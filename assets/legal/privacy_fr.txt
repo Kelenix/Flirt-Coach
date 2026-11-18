@@ -1,0 +1,53 @@
+# Politique de confidentialité
+
+Dernière mise à jour : 18 novembre 2026
+
+## Qui sommes-nous
+
+Flirt Coach est édité par {{EDITEUR}}. Pour toute question sur tes données : {{CONTACT}}.
+
+## Les données que nous traitons
+
+- Un identifiant de compte anonyme, créé automatiquement : ni nom, ni e-mail, ni numéro de téléphone.
+- Ta déclaration d'âge (18 ans ou plus) et sa date.
+- Les textes que tu saisis (message reçu, contexte, conversation) et les réponses générées. Ils servent à l'historique (Premium) et au calcul des limites d'usage. Tu peux les supprimer à tout moment.
+- Les captures d'écran que tu importes : elles sont transmises au service d'IA pour être lues, puis ne sont jamais conservées.
+- Tes crédits, achats et abonnements. Le paiement est traité par l'App Store ou Google Play : nous ne recevons jamais tes données bancaires.
+- Pour la version gratuite, des données publicitaires traitées par Google AdMob, selon tes choix de consentement.
+- Les signalements que tu envoies : le texte signalé et le motif choisi.
+
+## Pourquoi nous les traitons
+
+- Fournir le service : générer les réponses, gérer tes crédits, ton abonnement et ton historique (exécution du contrat).
+- Assurer la sécurité et prévenir les abus : limites d'usage, examen des signalements (intérêt légitime).
+- Afficher des publicités personnalisées, uniquement avec ton consentement, que tu peux modifier dans Réglages > Préférences publicitaires.
+
+## Nos prestataires
+
+- Supabase : hébergement de la base de données et du serveur, dans l'Union européenne.
+- Anthropic : génération des réponses par intelligence artificielle. Les textes et captures lui sont transmis pour traitement, conformément à ses conditions d'utilisation commerciales.
+- RevenueCat : gestion des achats et abonnements.
+- Google (AdMob, Google Play) et Apple (App Store).
+
+Certains prestataires sont situés hors de l'Union européenne, notamment aux États-Unis. Ces transferts sont encadrés par des garanties appropriées (clauses contractuelles types de la Commission européenne ou cadre de protection des données UE–États-Unis).
+
+## Combien de temps nous les gardons
+
+- Ton compte, ton historique et tes signalements : jusqu'à ce que tu les supprimes ou que tu supprimes ton compte.
+- Tes captures d'écran : elles ne sont pas conservées.
+
+## Tes droits
+
+Tu peux accéder à tes données, les rectifier, les effacer, t'opposer à leur traitement ou en demander la portabilité en écrivant à {{CONTACT}}.
+
+Tu peux supprimer ton compte immédiatement depuis Réglages > Supprimer mon compte : toutes tes données sont alors effacées définitivement. Un abonnement en cours se résilie séparément, dans l'App Store ou Google Play.
+
+Tu peux aussi adresser une réclamation à l'autorité de protection des données de ton pays (en France, la CNIL).
+
+## Mineurs
+
+Flirt Coach est réservé aux personnes de 18 ans ou plus.
+
+## Modifications
+
+Nous pouvons mettre à jour cette politique. La date en haut de page indique la dernière version.

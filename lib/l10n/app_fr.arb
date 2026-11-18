@@ -1,0 +1,245 @@
+{
+  "@@locale": "fr",
+  "appName": "Flirt Coach",
+  "appSubtitle": "Coach de drague et messages",
+  "welcomeBenefitWords": "Trouve les bons mots",
+  "welcomeBenefitRespect": "Flirte avec respect",
+  "welcomeBenefitConfidence": "Gagne en confiance",
+  "ageConfirmation": "J'ai 18 ans ou plus",
+  "aiDisclaimer": "Les réponses sont des suggestions générées par IA. Aucun résultat n'est garanti.",
+  "start": "Commencer",
+  "generateTitle": "Générer un message",
+  "menuTitle": "Menu",
+  "menuGenerate": "Générer un message",
+  "menuScreenshot": "Capture d'écran",
+  "menuCredits": "Crédits",
+  "situationLabel": "Situation",
+  "situationReply": "Répondre à un message",
+  "situationOpener": "Démarrer une conversation",
+  "situationFlirt": "Flirter",
+  "situationFollowUp": "Relancer la conversation",
+  "situationPreDate": "Avant un rendez-vous",
+  "situationApology": "M'excuser",
+  "situationSoftBreakup": "Rompre en douceur",
+  "contextLabel": "Contexte (facultatif)",
+  "contextHintReply": "Où vous en êtes, ce que tu aimerais obtenir…",
+  "contextHintOpener": "Ce que tu sais de la personne : sa bio, une passion, une photo…",
+  "contextHintFlirt": "Où en est la conversation, ce qui vous fait rire…",
+  "contextHintFollowUp": "De quoi vous parliez, depuis quand la conversation s'est arrêtée…",
+  "contextHintPreDate": "Le rendez-vous : où, quand, ce que vous allez faire…",
+  "contextHintApology": "Ce qui s'est passé, ce que tu regrettes…",
+  "contextHintSoftBreakup": "Votre histoire en quelques mots, ce que tu veux lui dire…",
+  "messageHint": "Colle son dernier message…",
+  "importScreenshot": "Importer une capture d'écran",
+  "screenshotSelected": "Capture d'écran sélectionnée",
+  "removeScreenshot": "Retirer la capture",
+  "screenshotInfo": "Lecture de la capture : 2 crédits (inclus avec Premium). Ta capture n'est jamais conservée.",
+  "chooseStyle": "Choisis un style",
+  "generateButton": "Générer 3 réponses",
+  "lockedStyle": "Débloque les styles avancés avec Premium.",
+  "lockedStyleLabel": "{style}, réservé à Premium",
+  "@lockedStyleLabel": {
+    "placeholders": {
+      "style": {
+        "type": "String"
+      }
+    }
+  },
+  "credits": "{count, plural, =0{0 crédit} =1{1 crédit} other{{count} crédits}}",
+  "@credits": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "premium": "Premium",
+  "refusedDefault": "Je ne peux pas t'aider avec ce message. Essaie une approche plus respectueuse.",
+  "styleClassic": "Classique",
+  "styleFunny": "Drôle",
+  "styleRomantic": "Romantique",
+  "styleMysterious": "Mystérieux",
+  "styleDirect": "Direct",
+  "styleElegant": "Élégant",
+  "stylePlayfulBold": "Provocateur léger",
+  "resultsTitle": "Résultats",
+  "resultsSubtitle": "3 propositions de réponse",
+  "proposalLabel": "Réponse {number}",
+  "@proposalLabel": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "copy": "Copier",
+  "copied": "Copié ! Tu peux le coller dans ta conversation.",
+  "regenerate": "Régénérer",
+  "regenerateWithCost": "{count, plural, =1{Régénérer (1 crédit)} other{Régénérer ({count} crédits)}}",
+  "@regenerateWithCost": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "respectTitle": "Mode Respect",
+  "respectIntro": "Vérifie ton message avant de l'envoyer : est-il trop insistant, trop sexualisé ou manipulateur ?",
+  "respectMessageLabel": "Ton message",
+  "respectMessageHint": "Écris ou colle le message que tu veux envoyer…",
+  "respectContextHint": "Ce qui s'est passé avant : messages sans réponse, où vous en êtes…",
+  "respectCheckButton": "Vérifier mon message",
+  "respectVerdictOk": "Ton message est respectueux. Tu peux l'envoyer !",
+  "respectVerdictReview": "À revoir avant d'envoyer",
+  "respectIssueInsistent": "Trop insistant",
+  "respectIssueSexualized": "Trop sexualisé",
+  "respectIssueManipulative": "Manipulateur",
+  "respectAlternativeTitle": "Version plus respectueuse",
+  "respectRefusedDefault": "Le coach ne peut pas analyser ce message.",
+  "paywallTitle": "Flirt Coach Premium",
+  "paywallHeadline": "Passe à Premium",
+  "annualOfferHeadline": "Offre spéciale : Premium à l'année",
+  "paywallBenefitMessages": "Jusqu'à 100 messages par jour",
+  "paywallBenefitStyles": "Les 7 styles : Drôle, Romantique, Mystérieux…",
+  "paywallBenefitScreenshot": "Réponses à partir d'une capture d'écran",
+  "paywallBenefitAnalysis": "Analyse de conversation et historique",
+  "paywallBenefitNoAds": "Aucune publicité",
+  "planWeekly": "Hebdomadaire",
+  "planMonthly": "Mensuel",
+  "planAnnual": "Annuel",
+  "planPerWeek": "{price} / semaine",
+  "@planPerWeek": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "planPerMonth": "{price} / mois",
+  "@planPerMonth": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "planPerYear": "{price} / an",
+  "@planPerYear": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "planIntroPrice": "{price} pour commencer",
+  "@planIntroPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "planBadgePopular": "Le plus choisi",
+  "planBadgeBestValue": "Meilleur prix",
+  "planBadgeSpecialOffer": "Offre spéciale",
+  "planSelectedLabel": "sélectionné",
+  "paywallContinue": "Continuer",
+  "paywallRenewalNotice": "Abonnement renouvelé automatiquement à la fin de chaque période, au prix indiqué. Résiliable à tout moment, au plus tard 24 h avant le renouvellement, dans les réglages de ton compte Google Play ou App Store.",
+  "paywallRestore": "Restaurer mes achats",
+  "paywallPacksTitle": "Ou achète des crédits",
+  "paywallPacksSubtitle": "Sans abonnement, sans date d'expiration.",
+  "creditPackLabel": "{count} crédits",
+  "@creditPackLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "paywallAlreadyPremium": "Tu profites déjà de Premium. Merci !",
+  "purchasePremiumActivated": "Bienvenue dans Premium !",
+  "purchaseCreditsAdded": "Tes crédits ont été ajoutés.",
+  "purchasePending": "Achat validé par le store. Tes avantages arrivent dans quelques instants.",
+  "purchaseRestored": "Achats restaurés : Premium est actif.",
+  "purchaseNothingToRestore": "Aucun abonnement actif à restaurer pour ce compte store.",
+  "upgradeButton": "Passer Premium",
+  "watchAdForCredits": "Regarder une pub (+2 crédits)",
+  "rewardCredited": "+2 crédits ajoutés, merci !",
+  "rewardPending": "Merci ! Tes 2 crédits arrivent dans quelques instants.",
+  "rewardInterrupted": "Vidéo interrompue : regarde-la jusqu'au bout pour gagner tes crédits.",
+  "rewardUnavailable": "Aucune vidéo disponible pour le moment. Réessaie plus tard.",
+  "errorNetwork": "Pas de connexion. Vérifie ton réseau et réessaie.",
+  "errorInsufficientCredits": "Tu as utilisé tes crédits du jour. Reviens demain pour en avoir 5 nouveaux.",
+  "errorDailyLimit": "Tu as atteint la limite de générations pour aujourd'hui. Reviens demain.",
+  "errorAiUnavailable": "Le coach est momentanément indisponible. Ton crédit n'a pas été utilisé, réessaie.",
+  "errorUnreadableScreenshot": "Impossible de lire une conversation sur cette capture. Essaie une capture plus nette, ou colle le message. Aucun crédit utilisé.",
+  "errorImageTooLarge": "Cette image est trop lourde. Utilise une capture d'écran classique.",
+  "errorPurchasesUnavailable": "Les achats ne sont pas disponibles pour le moment.",
+  "errorPurchaseFailed": "L'achat n'a pas abouti. Réessaie dans un instant.",
+  "errorUnexpected": "Une erreur est survenue. Réessaie dans un instant.",
+  "menuAnalysis": "Analyse",
+  "analysisIntro": "Colle votre échange ou importe une capture : je te dis où vous en êtes et quoi faire ensuite.",
+  "analysisConversationLabel": "La conversation",
+  "analysisConversationHint": "Colle votre échange (qui dit quoi)…",
+  "analysisContextHint": "Ce que tu sais de cette personne, ce que tu espères…",
+  "analysisButton": "Analyser la conversation",
+  "analysisScreenshotInfo": "Lecture de la capture incluse avec Premium. Ta capture n'est jamais conservée.",
+  "analysisMomentumProgressing": "La conversation progresse",
+  "analysisMomentumStalling": "La conversation stagne",
+  "analysisMomentumDeclining": "La conversation recule",
+  "analysisNextStepTitle": "Prochaine étape",
+  "analysisSuggestedMessageTitle": "Message à envoyer",
+  "analysisDateTitle": "Proposer un rendez-vous",
+  "analysisRefusedDefault": "Je ne peux pas analyser cette conversation.",
+  "premiumLockedTitle": "Réservé à Premium",
+  "analysisLockedBody": "Découvre où en est ta conversation, la prochaine étape à suivre et le bon moment pour proposer un rendez-vous.",
+  "menuBank": "Banque",
+  "bankTitle": "Banque de messages",
+  "bankIntro": "Des messages prêts à copier, gratuits et disponibles même hors connexion.",
+  "bankCategoryOpener": "Ouverture",
+  "bankCategoryFollowUp": "Relance",
+  "bankCategoryDate": "Rendez-vous",
+  "bankCategoryApology": "Excuses",
+  "bankCategorySoftBreakup": "Rupture douce",
+  "bankMessageLabel": "Message {number}",
+  "@bankMessageLabel": {"placeholders": {"number": {"type": "int"}}},
+  "retry": "Réessayer",
+  "menuHistory": "Historique",
+  "historyTitle": "Historique",
+  "historyLockedBody": "Retrouve tous tes messages générés et copie-les à nouveau quand tu veux.",
+  "historyEmpty": "Tes messages générés apparaîtront ici.",
+  "historyShowMore": "Afficher plus",
+  "historyDelete": "Supprimer",
+  "historyDeleteTitle": "Supprimer cette entrée ?",
+  "historyDeleteBody": "Ton message et les réponses seront effacés définitivement.",
+  "historyDeleted": "Entrée supprimée.",
+  "cancel": "Annuler",
+  "legalPrivacy": "Politique de confidentialité",
+  "legalTerms": "Conditions d'utilisation",
+  "legalPrivacyShort": "Confidentialité",
+  "legalTermsShort": "Conditions",
+  "legalMissing": "(à compléter avant publication)",
+  "menuSettings": "Réglages",
+  "settingsTitle": "Réglages",
+  "settingsSectionSubscription": "Abonnement et crédits",
+  "settingsPremium": "Premium et crédits",
+  "settingsManageSubscription": "Gérer mon abonnement",
+  "settingsSectionPrivacy": "Confidentialité",
+  "settingsAdPreferences": "Préférences publicitaires",
+  "settingsSectionHelp": "Aide",
+  "settingsContact": "Contacter le support",
+  "settingsSectionAccount": "Compte",
+  "settingsDeleteAccount": "Supprimer mon compte",
+  "deleteAccountTitle": "Supprimer ton compte ?",
+  "deleteAccountBody": "Ton historique, tes crédits et tes signalements seront effacés définitivement. Un abonnement en cours n'est pas résilié pour autant : fais-le dans l'App Store ou Google Play.",
+  "deleteAccountConfirm": "Supprimer définitivement",
+  "errorLinkUnavailable": "Impossible d'ouvrir ce lien.",
+  "report": "Signaler",
+  "reportTitle": "Signaler cette réponse",
+  "reportReasonOffensive": "Offensante ou blessante",
+  "reportReasonSexual": "Sexuelle ou déplacée",
+  "reportReasonHarassment": "Harcèlement ou insistance",
+  "reportReasonManipulative": "Manipulatrice",
+  "reportReasonOther": "Autre problème",
+  "reportSent": "Merci, ton signalement a été envoyé."
+}

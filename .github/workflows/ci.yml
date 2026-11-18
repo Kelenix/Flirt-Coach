@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  flutter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.41.7
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: dart run build_runner build -d
+      - run: dart format --output=none --set-exit-if-changed lib test
+      - run: flutter analyze
+      - run: flutter test
+
+  edge-functions:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        function: [generate, respect-check, screenshot-reply, revenuecat-webhook, admob-ssv]
+    defaults:
+      run:
+        working-directory: supabase/functions/${{ matrix.function }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.9.8
+      - run: deno fmt --check . ../_shared
+      - run: deno lint . ../_shared
+      - run: deno check index.ts
+      - run: deno test --allow-env .
+
+  database:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.121.0
+      - run: supabase db start
+      - run: supabase test db

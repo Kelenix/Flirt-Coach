@@ -1,0 +1,3 @@
+-- Données de développement (Supabase local uniquement).
+-- Les comptes sont créés par l'app (connexion anonyme) ; aucune donnée à précharger en Inc-0.
+-- La banque de messages (Inc-8) sera ajoutée ici.
