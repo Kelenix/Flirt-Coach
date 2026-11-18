@@ -16,16 +16,23 @@ class SupabaseHistoryRepository implements HistoryRepository {
 
   @override
   Future<List<HistoryEntry>> fetchPage({
-    DateTime? before,
+    HistoryEntry? after,
     required int limit,
   }) => guardSupabase(() async {
     var query = _client
         .from('generations')
         .select('id, kind, input_text, output, created_at');
-    if (before != null) {
-      query = query.lt('created_at', before.toUtc().toIso8601String());
+    if (after != null) {
+      // Pagination par (date, id) : deux entrées de même date ne sont jamais sautées.
+      final date = after.createdAt.toUtc().toIso8601String();
+      query = query.or(
+        'created_at.lt."$date",and(created_at.eq."$date",id.lt.${after.id})',
+      );
     }
-    final rows = await query.order('created_at', ascending: false).limit(limit);
+    final rows = await query
+        .order('created_at', ascending: false)
+        .order('id', ascending: false)
+        .limit(limit);
     return [for (final row in rows) entryFromRow(row)];
   });
 

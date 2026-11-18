@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fond du kit de marque (AppColors.background) : pas de flash blanc au lancement. -->
+    <color name="launch_background">#1A1033</color>
+</resources>

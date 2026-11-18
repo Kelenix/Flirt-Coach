@@ -241,5 +241,8 @@
   "reportReasonHarassment": "Harcèlement ou insistance",
   "reportReasonManipulative": "Manipulatrice",
   "reportReasonOther": "Autre problème",
-  "reportSent": "Merci, ton signalement a été envoyé."
+  "reportSent": "Merci, ton signalement a été envoyé.",
+  "errorRateLimited": "Tu vas un peu vite : patiente une minute avant de recommencer.",
+  "historyInput": "« {text} »",
+  "@historyInput": {"placeholders": {"text": {"type": "String"}}}
 }

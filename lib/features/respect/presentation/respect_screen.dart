@@ -108,7 +108,7 @@ class _RespectScreenState extends ConsumerState<RespectScreen> {
               style: fieldStyle,
               decoration: InputDecoration(hintText: l10n.respectContextHint),
             ),
-            if (check.valueOrNull case final RespectVerdict verdict)
+            if (check case AsyncData(value: final RespectVerdict verdict))
               _VerdictView(verdict),
             const SizedBox(height: AppSpacing.md),
             Text(

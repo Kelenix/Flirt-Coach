@@ -23,3 +23,8 @@
 | 12 | Renseigner dans `config/prod.json` : `LEGAL_PUBLISHER` (nom et adresse de l'éditeur) et `SUPPORT_EMAIL` (support, données personnelles, signalements). Tant qu'ils sont vides, les textes légaux affichent « (à compléter avant publication) » et le lien « Contacter le support » est masqué | Inc-10 | ⬜ |
 | 13 | Examiner régulièrement les **signalements** : tableau de bord Supabase → table `reports` (texte signalé, motif, date) | après publication | ⬜ |
 | 14 | RevenueCat (avec la tâche 7) : clé **secrète** API en secret serveur `supabase secrets set REVENUECAT_SECRET_API_KEY=…` pour effacer aussi le client RevenueCat lors d'une suppression de compte (RGPD) | Inc-10 | ⬜ |
+| 15 | AdMob (avec la tâche 8) : secret serveur `supabase secrets set ADMOB_AD_UNIT_IDS=<id_android>,<id_ios>` (partie après « / » des blocs « récompensée ») — sans lui, tout bloc AdMob signé est accepté | phase 5 | ⬜ |
+| 16 | Phase de test des achats : `supabase secrets set REVENUECAT_ALLOW_SANDBOX=true`, puis **retirer ce secret avant la publication** (sinon les achats de test donnent de vrais droits) | phase 5 | ⬜ |
+| 17 | **Décision** : protection contre la création de comptes en série (CAPTCHA Turnstile/hCaptcha ou attestation d'appareil Play Integrity / App Attest) — voir `docs/security.md` | phase 5 | ❓ |
+| 18 | Mesurer la fluidité sur ton téléphone (commande dans `docs/performance.md`) | phase 5 | ⬜ |
+

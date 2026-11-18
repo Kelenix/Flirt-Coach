@@ -13,8 +13,8 @@ final analysisControllerProvider =
       ConversationAnalysis?
     >(AnalysisController.new);
 
-class AnalysisController
-    extends AutoDisposeAsyncNotifier<ConversationAnalysis?> {
+class AnalysisController extends AutoDisposeAsyncNotifier<ConversationAnalysis?>
+    with GuardedAction {
   @override
   ConversationAnalysis? build() => null;
 
@@ -23,20 +23,16 @@ class AnalysisController
     Uint8List? screenshot,
     String? context,
   }) async {
-    state = const AsyncLoading();
-    state = await keepAliveWhile(
-      ref,
-      () => AsyncValue.guard(() async {
-        final result = await ref
-            .read(analysisRepositoryProvider)
-            .analyze(
-              conversation: conversation,
-              screenshot: screenshot,
-              context: context,
-            );
-        ref.read(walletProvider.notifier).replace(result.wallet);
-        return result;
-      }),
-    );
+    await runGuarded(() async {
+      final result = await ref
+          .read(analysisRepositoryProvider)
+          .analyze(
+            conversation: conversation,
+            screenshot: screenshot,
+            context: context,
+          );
+      ref.read(walletProvider.notifier).replace(result.wallet);
+      return result;
+    });
   }
 }

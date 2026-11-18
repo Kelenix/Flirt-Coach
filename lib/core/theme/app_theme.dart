@@ -51,7 +51,7 @@ abstract final class AppTheme {
         style: FilledButton.styleFrom(
           minimumSize: const Size.fromHeight(_buttonHeight),
           shape: const StadiumBorder(),
-          textStyle: _textTheme.labelLarge,
+          textStyle: _buttonText,
           disabledBackgroundColor: AppColors.primary.withValues(
             alpha: _disabledOpacity,
           ),
@@ -68,7 +68,7 @@ abstract final class AppTheme {
           backgroundColor: AppColors.surface,
           foregroundColor: AppColors.onLight,
           side: const BorderSide(color: AppColors.secondary, width: 1.5),
-          textStyle: _textTheme.labelLarge,
+          textStyle: _buttonText,
         ),
       ),
       appBarTheme: AppBarTheme(
@@ -86,7 +86,7 @@ abstract final class AppTheme {
         style: TextButton.styleFrom(
           foregroundColor: AppColors.surfaceTint,
           minimumSize: const Size(48, 48),
-          textStyle: _textTheme.labelLarge,
+          textStyle: _buttonText,
         ),
       ),
       inputDecorationTheme: _inputDecoration,
@@ -140,6 +140,10 @@ abstract final class AppTheme {
     bodyMedium: _body(14, FontWeight.w400),
     labelMedium: _body(12, FontWeight.w500),
   );
+
+  /// Libellés de boutons en gras : texte blanc sur rose lisible (contraste WCAG
+  /// « gros texte », 3:1), sans toucher aux couleurs du kit.
+  static final _buttonText = _heading(16, FontWeight.w700);
 
   static TextStyle _heading(double size, FontWeight weight) => TextStyle(
     fontFamily: AppFonts.heading,

@@ -20,6 +20,7 @@ import '../../credits/presentation/credits_badge.dart';
 import '../../generation/data/screenshot_picker.dart';
 import '../application/analysis_controller.dart';
 import '../domain/conversation_analysis.dart';
+import '../../../shared/widgets/snack.dart';
 
 /// Analyse de conversation (INTAKE §2.4), réservée à Premium : où en est
 /// l'échange, prochaine étape, rendez-vous si le contexte s'y prête.
@@ -64,9 +65,7 @@ class _AnalysisScreenState extends ConsumerState<AnalysisScreen> {
       final bytes = await ref.read(screenshotPickerProvider)();
       if (bytes != null && mounted) setState(() => _screenshot = bytes);
     } catch (error) {
-      messenger
-        ..hideCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(failureMessage(l10n, error))));
+      messenger.showMessage(failureMessage(l10n, error));
     }
   }
 
@@ -164,7 +163,7 @@ class _AnalysisScreenState extends ConsumerState<AnalysisScreen> {
                 style: fieldStyle,
                 decoration: InputDecoration(hintText: l10n.analysisContextHint),
               ),
-              if (analysis.valueOrNull case final AnalysisResult result)
+              if (analysis case AsyncData(value: final AnalysisResult result))
                 _ResultView(result),
             ],
             const SizedBox(height: AppSpacing.md),

@@ -121,3 +121,42 @@ Deno.test("compte supprimé : reconnu pour ignorer le rappel", () => {
   assert(!isUnknownUser({ code: "P0001", message: "daily_limit" }));
   assert(!isUnknownUser({ code: "08006", message: "connection failure" }));
 });
+
+Deno.test("achat sandbox : ignoré en production, accepté en phase de test", () => {
+  const sandbox = event({
+    type: "NON_RENEWING_PURCHASE",
+    product_id: "flirtcoach_credits_20",
+    environment: "SANDBOX",
+  });
+  assertEquals(actionFor(sandbox), { kind: "ignore", reason: "sandbox" });
+  assertEquals(actionFor(sandbox, { allowSandbox: true }).kind, "grant_credits");
+  assertEquals(
+    actionFor(event({
+      type: "NON_RENEWING_PURCHASE",
+      product_id: "flirtcoach_credits_20",
+      environment: "PRODUCTION",
+    })).kind,
+    "grant_credits",
+  );
+});
+
+Deno.test("pack remboursé : crédits repris, une seule fois par transaction", () => {
+  assertEquals(
+    actionFor(event({
+      type: "CANCELLATION",
+      cancel_reason: "CUSTOMER_SUPPORT",
+      product_id: "flirtcoach_credits_50",
+    })),
+    { kind: "revoke_credits", userId: user, amount: 50, reference: "refund:tx-1" },
+  );
+  assertEquals(
+    actionFor(
+      event({
+        type: "CANCELLATION",
+        cancel_reason: "UNSUBSCRIBE",
+        product_id: "flirtcoach_credits_50",
+      }),
+    ),
+    { kind: "ignore", reason: "pack_CANCELLATION" },
+  );
+});

@@ -15,11 +15,7 @@ import '../../../shared/widgets/gradient_background.dart';
 import '../../ads/data/ads_service.dart';
 import '../../credits/application/wallet_controller.dart';
 import '../application/account_controller.dart';
-
-/// Le lien « Préférences publicitaires » n'existe que si le consentement s'applique.
-final adPrivacyOptionsProvider = FutureProvider.autoDispose<bool>(
-  (ref) => ref.watch(adsServiceProvider).privacyOptionsRequired(),
-);
+import '../../../shared/widgets/snack.dart';
 
 /// Réglages (INTAKE §7) : abonnement, confidentialité, aide, suppression du compte.
 class SettingsScreen extends ConsumerWidget {
@@ -36,9 +32,7 @@ class SettingsScreen extends ConsumerWidget {
     final message = AppLocalizations.of(context).errorLinkUnavailable;
     final messenger = ScaffoldMessenger.of(context);
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      messenger
-        ..hideCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(message)));
+      messenger.showMessage(message);
     }
   }
 
@@ -77,9 +71,7 @@ class SettingsScreen extends ConsumerWidget {
 
     ref.listen(accountControllerProvider, (previous, next) {
       if (next case AsyncError(:final error)) {
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(SnackBar(content: Text(failureMessage(l10n, error))));
+        ScaffoldMessenger.of(context).showMessage(failureMessage(l10n, error));
       }
     });
 

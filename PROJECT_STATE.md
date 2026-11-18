@@ -5,11 +5,11 @@
 
 ## Snapshot
 
-- **Phase courante** : 4 — Implémentation terminée (Inc-0 à Inc-10) ; phase 5 — Qualité & performance à lancer
+- **Phase courante** : 5 — Qualité & performance terminée (sauf mesure sur téléphone réel) ; prochaine : 6 — Publication
 - **Dernière mise à jour** : 2026-11-18
 - **Santé** : 🟢 OK
 - **Mode** : PLAN_PUIS_VALIDATION (plan validé le 2026-11-18, options par défaut retenues)
-- **Prochaine action** : phase 5 — Qualité & performance (11 Performance, 12 QA, 15 revue de code, 10 Sécurité), puis 6 Publication et 7 Documentation pro. Rappels : vrais achats
+- **Prochaine action** : décision sur la protection anti-comptes en série (tâche 17), puis phase 6 — Publication, puis 7 — Documentation pro. Rappels : vrais achats
   (comptes stores + RevenueCat) et vraie récompense publicitaire (Supabase cloud + AdMob)
   restent à vérifier une fois les comptes créés.
 
@@ -22,7 +22,7 @@
 | 2 — Planification           | ✅ fait | `docs/risks.md`, backlog ci-dessous |
 | 3 — Architecture & design   | ✅ fait | `docs/architecture.md`, `system-design.md`, `data-model.md`, `docs/design/` |
 | 4 — Implémentation          | ✅ fait | Inc-0 à Inc-10 ; US-04 (e-mail) reporté |
-| 5 — Qualité & performance   | ⬜ à faire | |
+| 5 — Qualité & performance   | ✅ fait | `docs/qa/revue-phase5.md`, `docs/security.md`, `docs/performance.md`, `docs/qa/test-plan.md` ; mesure sur téléphone réel à faire (tâche 18) |
 | 6 — Publication (stores)    | ⬜ à faire | |
 | 7 — Documentation           | ⬜ à faire | |
 | 8 — Maintenance             | ⬜ à faire | |
@@ -185,6 +185,20 @@ Une préférence de genre dans les réglages l'éviterait (non demandé par l'IN
 | Liens CGU / confidentialité sur le paywall (exigés par les stores) | ✅ Inc-10 |
 | Avantages annoncés « Analyse de conversation et historique » | ✅ Analyse (Inc-7) et historique (Inc-9) livrés |
 
+### Phase 5 — état de la Definition of Done
+
+| Critère | État |
+|---------|------|
+| Revue de sécurité indépendante (serveur + app) | ✅ 12 constats : 9 corrigés, 3 reportés avec raison (`docs/qa/revue-phase5.md`) |
+| Revue de code indépendante (app) | ✅ 17 constats : 15 corrigés, 2 reportés avec raison |
+| Quotas d'appels IA sûrs (simultanéité, remboursements) | ✅ table `ai_usage` : 10/minute, 100/jour, comptés sous verrou avant l'appel |
+| Accessibilité | ✅ 7 écrans conformes (cibles tactiles Android/iOS, libellés, contraste WCAG) |
+| Bout en bout sur appareil | ✅ parcours accueil → Générer → Résultats → Banque → Réglages (émulateur) |
+| Performance | ✅ démarrage 1,8 s ; construction des images 2,1 ms en moyenne ; ⚠️ rendu à confirmer sur téléphone ; APK arm64 24,4 Mo ; logos allégés ; plus de flash blanc au lancement |
+| Tests | 115 Flutter, 99 SQL, 50 Deno, 1 bout en bout ; `flutter analyze`, `dart format`, `deno fmt/lint` propres |
+| CI | ✅ couvre maintenant les 7 Edge Functions et `integration_test` (format) |
+| Cloud | ✅ 3 migrations + 7 fonctions déployées ; vérifié : génération réelle, signalement inventé refusé (400), vrai signalement accepté (204), rappel AdMob incomplet refusé (400), webhook sans secret refusé (401) |
+
 ### Inc-10 — état de la Definition of Done
 
 | Critère | État |
@@ -287,6 +301,8 @@ Reste ouvert :
 
 ## Journal de session (résumé court, le plus récent en haut)
 
+- 2026-11-18 — Phase 5 (Qualité & performance) : deux revues indépendantes, 24 corrections (quotas IA sûrs, achats sandbox refusés, packs remboursés repris, rappels AdMob limités à nos blocs, signalements vérifiés, erreurs après succès, portefeuille relu, double tap…), tests d'accessibilité et de bout en bout, mesures de performance (ADR-025). Erreur de ma part corrigée avant déploiement : contrôle des signalements contourné par un `NULL` (trouvé par le test). 115 Flutter, 99 SQL, 50 Deno.
+
 - 2026-11-18 — Build sans `--dart-define-from-file` : l'app restait figée sur le logo ; elle affiche maintenant « Configuration manquante » avec la commande à utiliser (`ConfigurationErrorApp`, 1 test ; vérifié sur émulateur). 95 tests Flutter.
 
 - 2026-11-18 — Inc-10 terminé : signalement, suppression de compte, textes légaux, réglages (ADR-024). Bug corrigé dans `scripts/deploy-cloud.ps1` (format JSON de la liste des projets). Tous les incréments fonctionnels (0 à 10) sont livrés ; reste la phase de publication.
@@ -295,7 +311,7 @@ Reste ouvert :
 
 - 2026-11-18 — Inc-8 terminé : banque de messages (40 messages, 5 catégories), hors-ligne, gratuite (ADR-022). 72 tests Flutter, 66 SQL. Bugs trouvés sur émulateur et corrigés : tri inversé (le client Supabase trie en décroissant par défaut), requête sans fin hors réseau (délai 6 s). Erreur de ma part corrigée : une substitution avait remplacé « ? ! : » par un caractère de contrôle dans la migration et la base locale, avant tout envoi au cloud.
 
-- 2026-11-18 — Supabase cloud (UE) relié : 6 migrations appliquées, 6 Edge Functions actives (verify_jwt conforme : webhook RevenueCat et AdMob publics, autres protégées — 401 sans session vérifié). Script `scripts/deploy-cloud.ps1`. Secret `ANTHROPIC_API_KEY` copié depuis le `.env` local. Connexion anonyme activée. Test bout en bout sur le cloud ✅ : session anonyme, âge exigé (403 avant), 5 crédits, génération et Mode Respect réels, analyse et style avancé refusés au gratuit (403), RLS (1 seul profil visible). APK `build/FlirtCoach-cloud.apk` (profile, branché sur le cloud). Build **release** : un premier essai est resté bloqué (> 45 min), mais il aboutit ensuite en ~6 min (constaté le 2026-11-18) ; il doit recevoir `--dart-define-from-file=config/prod.json`, sinon l'app reste sur l'écran de lancement. Signature release à créer (tâche 11).
+- 2026-11-18 — Supabase cloud (UE) relié : 6 migrations appliquées, 6 Edge Functions actives (verify_jwt conforme : webhook RevenueCat et AdMob publics, autres protégées — 401 sans session vérifié). Script `scripts/deploy-cloud.ps1`. Secret `ANTHROPIC_API_KEY` copié depuis le `.env` local. Connexion anonyme activée. Test bout en bout sur le cloud ✅ : session anonyme, âge exigé (403 avant), 5 crédits, génération et Mode Respect réels, analyse et style avancé refusés au gratuit (403), RLS (1 seul profil visible). APK `build/FlirtCoach-cloud.apk` (profile, branché sur le cloud). Build **release** ✅ (`app-release.apk`, 41 Mo, ~3 min). Cause du blocage initial : un démon Gradle resté actif verrouillait `classes.dex` (« fichier utilisé par un autre processus ») ; remède : `android\gradlew --stop` ou arrêter le processus Java, puis relancer. Le build doit recevoir `--dart-define-from-file=config/prod.json`, sinon l'app affiche « Configuration manquante ». Signature release à créer (tâche 11).
 
 - 2026-11-18 — Inc-7 terminé : analyse de conversation Premium (texte ou capture), ADR-021. 66 tests Flutter, 45 Deno ; analyses réelles en anglais et italien validées. Comptes de test locaux passés Premium 1 jour pour essayer. Bande sombre de la barre de navigation supprimée (bord à bord), vague d'accueil redessinée.
 

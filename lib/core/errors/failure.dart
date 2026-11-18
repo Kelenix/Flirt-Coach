@@ -21,6 +21,11 @@ final class DailyLimitFailure extends Failure {
   const DailyLimitFailure();
 }
 
+/// Trop de demandes en une minute (limite serveur).
+final class RateLimitedFailure extends Failure {
+  const RateLimitedFailure();
+}
+
 final class AiUnavailableFailure extends Failure {
   const AiUnavailableFailure();
 }
@@ -52,6 +57,7 @@ String failureMessage(AppLocalizations l10n, Object error) => switch (error) {
   InsufficientCreditsFailure() => l10n.errorInsufficientCredits,
   PremiumRequiredFailure() => l10n.lockedStyle,
   DailyLimitFailure() => l10n.errorDailyLimit,
+  RateLimitedFailure() => l10n.errorRateLimited,
   AiUnavailableFailure() => l10n.errorAiUnavailable,
   UnreadableScreenshotFailure() => l10n.errorUnreadableScreenshot,
   ImageTooLargeFailure() => l10n.errorImageTooLarge,

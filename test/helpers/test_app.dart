@@ -14,7 +14,9 @@ import 'package:flirt_coach/features/credits/domain/wallet_repository.dart';
 import 'package:flirt_coach/features/generation/data/screenshot_picker.dart';
 import 'package:flirt_coach/features/history/data/supabase_history_repository.dart';
 import 'package:flirt_coach/features/report/data/report_repository.dart';
+import 'package:flirt_coach/features/report/domain/report.dart';
 import 'package:flirt_coach/features/settings/data/account_repository.dart';
+import 'package:flirt_coach/features/settings/domain/account_repository.dart';
 import 'package:flirt_coach/features/history/domain/history_entry.dart';
 import 'package:flirt_coach/features/message_bank/data/supabase_message_bank_repository.dart';
 import 'package:flirt_coach/features/message_bank/domain/bank_message.dart';
@@ -112,6 +114,12 @@ class FakeBackend
 
   /// Publicités : consentement obtenu, résultat de la vidéo, rappel AdMob reçu.
   bool adsReady = false;
+
+  /// Si défini, chaque génération attend ce signal (serveur lent).
+  Future<void>? generationGate;
+
+  /// Nombre de demandes de consentement / préparation des publicités.
+  int prepareCalls = 0;
   RewardedVideoResult videoResult = RewardedVideoResult.watched;
   bool rewardDelivered = true;
   String? rewardedUserId;
@@ -152,6 +160,7 @@ class FakeBackend
   @override
   Future<GenerationResult> generate(GenerationRequest request) async {
     requests.add(request);
+    if (generationGate case final gate?) await gate;
     if (error case final error?) throw error;
     if (refusal case final reason?) {
       return GenerationResult.refused(reason: reason, wallet: wallet);
@@ -174,6 +183,7 @@ class FakeBackend
     }
     _spendCredits();
     return RespectCheck.verdict(
+      isRespectful: respectIssues.isEmpty,
       issues: respectIssues,
       alternative: respectAlternative,
       wallet: wallet,
@@ -217,14 +227,14 @@ class FakeBackend
 
   @override
   Future<List<HistoryEntry>> fetchPage({
-    DateTime? before,
+    HistoryEntry? after,
     required int limit,
   }) async {
     if (historyError case final error?) throw error;
-    return history
-        .where((entry) => before == null || entry.createdAt.isBefore(before))
-        .take(limit)
-        .toList();
+    final start = after == null
+        ? 0
+        : history.indexWhere((entry) => entry.id == after.id) + 1;
+    return history.skip(start).take(limit).toList();
   }
 
   @override
@@ -319,7 +329,10 @@ class FakeBackend
   }
 
   @override
-  Future<bool> prepare() async => adsReady;
+  Future<bool> prepare() async {
+    prepareCalls++;
+    return adsReady;
+  }
 
   @override
   Widget banner() => const SizedBox(key: Key('fake-banner'), height: 50);

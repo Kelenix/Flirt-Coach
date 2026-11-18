@@ -19,6 +19,7 @@ import '../../generation/domain/situation.dart';
 import '../../generation/presentation/labels.dart';
 import '../application/history_controller.dart';
 import '../domain/history_entry.dart';
+import '../../../shared/widgets/snack.dart';
 
 /// Historique Premium (INTAKE §2.7) : générations passées, texte seulement,
 /// suppression individuelle. Verrouillé pour les utilisateurs gratuits.
@@ -28,12 +29,18 @@ class HistoryScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final wallet = ref.watch(walletProvider).valueOrNull;
+    final walletState = ref.watch(walletProvider);
+    final wallet = walletState.valueOrNull;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.historyTitle)),
       body: GradientBackground(
         child: switch (wallet) {
+          // Portefeuille illisible (hors-ligne) : message et « Réessayer ».
+          null when walletState.hasError => _RetryView(
+            error: walletState.error!,
+            onRetry: () => ref.invalidate(walletProvider),
+          ),
           null => const Center(child: CircularProgressIndicator()),
           _ when !wallet.isPremium => ScrollWithBottomAction(
             content: [PremiumLockedNotice(body: l10n.historyLockedBody)],
@@ -64,9 +71,7 @@ class _HistoryListState extends ConsumerState<_HistoryList> {
 
   void _showError(Object error) {
     final l10n = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(failureMessage(l10n, error))));
+    ScaffoldMessenger.of(context).showMessage(failureMessage(l10n, error));
   }
 
   Future<void> _loadMore() async {
@@ -103,9 +108,7 @@ class _HistoryListState extends ConsumerState<_HistoryList> {
     final messenger = ScaffoldMessenger.of(context);
     try {
       await ref.read(historyControllerProvider.notifier).delete(entry.id);
-      messenger
-        ..hideCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(l10n.historyDeleted)));
+      messenger.showMessage(l10n.historyDeleted);
     } catch (error) {
       if (mounted) _showError(error);
     }
@@ -143,23 +146,40 @@ class _HistoryListState extends ConsumerState<_HistoryList> {
           return _HistoryCard(entry, onDelete: () => _delete(entry));
         },
       ),
-      AsyncError(:final error) => Padding(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            FeedbackMessage(failureMessage(l10n, error)),
-            SecondaryButton(
-              label: l10n.retry,
-              icon: AppIcons.refresh,
-              onPressed: () => ref.invalidate(historyControllerProvider),
-            ),
-          ],
-        ),
+      AsyncError(:final error) => _RetryView(
+        error: error,
+        onRetry: () => ref.invalidate(historyControllerProvider),
       ),
       _ => const Center(child: CircularProgressIndicator()),
     };
+  }
+}
+
+/// Erreur de chargement avec « Réessayer ».
+class _RetryView extends StatelessWidget {
+  const _RetryView({required this.error, required this.onRetry});
+
+  final Object error;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          FeedbackMessage(failureMessage(l10n, error)),
+          SecondaryButton(
+            label: l10n.retry,
+            icon: AppIcons.refresh,
+            onPressed: onRetry,
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -240,7 +260,7 @@ class _HistoryCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: AppSpacing.md),
               child: Text(
-                '« $input »',
+                l10n.historyInput(input),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: textTheme.bodyMedium?.copyWith(
@@ -266,9 +286,7 @@ class _ResultLine extends StatelessWidget {
     final message = AppLocalizations.of(context).copied;
     final messenger = ScaffoldMessenger.of(context);
     await Clipboard.setData(ClipboardData(text: text));
-    messenger
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(message)));
+    messenger.showMessage(message);
   }
 
   @override

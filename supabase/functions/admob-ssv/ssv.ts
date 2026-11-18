@@ -11,6 +11,8 @@ export interface RewardCallback {
   keyId: string;
   transactionId: string;
   userId: string;
+  /** Partie numérique du bloc d'annonces qui a versé la récompense. */
+  adUnit: string;
 }
 
 export class InvalidCallback extends Error {}
@@ -33,7 +35,9 @@ export function parseCallback(url: URL): RewardCallback {
   const keyId = params.get("key_id");
   const transactionId = params.get("transaction_id");
   const userId = params.get("user_id");
-  if (!signature || !keyId || !transactionId) throw new InvalidCallback("params");
+  const adUnit = params.get("ad_unit");
+  if (!signature || !keyId || !transactionId || !adUnit) throw new InvalidCallback("params");
+  if (!/^\d{1,20}$/.test(keyId)) throw new InvalidCallback("key_id");
   if (!userId || !uuidPattern.test(userId)) throw new InvalidCallback("user_id");
   try {
     return {
@@ -42,6 +46,7 @@ export function parseCallback(url: URL): RewardCallback {
       keyId,
       transactionId,
       userId: userId.toLowerCase(),
+      adUnit,
     };
   } catch {
     throw new InvalidCallback("signature");
@@ -107,4 +112,18 @@ export async function isSignatureValid(
   } catch {
     return false;
   }
+}
+
+/**
+ * Les clés de signature de Google sont communes à tous les éditeurs : seul un rappel
+ * venant d'un de NOS blocs d'annonces (liste `ADMOB_AD_UNIT_IDS`) crédite. Liste vide :
+ * aucun contrôle (développement uniquement).
+ */
+export function isAllowedAdUnit(adUnit: string, allowed: readonly string[]): boolean {
+  return allowed.length === 0 || allowed.includes(adUnit);
+}
+
+/** `ADMOB_AD_UNIT_IDS` : identifiants séparés par des virgules (partie après « / »). */
+export function parseAdUnitList(value: string | undefined): string[] {
+  return (value ?? "").split(",").map((id) => id.trim().split("/").pop()!).filter(Boolean);
 }

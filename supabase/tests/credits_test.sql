@@ -87,13 +87,16 @@ select results_eq(
   $$ values (0, 0) $$,
   'un Premium n''est pas débité'
 );
-insert into public.generations (user_id, kind, style, output)
-select :p, 'reply', 'classic', '{}'::jsonb from generate_series(1, 100);
+-- Tentatives du jour, hors fenêtre de la limite par minute.
+insert into public.ai_usage (user_id, reference, created_at)
+select :p, 'old-' || n, now() - interval '2 minutes' from generate_series(1, 99) n;
 select throws_ok(
   $$ select * from public.spend_credits('00000000-0000-0000-0000-0000000000c1', 1, 't6') $$,
   'P0001', 'daily_limit',
   'un Premium est bloqué à 100 générations par jour'
 );
+-- Nouveau jour d'usage pour le test suivant.
+delete from public.ai_usage where user_id = :p;
 update public.entitlements set expires_at = now() - interval '1 day' where user_id = :p;
 select results_eq(
   $$ select from_daily, from_bonus from public.spend_credits('00000000-0000-0000-0000-0000000000c1', 1, 't7') $$,
@@ -145,10 +148,12 @@ select throws_ok(
 -- Un Premium lit son historique, et seulement le sien.
 reset role;
 update public.entitlements set expires_at = null where user_id = :p;
+insert into public.generations (user_id, kind, style, output)
+select :p, 'reply', 'classic', '{}'::jsonb from generate_series(1, 3);
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000c1","role":"authenticated"}', true);
 select is(
-  (select count(*)::int from public.generations), 100,
+  (select count(*)::int from public.generations), 3,
   'un Premium lit son propre historique uniquement'
 );
 

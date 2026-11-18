@@ -10,21 +10,18 @@ final respectControllerProvider =
       RespectController.new,
     );
 
-class RespectController extends AutoDisposeAsyncNotifier<RespectCheck?> {
+class RespectController extends AutoDisposeAsyncNotifier<RespectCheck?>
+    with GuardedAction {
   @override
   RespectCheck? build() => null;
 
   Future<void> check({required String message, String? context}) async {
-    state = const AsyncLoading();
-    state = await keepAliveWhile(
-      ref,
-      () => AsyncValue.guard(() async {
-        final result = await ref
-            .read(respectRepositoryProvider)
-            .check(message: message, context: context);
-        ref.read(walletProvider.notifier).replace(result.wallet);
-        return result;
-      }),
-    );
+    await runGuarded(() async {
+      final result = await ref
+          .read(respectRepositoryProvider)
+          .check(message: message, context: context);
+      ref.read(walletProvider.notifier).replace(result.wallet);
+      return result;
+    });
   }
 }

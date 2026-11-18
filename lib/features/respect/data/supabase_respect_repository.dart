@@ -22,25 +22,32 @@ class SupabaseRespectRepository implements RespectRepository {
       'message': message,
       'context': ?context,
     });
-    final wallet = walletFromJson(json['wallet'] as Map<String, dynamic>);
-    if (json['refused'] == true) {
-      return RespectCheck.refused(
-        reason: json['reason'] as String? ?? '',
-        wallet: wallet,
-      );
-    }
-    return RespectCheck.verdict(
-      issues: [
-        for (final issue in json['issues'] as List)
-          if (RespectIssueCategory.fromApi(issue['category'] as String)
-              case final category?)
-            RespectIssue(
-              category: category,
-              explanation: issue['explanation'] as String,
-            ),
-      ],
-      alternative: json['alternative'] as String?,
+    return respectCheckFromJson(json);
+  }
+}
+
+/// Réponse de l'Edge Function `respect-check` → [RespectCheck].
+RespectCheck respectCheckFromJson(Map<String, dynamic> json) {
+  final wallet = walletFromJson(json['wallet'] as Map<String, dynamic>);
+  if (json['refused'] == true) {
+    return RespectCheck.refused(
+      reason: json['reason'] as String? ?? '',
       wallet: wallet,
     );
   }
+  final issues = <RespectIssue>[
+    for (final issue in (json['issues'] as List? ?? const []).cast<Map>())
+      if (RespectIssueCategory.fromApi(issue['category'] as String? ?? '')
+          case final category?)
+        RespectIssue(
+          category: category,
+          explanation: issue['explanation'] as String? ?? '',
+        ),
+  ];
+  return RespectCheck.verdict(
+    isRespectful: json['is_respectful'] as bool? ?? issues.isEmpty,
+    issues: issues,
+    alternative: json['alternative'] as String?,
+    wallet: wallet,
+  );
 }

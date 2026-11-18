@@ -70,7 +70,7 @@ class _StyleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final textStyle = Theme.of(context).textTheme.bodyLarge?.copyWith(
-      fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+      fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
       color: isLocked ? AppColors.onDarkMuted : AppColors.onDark,
     );
     return Semantics(

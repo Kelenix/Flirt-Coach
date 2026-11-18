@@ -20,27 +20,29 @@ class HistoryController extends AutoDisposeAsyncNotifier<HistoryPage> {
   static const pageSize = 20;
 
   @override
-  Future<HistoryPage> build() => _load(const []);
-
-  Future<HistoryPage> _load(List<HistoryEntry> current) async {
+  Future<HistoryPage> build() async {
     final page = await ref
         .read(historyRepositoryProvider)
-        .fetchPage(
-          before: current.isEmpty ? null : current.last.createdAt,
-          limit: pageSize,
-        );
-    return HistoryPage(
-      entries: [...current, ...page],
-      hasMore: page.length == pageSize,
-    );
+        .fetchPage(limit: pageSize);
+    return HistoryPage(entries: page, hasMore: page.length == pageSize);
   }
 
   /// Ajoute la page suivante ; en cas d'erreur, les entrées affichées restent
   /// et l'erreur est renvoyée à l'écran.
   Future<void> loadMore() async {
     final current = state.valueOrNull;
-    if (current == null || !current.hasMore) return;
-    state = AsyncData(await _load(current.entries));
+    if (current == null || !current.hasMore || current.entries.isEmpty) return;
+    final page = await ref
+        .read(historyRepositoryProvider)
+        .fetchPage(after: current.entries.last, limit: pageSize);
+    // Liste relue après l'attente : une suppression faite entre-temps est conservée.
+    final latest = state.valueOrNull ?? current;
+    state = AsyncData(
+      HistoryPage(
+        entries: [...latest.entries, ...page],
+        hasMore: page.length == pageSize,
+      ),
+    );
   }
 
   /// Supprime une entrée ; l'erreur éventuelle est renvoyée à l'écran.

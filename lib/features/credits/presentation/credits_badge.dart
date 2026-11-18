@@ -24,7 +24,16 @@ class CreditsBadge extends ConsumerWidget {
       child: InkWell(
         onTap: () => context.push(AppRoutes.paywall),
         borderRadius: BorderRadius.circular(AppRadius.pill),
-        child: _badge(context, l10n, wallet.isPremium, wallet.credits),
+        // Cible tactile d'au moins 48 dp, pastille visuelle inchangée.
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: kMinInteractiveDimension,
+          ),
+          child: Center(
+            widthFactor: 1,
+            child: _badge(context, l10n, wallet.isPremium, wallet.credits),
+          ),
+        ),
       ),
     );
   }

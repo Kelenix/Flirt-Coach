@@ -55,6 +55,7 @@ type ErrorCode =
   | "premium_required"
   | "insufficient_credits"
   | "daily_limit"
+  | "rate_limited"
   | "unusable_input"
   | "ai_unavailable";
 
@@ -65,6 +66,7 @@ const errorStatus: Record<ErrorCode, number> = {
   premium_required: 403,
   insufficient_credits: 402,
   daily_limit: 429,
+  rate_limited: 429,
   unusable_input: 422,
   ai_unavailable: 503,
 };
@@ -165,16 +167,20 @@ export function serveAiEndpoint<Req, Output>(endpoint: AiEndpoint<Req, Output>):
     if (spendError) {
       if (spendError.message === "insufficient_credits") return fail("insufficient_credits");
       if (spendError.message === "daily_limit") return fail("daily_limit");
+      if (spendError.message === "rate_limited") return fail("rate_limited");
       throw spendError;
     }
 
-    const refund = () =>
-      admin.rpc("refund_credits", {
+    // Un remboursement en échec est journalisé (sans contenu utilisateur) pour être rattrapé.
+    const refund = async () => {
+      const { error } = await admin.rpc("refund_credits", {
         p_user: userId,
         p_daily: spent.from_daily,
         p_bonus: spent.from_bonus,
         p_reference: reference,
       });
+      if (error) console.error(`${endpoint.name}: refund failed`, reference, error.code);
+    };
 
     let outcome: ModelOutcome<Output>;
     try {

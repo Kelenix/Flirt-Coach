@@ -25,7 +25,7 @@ enum LegalDocument {
 }
 
 /// Texte légal : `# ` titre, `## ` section, `- ` puce, sinon paragraphe.
-class LegalScreen extends StatelessWidget {
+class LegalScreen extends StatefulWidget {
   const LegalScreen({super.key, required this.document});
 
   final LegalDocument document;
@@ -42,22 +42,38 @@ class LegalScreen extends StatelessWidget {
       );
 
   @override
+  State<LegalScreen> createState() => _LegalScreenState();
+}
+
+class _LegalScreenState extends State<LegalScreen> {
+  // Chargé une seule fois, pas à chaque reconstruction de l'écran.
+  late final Future<String> _text = rootBundle.loadString(
+    widget.document.asset,
+  );
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(document.title(l10n))),
+      appBar: AppBar(title: Text(widget.document.title(l10n))),
       body: GradientBackground(
         child: FutureBuilder(
-          future: rootBundle.loadString(document.asset),
-          builder: (context, snapshot) => switch (snapshot.data) {
-            null => const Center(child: CircularProgressIndicator()),
-            final text => ListView(
+          future: _text,
+          builder: (context, snapshot) => switch (snapshot) {
+            AsyncSnapshot(hasError: true) => Center(
+              child: Text(l10n.errorUnexpected, textAlign: TextAlign.center),
+            ),
+            AsyncSnapshot(:final data?) => ListView(
               padding: const EdgeInsets.all(AppSpacing.lg),
               children: [
-                for (final block in fill(text, l10n).split(RegExp(r'\n\s*\n')))
+                for (final block in LegalScreen.fill(
+                  data,
+                  l10n,
+                ).split(RegExp(r'\n\s*\n')))
                   if (block.trim().isNotEmpty) _LegalBlock(block.trim()),
               ],
             ),
+            _ => const Center(child: CircularProgressIndicator()),
           },
         ),
       ),

@@ -24,8 +24,12 @@ final class HistoryEntry {
 
 /// Historique Premium. Les erreurs sont des `Failure`.
 abstract interface class HistoryRepository {
-  /// Entrées les plus récentes d'abord, antérieures à [before] si fourni.
-  Future<List<HistoryEntry>> fetchPage({DateTime? before, required int limit});
+  /// Entrées les plus récentes d'abord, situées après [after] (dernière entrée
+  /// de la page précédente) si fourni.
+  Future<List<HistoryEntry>> fetchPage({
+    HistoryEntry? after,
+    required int limit,
+  });
 
   /// Efface le contenu de l'entrée ; elle disparaît de l'historique.
   Future<void> delete(String id);

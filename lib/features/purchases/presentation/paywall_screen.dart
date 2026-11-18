@@ -15,6 +15,7 @@ import '../../credits/application/wallet_controller.dart';
 import '../application/purchase_controller.dart';
 import '../domain/catalog.dart';
 import '../../legal/presentation/legal_screen.dart';
+import '../../../shared/widgets/snack.dart';
 
 /// Paywall (INTAKE §3.1, §4) : abonnements Premium et packs de crédits.
 /// [annualOffer] : variante proposée à J+3, annuel mis en avant.
@@ -44,12 +45,12 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       };
 
   void _onOutcome(AsyncValue<PurchaseOutcome?>? previous, AsyncValue next) {
-    final outcome = next.valueOrNull;
-    if (outcome is! PurchaseOutcome || previous?.valueOrNull == outcome) return;
+    // Seulement à la fin d'un achat : deux achats identiques sont confirmés deux fois.
+    if (previous?.isLoading != true || next is! AsyncData) return;
+    final outcome = next.value;
+    if (outcome is! PurchaseOutcome) return;
     final l10n = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(_outcomeMessage(l10n, outcome))));
+    ScaffoldMessenger.of(context).showMessage(_outcomeMessage(l10n, outcome));
     if (outcome == PurchaseOutcome.premiumActivated ||
         outcome == PurchaseOutcome.restored) {
       context.pop();

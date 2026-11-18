@@ -5,6 +5,32 @@
 
 ---
 
+## ADR-025 — Corrections de la phase 5 (qualité, sécurité, performance)
+
+- **Date** : 2026-11-18
+- **Statut** : Accepté
+- **Décisions** :
+  - **Quotas IA** : table `ai_usage` ; chaque tentative est comptée sous le verrou du
+    portefeuille, avant l'appel : 10 par minute et 100 par jour pour tout utilisateur (refus et
+    remboursements compris). Le plafond Premium ne dépend plus des lignes de `generations`.
+  - **RevenueCat** : achats sandbox ignorés sauf `REVENUECAT_ALLOW_SANDBOX=true` ; pack remboursé
+    → crédits restants repris (au plus le montant du pack). **Remplace ADR-017** sur ce point
+    (« crédits non repris ») : la revue a montré qu'un achat-utilisation-remboursement était gratuit.
+  - **AdMob** : seuls nos blocs d'annonces (`ADMOB_AD_UNIT_IDS`) créditent ; rechargement des
+    clés Google limité à une fois par minute.
+  - **Signalements** : le texte doit venir de la génération ; 20 par jour.
+  - **App** : actions des contrôleurs factorisées (`GuardedAction`, garde anti double tap) ;
+    portefeuille relu au retour dans l'app et après création d'une session ; délais maximaux
+    (20 s, 70 s pour l'IA) ; lecture tolérante des réponses serveur ; consentement pub
+    seulement pour les gratuits ; libellés de boutons en gras (contraste WCAG sans changer les
+    couleurs du kit) ; écran de lancement Android au fond du kit.
+- **Reportés** : protection anti-comptes en série (décision du propriétaire, tâche 17) ;
+  événements RevenueCat `TRANSFER` / tardifs (phase 6, avec la clé secrète RevenueCat).
+- **Conséquences** : 4 migrations (`20261118080000` à `080200`), webhooks et fonctions IA à
+  redéployer ; 2 nouveaux secrets serveur (tâches 15, 16).
+
+---
+
 ## ADR-024 — Confiance, réglages et suppression de compte (Inc-10)
 
 - **Date** : 2026-11-18

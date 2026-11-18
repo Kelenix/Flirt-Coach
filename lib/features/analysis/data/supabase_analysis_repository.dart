@@ -30,20 +30,25 @@ class SupabaseAnalysisRepository implements AnalysisRepository {
       if (screenshot != null) 'image': base64Encode(screenshot),
       'context': ?context,
     });
-    final wallet = walletFromJson(json['wallet'] as Map<String, dynamic>);
-    if (json['refused'] == true) {
-      return ConversationAnalysis.refused(
-        reason: json['reason'] as String? ?? '',
-        wallet: wallet,
-      );
-    }
-    return ConversationAnalysis.result(
-      momentum: Momentum.fromApi(json['momentum'] as String),
-      summary: json['summary'] as String,
-      nextStep: json['next_step'] as String,
-      suggestedMessage: json['suggested_message'] as String,
-      dateSuggestion: json['date_suggestion'] as String?,
+    return analysisFromJson(json);
+  }
+}
+
+/// Réponse de l'Edge Function `conversation-analysis` → [ConversationAnalysis].
+ConversationAnalysis analysisFromJson(Map<String, dynamic> json) {
+  final wallet = walletFromJson(json['wallet'] as Map<String, dynamic>);
+  if (json['refused'] == true) {
+    return ConversationAnalysis.refused(
+      reason: json['reason'] as String? ?? '',
       wallet: wallet,
     );
   }
+  return ConversationAnalysis.result(
+    momentum: Momentum.fromApi(json['momentum'] as String?),
+    summary: json['summary'] as String? ?? '',
+    nextStep: json['next_step'] as String? ?? '',
+    suggestedMessage: json['suggested_message'] as String? ?? '',
+    dateSuggestion: json['date_suggestion'] as String?,
+    wallet: wallet,
+  );
 }

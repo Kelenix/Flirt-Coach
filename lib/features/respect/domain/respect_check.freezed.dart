@@ -419,10 +419,10 @@ return refused(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<RespectIssue> issues,  String? alternative,  Wallet wallet)?  verdict,TResult Function( String reason,  Wallet wallet)?  refused,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( bool isRespectful,  List<RespectIssue> issues,  String? alternative,  Wallet wallet)?  verdict,TResult Function( String reason,  Wallet wallet)?  refused,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case RespectVerdict() when verdict != null:
-return verdict(_that.issues,_that.alternative,_that.wallet);case RespectRefused() when refused != null:
+return verdict(_that.isRespectful,_that.issues,_that.alternative,_that.wallet);case RespectRefused() when refused != null:
 return refused(_that.reason,_that.wallet);case _:
   return orElse();
 
@@ -441,10 +441,10 @@ return refused(_that.reason,_that.wallet);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<RespectIssue> issues,  String? alternative,  Wallet wallet)  verdict,required TResult Function( String reason,  Wallet wallet)  refused,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( bool isRespectful,  List<RespectIssue> issues,  String? alternative,  Wallet wallet)  verdict,required TResult Function( String reason,  Wallet wallet)  refused,}) {final _that = this;
 switch (_that) {
 case RespectVerdict():
-return verdict(_that.issues,_that.alternative,_that.wallet);case RespectRefused():
+return verdict(_that.isRespectful,_that.issues,_that.alternative,_that.wallet);case RespectRefused():
 return refused(_that.reason,_that.wallet);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -459,10 +459,10 @@ return refused(_that.reason,_that.wallet);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<RespectIssue> issues,  String? alternative,  Wallet wallet)?  verdict,TResult? Function( String reason,  Wallet wallet)?  refused,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( bool isRespectful,  List<RespectIssue> issues,  String? alternative,  Wallet wallet)?  verdict,TResult? Function( String reason,  Wallet wallet)?  refused,}) {final _that = this;
 switch (_that) {
 case RespectVerdict() when verdict != null:
-return verdict(_that.issues,_that.alternative,_that.wallet);case RespectRefused() when refused != null:
+return verdict(_that.isRespectful,_that.issues,_that.alternative,_that.wallet);case RespectRefused() when refused != null:
 return refused(_that.reason,_that.wallet);case _:
   return null;
 
@@ -475,9 +475,10 @@ return refused(_that.reason,_that.wallet);case _:
 
 
 class RespectVerdict extends RespectCheck {
-  const RespectVerdict({required final  List<RespectIssue> issues, required this.alternative, required this.wallet}): _issues = issues,super._();
+  const RespectVerdict({required this.isRespectful, required final  List<RespectIssue> issues, required this.alternative, required this.wallet}): _issues = issues,super._();
   
 
+ final  bool isRespectful;
  final  List<RespectIssue> _issues;
  List<RespectIssue> get issues {
   if (_issues is EqualUnmodifiableListView) return _issues;
@@ -498,16 +499,16 @@ $RespectVerdictCopyWith<RespectVerdict> get copyWith => _$RespectVerdictCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RespectVerdict&&const DeepCollectionEquality().equals(other._issues, _issues)&&(identical(other.alternative, alternative) || other.alternative == alternative)&&(identical(other.wallet, wallet) || other.wallet == wallet));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RespectVerdict&&(identical(other.isRespectful, isRespectful) || other.isRespectful == isRespectful)&&const DeepCollectionEquality().equals(other._issues, _issues)&&(identical(other.alternative, alternative) || other.alternative == alternative)&&(identical(other.wallet, wallet) || other.wallet == wallet));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_issues),alternative,wallet);
+int get hashCode => Object.hash(runtimeType,isRespectful,const DeepCollectionEquality().hash(_issues),alternative,wallet);
 
 @override
 String toString() {
-  return 'RespectCheck.verdict(issues: $issues, alternative: $alternative, wallet: $wallet)';
+  return 'RespectCheck.verdict(isRespectful: $isRespectful, issues: $issues, alternative: $alternative, wallet: $wallet)';
 }
 
 
@@ -518,7 +519,7 @@ abstract mixin class $RespectVerdictCopyWith<$Res> implements $RespectCheckCopyW
   factory $RespectVerdictCopyWith(RespectVerdict value, $Res Function(RespectVerdict) _then) = _$RespectVerdictCopyWithImpl;
 @override @useResult
 $Res call({
- List<RespectIssue> issues, String? alternative, Wallet wallet
+ bool isRespectful, List<RespectIssue> issues, String? alternative, Wallet wallet
 });
 
 
@@ -535,9 +536,10 @@ class _$RespectVerdictCopyWithImpl<$Res>
 
 /// Create a copy of RespectCheck
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? issues = null,Object? alternative = freezed,Object? wallet = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isRespectful = null,Object? issues = null,Object? alternative = freezed,Object? wallet = null,}) {
   return _then(RespectVerdict(
-issues: null == issues ? _self._issues : issues // ignore: cast_nullable_to_non_nullable
+isRespectful: null == isRespectful ? _self.isRespectful : isRespectful // ignore: cast_nullable_to_non_nullable
+as bool,issues: null == issues ? _self._issues : issues // ignore: cast_nullable_to_non_nullable
 as List<RespectIssue>,alternative: freezed == alternative ? _self.alternative : alternative // ignore: cast_nullable_to_non_nullable
 as String?,wallet: null == wallet ? _self.wallet : wallet // ignore: cast_nullable_to_non_nullable
 as Wallet,

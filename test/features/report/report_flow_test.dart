@@ -1,5 +1,5 @@
 import 'package:flirt_coach/features/generation/presentation/generate_screen.dart';
-import 'package:flirt_coach/features/report/data/report_repository.dart';
+import 'package:flirt_coach/features/report/domain/report.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

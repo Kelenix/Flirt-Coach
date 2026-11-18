@@ -38,6 +38,11 @@ final adsReadyProvider = FutureProvider<bool>(
   (ref) => ref.watch(adsServiceProvider).prepare(),
 );
 
+/// Le lien « Préférences publicitaires » n'existe que si le consentement s'applique.
+final adPrivacyOptionsProvider = FutureProvider.autoDispose<bool>(
+  (ref) => ref.watch(adsServiceProvider).privacyOptionsRequired(),
+);
+
 class AdMobAdsService implements AdsService {
   Future<bool>? _preparation;
 

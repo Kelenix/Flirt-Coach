@@ -26,38 +26,29 @@ final purchaseControllerProvider =
       PurchaseController.new,
     );
 
-class PurchaseController extends AutoDisposeAsyncNotifier<PurchaseOutcome?> {
+class PurchaseController extends AutoDisposeAsyncNotifier<PurchaseOutcome?>
+    with GuardedAction {
   @override
   PurchaseOutcome? build() => null;
 
   /// Achète un abonnement ou un pack. État `null` si l'utilisateur annule.
   Future<void> buy(String productId) async {
-    state = const AsyncLoading();
-    state = await keepAliveWhile(
-      ref,
-      () => AsyncValue.guard(() async {
-        final before = await ref.read(walletRepositoryProvider).fetch();
-        final bought = await ref
-            .read(purchasesRepositoryProvider)
-            .buy(productId);
-        if (!bought) return null;
-        return _awaitServerConfirmation(before);
-      }),
-    );
+    await runGuarded(() async {
+      final before = await ref.read(walletRepositoryProvider).fetch();
+      final bought = await ref.read(purchasesRepositoryProvider).buy(productId);
+      if (!bought) return null;
+      return _awaitServerConfirmation(before);
+    });
   }
 
   Future<void> restore() async {
-    state = const AsyncLoading();
-    state = await keepAliveWhile(
-      ref,
-      () => AsyncValue.guard(() async {
-        await ref.read(purchasesRepositoryProvider).restore();
-        final wallet = await _refreshWallet();
-        return wallet.isPremium
-            ? PurchaseOutcome.restored
-            : PurchaseOutcome.nothingToRestore;
-      }),
-    );
+    await runGuarded(() async {
+      await ref.read(purchasesRepositoryProvider).restore();
+      final wallet = await _refreshWallet();
+      return wallet.isPremium
+          ? PurchaseOutcome.restored
+          : PurchaseOutcome.nothingToRestore;
+    });
   }
 
   /// Les droits viennent du serveur (webhook) : on relit le portefeuille jusqu'à

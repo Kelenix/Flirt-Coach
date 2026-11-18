@@ -29,6 +29,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
   flutter_lints: ^6.0.0
   freezed: ^3.2.5
   build_runner: ^2.15.1
@@ -41,7 +43,6 @@ flutter:
   assets:
     - assets/images/logo_symbol.png
     - assets/images/logo_wordmark_dark.png
-    - assets/images/logo_horizontal_dark.png
     - assets/legal/
 
   fonts:

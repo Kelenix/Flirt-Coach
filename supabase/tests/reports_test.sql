@@ -1,7 +1,7 @@
 -- Tests du signalement (Inc-10) et de la suppression de compte. Lancer : supabase test db
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(9);
+select plan(11);
 
 \set a '\'00000000-0000-0000-0000-0000000000e1\''
 \set b '\'00000000-0000-0000-0000-0000000000e2\''
@@ -30,8 +30,27 @@ select throws_ok(
 );
 select throws_ok(
   $$ select public.report_generation('30000000-0000-0000-0000-000000000001', '', 'other') $$,
-  '23514', null,
+  'P0001', 'not_found',
   'un texte vide est refusé'
+);
+select throws_ok(
+  $$ select public.report_generation('30000000-0000-0000-0000-000000000001', 'texte inventé', 'other') $$,
+  'P0001', 'not_found',
+  'un texte que la génération n''a pas produit est refusé'
+);
+reset role;
+insert into public.generations (id, user_id, kind, style, output)
+select ('31000000-0000-0000-0000-' || lpad(n::text, 12, '0'))::uuid, :a, 'reply', 'classic',
+       '{"proposals":["p"]}'::jsonb
+from generate_series(1, 19) n;
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000e1","role":"authenticated"}', true);
+select public.report_generation(('31000000-0000-0000-0000-' || lpad(n::text, 12, '0'))::uuid, 'p', 'other')
+from generate_series(1, 19) n;
+select throws_ok(
+  $$ select public.report_generation('30000000-0000-0000-0000-000000000001', 'y', 'other') $$,
+  'P0001', 'report_limit',
+  'au plus 20 signalements par jour'
 );
 select is((select count(*)::int from public.reports), 0, 'le client ne lit pas les signalements');
 select throws_ok(
@@ -43,7 +62,8 @@ select throws_ok(
 
 reset role;
 select results_eq(
-  $$ select reported_text, reason::text from public.reports $$,
+  $$ select reported_text, reason::text from public.reports
+     where generation_id = '30000000-0000-0000-0000-000000000001' $$,
   $$ values ('x', 'offensive') $$,
   'un seul signalement, texte nettoyé, premier motif conservé'
 );

@@ -17,6 +17,7 @@ export const creditPacks: Readonly<Record<string, number>> = {
 
 export type WebhookAction =
   | { kind: "grant_credits"; userId: string; amount: number; reference: string }
+  | { kind: "revoke_credits"; userId: string; amount: number; reference: string }
   | {
     kind: "set_premium";
     userId: string;
@@ -61,13 +62,25 @@ const activatingEvents = new Set([
 
 export class MalformedEvent extends Error {}
 
-export function actionFor(payload: unknown): WebhookAction {
+export interface WebhookOptions {
+  /** Achats de test (sandbox) acceptés : seulement pendant la phase de test. */
+  allowSandbox: boolean;
+}
+
+export function actionFor(
+  payload: unknown,
+  options: WebhookOptions = { allowSandbox: false },
+): WebhookAction {
   const event = (payload as { event?: unknown } | null)?.event;
   if (typeof event !== "object" || event === null) throw new MalformedEvent("event");
   const fields = event as Record<string, unknown>;
   const type = fields.type;
   if (typeof type !== "string") throw new MalformedEvent("type");
   if (type === "TEST") return { kind: "ignore", reason: "test" };
+  // Un achat sandbox est gratuit : il ne doit jamais donner de vrais droits en production.
+  if (fields.environment === "SANDBOX" && !options.allowSandbox) {
+    return { kind: "ignore", reason: "sandbox" };
+  }
 
   const userId = resolveUserId(fields);
   if (userId === null) return { kind: "ignore", reason: "unknown_user" };
@@ -78,10 +91,21 @@ export function actionFor(payload: unknown): WebhookAction {
     : null;
 
   if (product in creditPacks) {
-    if (type !== "NON_RENEWING_PURCHASE") return { kind: "ignore", reason: `pack_${type}` };
     const reference = fields.transaction_id ?? fields.id;
     if (typeof reference !== "string") throw new MalformedEvent("transaction_id");
-    return { kind: "grant_credits", userId, amount: creditPacks[product], reference };
+    if (type === "NON_RENEWING_PURCHASE") {
+      return { kind: "grant_credits", userId, amount: creditPacks[product], reference };
+    }
+    // Pack remboursé : les crédits restants sont repris (au plus le montant du pack).
+    if (type === "CANCELLATION" && fields.cancel_reason === "CUSTOMER_SUPPORT") {
+      return {
+        kind: "revoke_credits",
+        userId,
+        amount: creditPacks[product],
+        reference: `refund:${reference}`,
+      };
+    }
+    return { kind: "ignore", reason: `pack_${type}` };
   }
 
   if (!subscriptionProducts.has(product)) return { kind: "ignore", reason: "unknown_product" };

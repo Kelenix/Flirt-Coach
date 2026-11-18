@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/state/keep_alive.dart';
 import '../../auth/data/supabase_auth_repository.dart';
+import '../../credits/application/wallet_controller.dart';
 import '../data/age_confirmation_store.dart';
 
 /// `true` quand l'utilisateur a confirmé son âge et dispose d'une session.
@@ -24,24 +25,23 @@ final onboardingControllerProvider =
       OnboardingController.new,
     );
 
-class OnboardingController extends AutoDisposeAsyncNotifier<void> {
+class OnboardingController extends AutoDisposeAsyncNotifier<void>
+    with GuardedAction {
   @override
   void build() {}
 
   /// Crée la session, enregistre la confirmation d'âge, puis ouvre l'accès.
   /// Rien n'est mémorisé si une étape échoue.
   Future<void> start() async {
-    state = const AsyncLoading();
-    final result = await keepAliveWhile(
-      ref,
-      () => AsyncValue.guard(() async {
-        final auth = ref.read(authRepositoryProvider);
-        await auth.signInAnonymously();
-        await auth.confirmAge();
-        await ref.read(ageConfirmationStoreProvider).markConfirmed();
-      }),
-    );
-    state = result;
-    if (!result.hasError) ref.read(accessGateProvider.notifier).open();
+    final started = await runGuarded(() async {
+      final auth = ref.read(authRepositoryProvider);
+      await auth.signInAnonymously();
+      await auth.confirmAge();
+      await ref.read(ageConfirmationStoreProvider).markConfirmed();
+    });
+    if (!started || state.hasError) return;
+    // Nouvelle session (par ex. après suppression du compte) : portefeuille relu.
+    ref.invalidate(walletProvider);
+    ref.read(accessGateProvider.notifier).open();
   }
 }

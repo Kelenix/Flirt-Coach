@@ -4,7 +4,9 @@ import {
   derToRaw,
   importVerifierKeys,
   InvalidCallback,
+  isAllowedAdUnit,
   isSignatureValid,
+  parseAdUnitList,
   parseCallback,
 } from "./ssv.ts";
 
@@ -111,4 +113,24 @@ Deno.test("DER → r‖s : entiers courts complétés, zéro de signe retiré", 
   const back = derToRaw(rawToDer(raw));
   assertEquals(back, raw);
   assertThrows(() => derToRaw(Uint8Array.of(0x31, 0)), InvalidCallback);
+});
+
+Deno.test("bloc d'annonces : seuls nos blocs créditent", () => {
+  const allowed = parseAdUnitList(" ca-app-pub-123/1234567890 , 9876543210 ");
+  assertEquals(allowed, ["1234567890", "9876543210"]);
+  assert(isAllowedAdUnit("1234567890", allowed));
+  assert(!isAllowedAdUnit("5555555555", allowed));
+  assert(isAllowedAdUnit("5555555555", parseAdUnitList(undefined)));
+});
+
+Deno.test("rappel sans bloc d'annonces ou key_id non numérique : refusé", () => {
+  const signature = Uint8Array.of(1, 2, 3);
+  assertThrows(
+    () => parseCallback(callbackUrl(query.replace("ad_unit=1234567890&", ""), signature, "1")),
+    InvalidCallback,
+  );
+  assertThrows(
+    () => parseCallback(callbackUrl(query.replace("KEY", "abc"), signature, "abc")),
+    InvalidCallback,
+  );
 });

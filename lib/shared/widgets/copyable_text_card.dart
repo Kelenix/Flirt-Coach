@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../l10n/app_localizations.dart';
+import '../../shared/widgets/snack.dart';
 
 /// Carte claire du kit (« Réponse 1 ») : emoji + titre en gras, bouton « Copier »
 /// en haut à droite (et « Signaler » si [onReport]), texte sélectionnable.
@@ -27,9 +28,7 @@ class CopyableTextCard extends StatelessWidget {
     final message = AppLocalizations.of(context).copied;
     final messenger = ScaffoldMessenger.of(context);
     await Clipboard.setData(ClipboardData(text: text));
-    messenger
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(message)));
+    messenger.showMessage(message);
   }
 
   @override

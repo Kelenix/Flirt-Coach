@@ -17,7 +17,7 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: dart run build_runner build -d
-      - run: dart format --output=none --set-exit-if-changed lib test
+      - run: dart format --output=none --set-exit-if-changed lib test integration_test test_driver
       - run: flutter analyze
       - run: flutter test
 
@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        function: [generate, respect-check, screenshot-reply, revenuecat-webhook, admob-ssv]
+        function: [generate, respect-check, screenshot-reply, conversation-analysis, revenuecat-webhook, admob-ssv, delete-account]
     defaults:
       run:
         working-directory: supabase/functions/${{ matrix.function }}
@@ -37,7 +37,7 @@ jobs:
       - run: deno fmt --check . ../_shared
       - run: deno lint . ../_shared
       - run: deno check index.ts
-      - run: deno test --allow-env .
+      - run: deno test --allow-env --permit-no-files .
 
   database:
     runs-on: ubuntu-latest

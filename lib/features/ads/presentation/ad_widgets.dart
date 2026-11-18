@@ -10,6 +10,7 @@ import '../../../shared/widgets/secondary_button.dart';
 import '../../credits/application/wallet_controller.dart';
 import '../application/rewarded_video_controller.dart';
 import '../data/ads_service.dart';
+import '../../../shared/widgets/snack.dart';
 
 /// Bannière discrète en bas d'écran, pour les utilisateurs gratuits uniquement
 /// (jamais pour Premium, jamais avant le consentement).
@@ -19,10 +20,10 @@ class AdBannerSlot extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final wallet = ref.watch(walletProvider).valueOrNull;
+    // Le consentement n'est demandé qu'une fois l'utilisateur connu comme gratuit.
+    if (wallet == null || wallet.isPremium) return const SizedBox.shrink();
     final isReady = ref.watch(adsReadyProvider).valueOrNull ?? false;
-    if (wallet == null || wallet.isPremium || !isReady) {
-      return const SizedBox.shrink();
-    }
+    if (!isReady) return const SizedBox.shrink();
     return Padding(
       padding: const EdgeInsets.only(top: AppSpacing.sm),
       child: ref.read(adsServiceProvider).banner(),
@@ -59,9 +60,7 @@ class EarnCreditsActions extends ConsumerWidget {
         _ => null,
       };
       if (message == null || next.isLoading) return;
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(message)));
+      ScaffoldMessenger.of(context).showMessage(message);
     });
     final canWatch = offerRewardedVideo && (wallet?.adRewardsLeft ?? 0) > 0;
 

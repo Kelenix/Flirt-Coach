@@ -3,13 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/supabase/edge_function.dart';
 import '../../../core/supabase/supabase_client.dart';
-
-/// Compte de l'utilisateur. Les erreurs sont des `Failure`.
-abstract interface class AccountRepository {
-  /// Supprime définitivement le compte et ses données côté serveur (US-05),
-  /// puis ferme la session locale.
-  Future<void> deleteAccount();
-}
+import '../domain/account_repository.dart';
 
 final accountRepositoryProvider = Provider<AccountRepository>(
   (ref) => SupabaseAccountRepository(ref.watch(supabaseClientProvider)),

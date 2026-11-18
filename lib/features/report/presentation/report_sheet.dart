@@ -5,6 +5,8 @@ import '../../../core/errors/failure.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../../l10n/app_localizations.dart';
 import '../data/report_repository.dart';
+import '../domain/report.dart';
+import '../../../shared/widgets/snack.dart';
 
 /// Demande un motif puis envoie le signalement de [text] (US-07) ; confirme ou
 /// affiche l'erreur dans une barre en bas d'écran.
@@ -59,9 +61,7 @@ Future<void> reportProposal(
   } catch (error) {
     message = failureMessage(l10n, error);
   }
-  messenger
-    ..hideCurrentSnackBar()
-    ..showSnackBar(SnackBar(content: Text(message)));
+  messenger.showMessage(message);
 }
 
 String _reasonLabel(AppLocalizations l10n, ReportReason reason) =>

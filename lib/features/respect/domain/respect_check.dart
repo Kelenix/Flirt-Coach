@@ -34,6 +34,7 @@ abstract class RespectIssue with _$RespectIssue {
 sealed class RespectCheck with _$RespectCheck {
   /// Verdict sur le message ; [alternative] n'existe que s'il est à revoir.
   const factory RespectCheck.verdict({
+    required bool isRespectful,
     required List<RespectIssue> issues,
     required String? alternative,
     required Wallet wallet,
@@ -46,8 +47,4 @@ sealed class RespectCheck with _$RespectCheck {
   }) = RespectRefused;
 
   const RespectCheck._();
-}
-
-extension RespectVerdictReading on RespectVerdict {
-  bool get isRespectful => issues.isEmpty;
 }

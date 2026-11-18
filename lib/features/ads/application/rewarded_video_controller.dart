@@ -21,35 +21,32 @@ final rewardedVideoControllerProvider =
       RewardedVideoController.new,
     );
 
-class RewardedVideoController extends AutoDisposeAsyncNotifier<RewardOutcome?> {
+class RewardedVideoController extends AutoDisposeAsyncNotifier<RewardOutcome?>
+    with GuardedAction {
   @override
   RewardOutcome? build() => null;
 
   Future<void> watch() async {
-    state = const AsyncLoading();
-    state = await keepAliveWhile(
-      ref,
-      () => AsyncValue.guard(() async {
-        final userId = ref.read(authRepositoryProvider).userId;
-        if (userId == null) throw const UnexpectedFailure();
-        final before = await ref.read(walletRepositoryProvider).fetch();
+    await runGuarded(() async {
+      final userId = ref.read(authRepositoryProvider).userId;
+      if (userId == null) throw const UnexpectedFailure();
+      final before = await ref.read(walletRepositoryProvider).fetch();
 
-        final result = await ref
-            .read(adsServiceProvider)
-            .showRewardedVideo(userId);
-        switch (result) {
-          case RewardedVideoResult.unavailable:
-            return RewardOutcome.unavailable;
-          case RewardedVideoResult.interrupted:
-            return RewardOutcome.interrupted;
-          case RewardedVideoResult.watched:
-            final (_, credited) = await awaitServerConfirmation(
-              ref,
-              (wallet) => wallet.bonusCredits > before.bonusCredits,
-            );
-            return credited ? RewardOutcome.credited : RewardOutcome.pending;
-        }
-      }),
-    );
+      final result = await ref
+          .read(adsServiceProvider)
+          .showRewardedVideo(userId);
+      switch (result) {
+        case RewardedVideoResult.unavailable:
+          return RewardOutcome.unavailable;
+        case RewardedVideoResult.interrupted:
+          return RewardOutcome.interrupted;
+        case RewardedVideoResult.watched:
+          final (_, credited) = await awaitServerConfirmation(
+            ref,
+            (wallet) => wallet.bonusCredits > before.bonusCredits,
+          );
+          return credited ? RewardOutcome.credited : RewardOutcome.pending;
+      }
+    });
   }
 }

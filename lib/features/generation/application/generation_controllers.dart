@@ -12,7 +12,8 @@ final generationControllerProvider =
       GenerationController.new,
     );
 
-class GenerationController extends AutoDisposeAsyncNotifier<GenerationResult?> {
+class GenerationController extends AutoDisposeAsyncNotifier<GenerationResult?>
+    with GuardedAction {
   /// Dernière demande, conservée pour « Régénérer ».
   GenerationRequest? _lastRequest;
 
@@ -24,19 +25,18 @@ class GenerationController extends AutoDisposeAsyncNotifier<GenerationResult?> {
 
   /// Renvoie `true` si des propositions sont disponibles.
   Future<bool> generate(GenerationRequest request) async {
-    _lastRequest = request;
-    state = const AsyncLoading();
-    state = await keepAliveWhile(
-      ref,
-      () => AsyncValue.guard(() async {
-        final result = await ref
-            .read(generationRepositoryProvider)
-            .generate(request);
-        ref.read(walletProvider.notifier).replace(result.wallet);
-        return result;
-      }),
-    );
-    return state.valueOrNull is GeneratedProposals;
+    final started = await runGuarded(() async {
+      final result = await ref
+          .read(generationRepositoryProvider)
+          .generate(request);
+      ref.read(walletProvider.notifier).replace(result.wallet);
+      return result;
+    });
+    if (started) _lastRequest = request;
+    // Une erreur garde la valeur précédente : ne jamais la prendre pour un succès.
+    return started &&
+        !state.hasError &&
+        state.valueOrNull is GeneratedProposals;
   }
 
   Future<bool> regenerate() async {

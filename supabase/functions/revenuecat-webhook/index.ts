@@ -12,6 +12,8 @@ const admin = createClient(
   { auth: { persistSession: false } },
 );
 const secret = Deno.env.get("REVENUECAT_WEBHOOK_SECRET") ?? "";
+// Achats sandbox acceptés seulement pendant la phase de test (à retirer avant publication).
+const allowSandbox = Deno.env.get("REVENUECAT_ALLOW_SANDBOX") === "true";
 
 const reply = (status: number, body: Record<string, unknown>) =>
   new Response(JSON.stringify(body), {
@@ -27,7 +29,7 @@ Deno.serve(async (request) => {
 
   let action;
   try {
-    action = actionFor(await request.json());
+    action = actionFor(await request.json(), { allowSandbox });
   } catch (error) {
     if (error instanceof MalformedEvent || error instanceof SyntaxError) {
       return reply(400, { error: "malformed_event" });
@@ -49,6 +51,16 @@ Deno.serve(async (request) => {
       // Autre erreur → 500 : RevenueCat renverra l'événement plus tard.
       if (error) throw error;
       return reply(200, { status: data ? "credited" : "duplicate" });
+    }
+    case "revoke_credits": {
+      const { data, error } = await admin.rpc("revoke_credits", {
+        p_user: action.userId,
+        p_amount: action.amount,
+        p_reference: action.reference,
+      });
+      if (error && isUnknownUser(error)) return reply(200, { status: "unknown_user" });
+      if (error) throw error;
+      return reply(200, { status: "revoked", amount: data });
     }
     case "set_premium": {
       const { error } = await admin.rpc("set_premium", {

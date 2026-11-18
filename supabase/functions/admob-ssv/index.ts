@@ -6,7 +6,9 @@ import { createClient } from "@supabase/supabase-js";
 import {
   importVerifierKeys,
   InvalidCallback,
+  isAllowedAdUnit,
   isSignatureValid,
+  parseAdUnitList,
   parseCallback,
   verifierKeysUrl,
 } from "./ssv.ts";
@@ -18,13 +20,20 @@ const admin = createClient(
   { auth: { persistSession: false } },
 );
 
+const allowedAdUnits = parseAdUnitList(Deno.env.get("ADMOB_AD_UNIT_IDS"));
+
 const keysTtlMs = 6 * 60 * 60 * 1000;
+// Une clé inconnue force un rechargement, au plus une fois par minute (pas d'appels
+// en boucle vers Google provoqués par des requêtes forgées).
+const forcedRefreshMs = 60 * 1000;
 let cachedKeys: { keys: Map<string, CryptoKey>; fetchedAt: number } | null = null;
 
 /** Clés de Google en cache ; rechargées si périmées ou si la clé demandée est inconnue. */
 async function verifierKeys(keyId: string): Promise<Map<string, CryptoKey>> {
-  const isFresh = cachedKeys && Date.now() - cachedKeys.fetchedAt < keysTtlMs;
-  if (isFresh && cachedKeys!.keys.has(keyId)) return cachedKeys!.keys;
+  const age = cachedKeys ? Date.now() - cachedKeys.fetchedAt : Infinity;
+  if (age < keysTtlMs && (cachedKeys!.keys.has(keyId) || age < forcedRefreshMs)) {
+    return cachedKeys!.keys;
+  }
   const response = await fetch(verifierKeysUrl);
   if (!response.ok) throw new Error(`verifier keys: HTTP ${response.status}`);
   cachedKeys = { keys: await importVerifierKeys(await response.json()), fetchedAt: Date.now() };
@@ -50,6 +59,9 @@ Deno.serve(async (request) => {
 
   if (!(await isSignatureValid(callback, await verifierKeys(callback.keyId)))) {
     return reply(403, { error: "bad_signature" });
+  }
+  if (!isAllowedAdUnit(callback.adUnit, allowedAdUnits)) {
+    return reply(403, { error: "ad_unit" });
   }
 
   const { data: outcome, error } = await admin.rpc("claim_ad_reward", {

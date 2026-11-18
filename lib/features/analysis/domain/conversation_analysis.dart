@@ -14,8 +14,11 @@ enum Momentum {
 
   final String apiName;
 
-  static Momentum fromApi(String value) =>
-      values.firstWhere((momentum) => momentum.apiName == value);
+  /// Valeur inconnue (serveur plus récent) : « stagne », la lecture la plus neutre.
+  static Momentum fromApi(String? value) => values.firstWhere(
+    (momentum) => momentum.apiName == value,
+    orElse: () => Momentum.stalling,
+  );
 }
 
 @freezed

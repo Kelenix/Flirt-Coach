@@ -27,6 +27,7 @@ import '../domain/situation.dart';
 import 'labels.dart';
 import '../../credits/presentation/credits_badge.dart';
 import 'widgets/style_selector.dart';
+import '../../../shared/widgets/snack.dart';
 
 /// Écran principal (INTAKE §4) : une situation, un message ou un contexte → 3 propositions.
 class GenerateScreen extends ConsumerStatefulWidget {
@@ -98,11 +99,15 @@ class _GenerateScreenState extends ConsumerState<GenerateScreen> {
     final messenger = ScaffoldMessenger.of(context);
     try {
       final bytes = await ref.read(screenshotPickerProvider)();
-      if (bytes != null && mounted) setState(() => _screenshot = bytes);
+      if (bytes != null && mounted) {
+        // La capture remplace le message reçu : elle n'a de sens que pour « Répondre ».
+        setState(() {
+          _screenshot = bytes;
+          _situation = Situation.reply;
+        });
+      }
     } catch (error) {
-      messenger
-        ..hideCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(failureMessage(l10n, error))));
+      messenger.showMessage(failureMessage(l10n, error));
     }
   }
 
@@ -158,6 +163,8 @@ class _GenerateScreenState extends ConsumerState<GenerateScreen> {
             const SizedBox(height: AppSpacing.lg),
             FieldLabel(l10n.situationLabel),
             DropdownMenu<Situation>(
+              // Reconstruit quand la situation change par code (capture importée).
+              key: ValueKey(_situation),
               initialSelection: _situation,
               expandedInsets: EdgeInsets.zero,
               textStyle: fieldStyle,

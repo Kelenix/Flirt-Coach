@@ -34,17 +34,25 @@ class SupabaseGenerationRepository implements GenerationRepository {
         'context': ?request.context,
       }),
     };
-    final wallet = walletFromJson(json['wallet'] as Map<String, dynamic>);
-    if (json['refused'] == true) {
-      return GenerationResult.refused(
-        reason: json['reason'] as String? ?? '',
-        wallet: wallet,
-      );
-    }
-    return GenerationResult.proposals(
-      id: json['id'] as String,
-      proposals: List<String>.from(json['proposals'] as List),
+    return generationResultFromJson(json);
+  }
+}
+
+/// Réponse des Edge Functions `generate` et `screenshot-reply` → [GenerationResult].
+GenerationResult generationResultFromJson(Map<String, dynamic> json) {
+  final wallet = walletFromJson(json['wallet'] as Map<String, dynamic>);
+  if (json['refused'] == true) {
+    return GenerationResult.refused(
+      reason: json['reason'] as String? ?? '',
       wallet: wallet,
     );
   }
+  return GenerationResult.proposals(
+    id: json['id'] as String,
+    proposals: [
+      for (final proposal in json['proposals'] as List? ?? const [])
+        if (proposal is String) proposal,
+    ],
+    wallet: wallet,
+  );
 }
