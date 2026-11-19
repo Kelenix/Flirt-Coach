@@ -9,10 +9,16 @@
 - **Dernière mise à jour** : 2026-11-19
 - **Santé** : 🟢 OK
 - **Mode** : PLAN_PUIS_VALIDATION (plan validé le 2026-11-18, options par défaut retenues)
-- **Prochaine action** : étape 13 en cours — pays du test fermé faits (tous). Reste la
-  nouvelle liste de testeurs « Flirt Coach Pro » (adresses à fournir par l'utilisateur,
-  15 à 20 conseillées), avec l'e-mail de support pour les retours. Tout cela en attendant la
-  première version compilée sur l'autre machine. Ensuite : première version dans le test fermé,
+- **Prochaine action** :
+  1. Commiter et pousser le travail, sur demande de l'utilisateur, pour que l'autre machine
+     l'ait.
+  2. Sur l'autre machine, l'utilisateur suit le guide « Première version Google Play » de
+     `docs/operations.md` : clé d'envoi, `key.properties`, AAB, release dans « Test chiusi -
+     Alpha », sans encore envoyer en revue.
+  3. Ensuite, ensemble : liste de testeurs, produits (tâche 6), « Check again » RevenueCat, envoi
+     en revue, 14 jours de test.
+
+  APK de test validée sur son téléphone ; pays du test fermé déjà faits (tous). Ensuite : première version dans le test fermé,
   « Check again » sur les identifiants RevenueCat, produits (tâche 6). Déjà fait : configuration
   de l'app dans la console, code d'accès Premium en ligne, consignes renommées déployées.
   Une étape à la fois, suivie dans
@@ -314,6 +320,34 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-19 — Signature préparée sans aucune clé, à la demande de l'utilisateur (la clé reste sur l'autre machine).
+  - `android/app/build.gradle.kts` lit `android/key.properties` s'il existe, sinon il signe avec la clé de débogage. Le TODO du modèle Flutter est retiré, le commentaire sur l'identifiant mis à jour.
+  - Modèle versionné `android/key.properties.example`. Le vrai fichier et les `.jks` restent ignorés par git (vérifié).
+  - Guide « Première version Google Play (sur l'autre machine) » dans `docs/operations.md`, lié depuis les tâches 11 et 19.
+  - Vérifié ici : APK release compilée avec la nouvelle configuration (40 s), signée « CN=Android Debug » faute de `key.properties`, comme prévu. Le chemin avec la vraie clé se vérifie sur l'autre machine (`keytool -printcert`, dans le guide).
+
+- 2026-11-19 — L'utilisateur a testé l'APK corrigée sur son téléphone : « tout fonctionne très bien » (configuration de production, code d'accès compris). Commit reporté à sa demande.
+  - Consigne rappelée : la clé de signature et l'AAB pour le store se font uniquement sur l'autre machine, jamais sur ce poste (mémorisé).
+  - Ici, on ne peut préparer que la configuration Gradle (lecture de `key.properties`) et un guide, sans clé.
+
+- 2026-11-19 — Premier retour sur un vrai téléphone : le code d'accès de 8 caractères fonctionne et Premium est activé. Défaut signalé : le texte saisi dans le champ du code était invisible (blanc sur blanc).
+  - Cause : le champ n'avait pas le style de texte sombre que les autres champs de l'app reçoivent explicitement.
+  - Correctif dans `access_code_dialog.dart`, avec un test qui vérifie la couleur. 121 tests, analyse propre.
+  - APK de test recompilée.
+
+- 2026-11-19 — Code court en service, vérifié sans afficher de valeur. Le secret du serveur correspond au nouveau code. Le champ *Password* de la Play Console contient bien ce code (8 caractères, empreinte identique) et l'attestation est cochée. Rien en attente d'enregistrement.
+
+- 2026-11-19 — Code d'accès Premium : l'utilisateur avait pris l'empreinte (64 caractères) pour le code. Elle était saisie dans le champ *Password* de la Play Console, ce que Claude a détecté en comparant l'empreinte du champ, sans afficher de valeur.
+  - `.env.cloud` réécrit pour mettre le code en évidence.
+  - À la demande de l'utilisateur, nouveau code de 8 caractères (`XXXX-XXXX`), jamais affiché, et nouvelle empreinte dans `.env.cloud`. Sûreté et procédure mises à jour (ADR-031, `docs/security.md`, `docs/operations.md`).
+  - À faire par l'utilisateur : `supabase secrets set --env-file supabase/functions/.env.cloud`, puis le code dans *Password* (« Aggiungi » puis « Salva »). Claude vérifiera ensuite.
+
+- 2026-11-19 — Liste de testeurs reportée à la mise en ligne de la première version (choix de l'utilisateur).
+  - APK de test compilée à sa demande : `build/app/outputs/flutter-apk/flirt-coach-pro-1.0.0-test.apk`, 40,3 Mo, envoyée dans le chat. Configuration de production, `-PadmobAppId` réel, signature de débogage.
+  - Vérifié avec `aapt` : `com.flirtcoach.flirt_coach` 1.0.0 (1), libellé « Flirt Coach Pro », minSdk 24 / targetSdk 36, identifiant AdMob réel, hôte Supabase de production et « J'ai un code » présents dans le binaire.
+  - Gradle échouait depuis l'environnement de Claude (« Unable to establish loopback connection », même hors bac à sable). La compilation a donc tourné dans le panneau Terminal de l'utilisateur.
+  - Commande de l'APK de test corrigée dans `docs/operations.md` (`-PadmobAppId`) ; consignes d'installation et de test dans `docs/manual-tasks.md`.
 
 - 2026-11-19 — Étape 13 commencée (Play Console, canal « Test chiusi - Alpha »).
   - Choix de l'utilisateur : tous les pays pour le test fermé (178 ajoutés au ciblage, enregistré) et une nouvelle liste de testeurs plutôt que les 6 listes existantes du compte.

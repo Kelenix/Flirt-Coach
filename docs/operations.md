@@ -26,12 +26,64 @@ toujours lancer `supabase test db` et les tests Deno avant.
 
 | Cible | Commande |
 |-------|----------|
-| Test interne (APK) | `flutter build apk --release --target-platform android-arm,android-arm64 --dart-define-from-file=config/prod.json` |
-| Google Play | `flutter build appbundle --release --dart-define-from-file=config/prod.json -PadmobAppId=<id AdMob Android>` |
+| Test interne (APK) | `flutter build apk --release --target-platform android-arm,android-arm64 --dart-define-from-file=config/prod.json -PadmobAppId=<id AdMob Android>` (sans `-PadmobAppId`, les vrais blocs ne chargent aucune pub). Signé avec la clé de débogage : le désinstaller avant d'installer la version du Play Store |
+| Google Play | `flutter build appbundle --release --dart-define-from-file=config/prod.json -PadmobAppId=<id AdMob Android>`, uniquement sur la machine qui détient la clé ([guide](#première-version-google-play-sur-lautre-machine)) |
 | App Store | à compiler sur macOS (`flutter build ipa`) — voir tâches manuelles 5 et 9 |
 
 Avant chaque version : numéro de version dans `pubspec.yaml` (`1.0.1+2` : nom + numéro de
 build croissant), entrée dans `CHANGELOG.md`, tests verts.
+
+### Première version Google Play (sur l'autre machine)
+
+La clé d'envoi n'existe que sur la machine qui compile les versions des stores, jamais sur le
+poste de développement. Le projet ne la lit que si `android/key.properties` existe. Sans ce
+fichier, la version est signée avec la clé de débogage et Google Play la refuse.
+
+1. **Machine** : Flutter 3.41.7 (stable), Android SDK et JDK 17 ; `flutter doctor` sans
+   erreur pour Android.
+2. **Projet** : `git pull` de la dernière version, commitée et poussée depuis le poste de
+   développement.
+3. **Configuration** : copier `config/prod.json` (non versionné) par un moyen sûr, par exemple
+   une clé USB. Jamais par git ni par messagerie.
+4. **Clé d'envoi**, une seule fois, en dehors du dépôt :
+
+   ```powershell
+   keytool -genkey -v -keystore C:/Users/<toi>/cles/flirt-coach-pro-upload.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+   ```
+
+   - Noter les deux mots de passe dans un gestionnaire de mots de passe.
+   - Garder une copie chiffrée du fichier `.jks` hors de cette machine. Sans elle, il faut
+     demander à Google de réinitialiser la clé d'envoi, ce qui prend plusieurs jours.
+5. **Brancher la clé** : copier `android/key.properties.example` en `android/key.properties`
+   et le remplir (chemin avec des barres obliques `/`).
+6. **Compiler** (identifiant AdMob : `ADMOB_APP_ID_ANDROID` de `config/prod.json`) :
+
+   ```powershell
+   flutter build appbundle --release --dart-define-from-file=config/prod.json -PadmobAppId=<id AdMob Android>
+   ```
+
+   Résultat : `build/app/outputs/bundle/release/app-release.aab`. Contrôle de la signature :
+   `keytool -printcert -jarfile build/app/outputs/bundle/release/app-release.aab` doit
+   afficher ta clé, et non « Android Debug ».
+7. **Envoyer dans le test fermé** : Play Console → Test e rilascio → Test chiusi → « Test
+   chiusi - Alpha » → Crea nuova release.
+   - Signature : garder la « Firma dell'app di Google Play ». Google conserve la clé de
+     signature de l'app ; ta clé sert seulement à l'envoi.
+   - Déposer `app-release.aab`. Nom de la version : `1.0.0 (1)`. Notes : section 4 de la
+     [fiche du store](store/fiche-store.md).
+   - Enregistrer et lire les avertissements, sans encore envoyer en revue. L'envoi part avec
+     toutes les déclarations de l'app ; on le fait ensemble, après la liste de testeurs.
+8. **Ensuite** :
+   - liste de testeurs (15 à 20 adresses) ;
+   - produits d'achat (tâche manuelle 6) ;
+   - « Check again » sur les identifiants RevenueCat ;
+   - 14 jours de test fermé.
+
+   Désinstaller l'APK de test du téléphone avant d'installer la version du Play Store : les
+   signatures diffèrent.
+
+Pour chaque nouvelle version : augmenter le numéro de build dans `pubspec.yaml` (`1.0.0+2`,
+puis `+3`…), sinon la Play Console refuse le fichier.
 
 ## Gérer les secrets
 
@@ -149,7 +201,8 @@ Dans l'app, Réglages → « J'ai un code » donne Premium pendant 30 jours (ADR
 - **Suivre les activations** (SQL Editor) :
   `select count(*) from public.access_code_redemptions;`
 - **Changer le code** (divulgué, ou plafond de 20 atteint) :
-  1. Générer 16 caractères aléatoires parmi `ABCDEFGHJKMNPQRSTVWXYZ23456789`.
+  1. Générer 8 caractères aléatoires parmi `ABCDEFGHJKMNPQRSTVWXYZ23456789` (format
+     `XXXX-XXXX`, facile à taper).
   2. Calculer l'empreinte SHA-256 du code en majuscules, sans tirets.
   3. `supabase secrets set REVIEW_ACCESS_CODE_SHA256=<empreinte>`.
   4. Mettre le nouveau code dans `.env.cloud` et dans la Play Console.

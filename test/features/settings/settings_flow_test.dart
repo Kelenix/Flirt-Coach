@@ -1,5 +1,6 @@
 import 'package:flirt_coach/core/errors/failure.dart';
 import 'package:flirt_coach/core/storage/preferences.dart';
+import 'package:flirt_coach/core/theme/app_tokens.dart';
 import 'package:flirt_coach/features/credits/domain/wallet.dart';
 import 'package:flirt_coach/features/legal/presentation/legal_screen.dart';
 import 'package:flirt_coach/features/onboarding/presentation/welcome_screen.dart';
@@ -97,6 +98,11 @@ void main() {
     final backend = await openSettings(tester);
     await tester.tap(find.text('J\'ai un code'));
     await tester.pumpAndSettle();
+    // Texte sombre sur le fond clair du champ : le code saisi reste lisible.
+    expect(
+      tester.widget<TextField>(find.byType(TextField)).style?.color,
+      AppColors.onLight,
+    );
     await tester.tap(find.text('Annuler'));
     await tester.pumpAndSettle();
 

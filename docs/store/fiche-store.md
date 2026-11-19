@@ -152,8 +152,10 @@ console le demande.
   en argent ; ni navigateur ni app d'actualités.
 
 **Accès pour la revue Google** (« Dettagli di accesso », en anglais, ADR-031) : nom « Premium
-access for review » ; le code d'accès va dans le champ *Password* (saisi par l'éditeur, jamais
-écrit ici) ; attester l'accès complet seulement une fois le code en service. Texte du champ
+access for review » ; le code d'accès va dans le champ *Password* : les 8 caractères encadrés
+en haut de `supabase/functions/.env.cloud`, **jamais** la longue chaîne
+`REVIEW_ACCESS_CODE_SHA256` (empreinte pour le serveur). Il est saisi par l'éditeur et
+jamais écrit ici ; attester l'accès complet seulement une fois le code en service. Texte du champ
 *Other information* :
 
 ```text

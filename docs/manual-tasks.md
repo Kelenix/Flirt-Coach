@@ -282,14 +282,17 @@ doit être unique : à vérifier avec la tâche 5.
 ## 11. Clés de signature
 
 - **Pourquoi** : un store n'accepte que des versions signées ; la clé ne doit jamais être perdue.
-- **Quand** : avec la compilation, sur la machine qui produit les versions des stores.
+- **Quand** : avec la compilation, **uniquement sur ton autre machine**. Ta consigne : la clé
+  n'est jamais créée ni enregistrée sur ce poste.
 - **Étapes Android** :
   - [ ] Créer une clé :
     `keytool -genkey -v -keystore upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload`.
   - [ ] La conserver **hors du dépôt** (gestionnaire de mots de passe et copie de secours).
   - [ ] Activer « Signature d'application par Google Play » dans la console.
-  - [ ] Me signaler que la clé existe : je branche la configuration de signature (fichier
-    `key.properties` non versionné).
+  - [x] Configuration de signature préparée ici sans aucune clé : Gradle lit
+    `android/key.properties` s'il existe (modèle : `android/key.properties.example`).
+  - [ ] Sur l'autre machine, suivre le guide pas à pas :
+    [Première version Google Play](operations.md#première-version-google-play-sur-lautre-machine).
 - **iOS** (avec la tâche 5) : certificats et profils de distribution dans le compte Apple (Xcode
   les gère).
 - **Coût** : aucun.
@@ -370,6 +373,28 @@ doit être unique : à vérifier avec la tâche 5.
     [Performance](performance.md#mesurer-sur-ton-téléphone).
 - **Vérification** : `build/performance.json` existe ; me transmettre ce fichier.
 
+### APK de test sur ton téléphone (2026-11-19)
+
+APK compilée avec la configuration de production (serveur en ligne, vrais blocs AdMob), signée
+avec la clé de débogage.
+
+- **Installer** : copier `app-release.apk` sur le téléphone, l'ouvrir et autoriser
+  « Installer des applis inconnues ». Désinstaller cette APK avant d'installer plus tard la
+  version du Play Store, sinon les signatures différentes bloquent l'installation.
+- **Publicités** :
+  - Ne clique jamais sur tes propres pubs : AdMob peut suspendre le compte.
+  - Le plus sûr : AdMob → Paramètres → Appareils de test → ajouter ton téléphone, avec
+    l'identifiant publicitaire lu dans les paramètres Android (Google → Annonces).
+- **À vérifier** :
+  - accueil 18+ ;
+  - génération (texte et capture d'écran) et Mode Respect ;
+  - analyse et banque de messages ;
+  - vidéo récompensée (+2 crédits) ;
+  - Réglages → « J'ai un code », avec le code de `.env.cloud` : il donne Premium 30 jours et
+    utilise 1 activation sur 20.
+- **Pas encore testable** : les achats. Les produits n'existeront qu'après l'envoi de la
+  première version au Play Store (tâche 6).
+
 ## 19. Test fermé Google Play
 
 - **Pourquoi** : obligatoire pour ce compte avant d'accéder à la production (compte personnel
@@ -386,14 +411,19 @@ doit être unique : à vérifier avec la tâche 5.
       gouvernement, finances, santé.
     - [x] Code d'accès Premium (ADR-031) : développé, déployé, secret posé sur le cloud. Le code
       est en commentaire dans `supabase/functions/.env.cloud` (non versionné).
-    - [x] Détails d'accès : instructions en anglais, code et attestation saisis par toi.
+    - [x] Détails d'accès : instructions en anglais, attestation cochée par toi.
+    - [x] Code court de 8 caractères (`XXXX-XXXX`, encadré en haut de `.env.cloud`) : posé sur
+      le serveur et saisi dans le champ *Password* des détails d'accès. Vérifié le
+      2026-11-19.
     - [x] Public cible et contenu : 18 ans et plus uniquement.
     - [x] Sécurité des données : envoyée.
   - [x] Canal « Test chiusi - Alpha » : disponible dans tous les pays (178), choix du
     2026-11-19. Les pays de la version publique se choisiront à part.
-  - [ ] Nouvelle liste de testeurs « Flirt Coach Pro » : tes adresses e-mail à me donner.
-    Vise 15 à 20 personnes pour garder 12 inscrits sans interruption.
-  - [ ] Envoyer une version dans le canal de test fermé (depuis l'autre machine).
+  - [ ] Nouvelle liste de testeurs « Flirt Coach Pro », à créer quand la première version sera
+    en ligne (ta décision du 2026-11-19). Vise 15 à 20 personnes pour garder 12 inscrits sans
+    interruption.
+  - [ ] Envoyer une version dans le canal de test fermé (depuis l'autre machine, guide :
+    [Première version Google Play](operations.md#première-version-google-play-sur-lautre-machine)).
   - [ ] Inviter au moins 12 testeurs (liste d'e-mails ou groupe Google) ; chacun accepte avec le
     lien d'inscription.
   - [ ] Garder au moins 12 testeurs inscrits sans interruption pendant 14 jours.

@@ -48,7 +48,10 @@
 - **Date** : 2026-11-19
 - **Statut** : Accepté (choix de l'utilisateur). Mis en œuvre et déployé le 2026-11-19 :
   migration `20261119000000_access_codes`, fonction `redeem-code`, Réglages → « J'ai un
-  code ». Le secret est posé sur le cloud et le code est saisi dans la Play Console.
+  code ». Le secret est posé sur le cloud et le code est saisi dans la Play Console. Code
+  ramené de 16 à 8 caractères à la demande de l'utilisateur, pour une saisie plus simple. Il
+  reste sûr : 5 essais par heure et par compte, création de comptes anonymes limitée par
+  adresse IP, plafond de 20 activations, code changeable.
 - **Décideur** : utilisateur ; Claude (rôle : sécurité / backend) pour la conception
 - **Contexte** : la Play Console (« Dettagli di accesso ») exige que les testeurs de Google
   accèdent à toute l'app, Premium compris, sans acheter ni utiliser d'essai gratuit. Elle

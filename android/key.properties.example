@@ -1,0 +1,7 @@
+# Modèle de android/key.properties : à copier en key.properties sur la machine qui compile
+# les versions des stores, jamais ailleurs. key.properties n'est jamais versionné.
+# Chemin de la clé avec des barres obliques, en dehors du dépôt.
+storeFile=C:/Users/<toi>/cles/flirt-coach-pro-upload.jks
+storePassword=<mot de passe du fichier de clé>
+keyAlias=upload
+keyPassword=<mot de passe de la clé>

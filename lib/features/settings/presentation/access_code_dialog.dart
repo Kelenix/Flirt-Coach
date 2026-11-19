@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/theme/app_tokens.dart';
 import '../../../l10n/app_localizations.dart';
 
 /// Saisie du code d'accès Premium (ADR-031). Renvoie le code, ou `null` si annulé.
@@ -41,6 +42,10 @@ class _AccessCodeDialogState extends State<_AccessCodeDialog> {
         autocorrect: false,
         enableSuggestions: false,
         textCapitalization: TextCapitalization.characters,
+        // Fond clair du champ : texte sombre, comme les autres champs de l'app.
+        style: Theme.of(
+          context,
+        ).textTheme.bodyLarge?.copyWith(color: AppColors.onLight),
         decoration: InputDecoration(hintText: l10n.accessCodeHint),
         onSubmitted: (_) => _submit(),
       ),
