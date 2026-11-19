@@ -1,4 +1,4 @@
-# Plan de test — Flirt Coach
+# Plan de test — Flirt Coach Pro
 
 État au 2026-11-18 (fin de phase 5). Tout est automatisé et lancé par la CI
 (`.github/workflows/ci.yml`), sauf le test sur appareil (émulateur ou téléphone).

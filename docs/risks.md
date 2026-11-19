@@ -1,4 +1,4 @@
-# Registre des risques — Flirt Coach
+# Registre des risques — Flirt Coach Pro
 
 > Phase 2 — Project Manager. P = probabilité, I = impact (1 faible → 3 fort). 🔴 = P×I ≥ 6.
 

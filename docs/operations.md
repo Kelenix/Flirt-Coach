@@ -73,6 +73,35 @@ indique qu'il faut renforcer les consignes du modèle (`generate/prompt.ts`,
 `screenshot-reply/screenshot.ts`, `respect-check/respect.ts` ou
 `conversation-analysis/analysis.ts`, dans `supabase/functions/`), puis redéployer.
 
+## Mettre à jour les textes légaux en ligne
+
+La politique de confidentialité et les conditions sont publiées sur GitHub Pages
+(https://kelenix.github.io/Flirt-Coach/), depuis la branche `gh-pages`. La source reste
+`assets/legal/*.txt`, pour que l'app et le site affichent le même texte.
+
+1. Modifier le texte dans `assets/legal/` (et la date « Dernière mise à jour »).
+2. Générer les pages (lit l'éditeur et le contact dans `config/prod.json`) :
+
+   ```powershell
+   python scripts/legal_pages.py
+   ```
+
+3. Publier le contenu de `build/legal-pages/` sur `gh-pages` :
+
+   ```powershell
+   git worktree add ..\flirt-coach-legal gh-pages
+   ```
+
+   ```powershell
+   Copy-Item build\legal-pages\* ..\flirt-coach-legal -Force; git -C ..\flirt-coach-legal add -A; git -C ..\flirt-coach-legal commit -m "Textes légaux : mise à jour"; git -C ..\flirt-coach-legal push
+   ```
+
+   ```powershell
+   git worktree remove ..\flirt-coach-legal
+   ```
+
+4. Publier aussi une nouvelle version de l'app, qui embarque le texte.
+
 ## Incidents fréquents
 
 | Symptôme | Cause probable | Action |

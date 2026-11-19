@@ -1,0 +1,123 @@
+"""Génère les pages web des textes légaux à partir des textes de l'app.
+
+Source unique : assets/legal/*.txt (format de l'app : `# ` titre, `## ` section, `- ` puce,
+sinon paragraphe). L'éditeur et le contact viennent de config/prod.json, comme dans l'app.
+Sortie : build/legal-pages/, publiée sur GitHub Pages (branche gh-pages).
+
+Usage : python scripts/legal_pages.py
+"""
+import html
+import json
+import pathlib
+import sys
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+OUT = ROOT / "build" / "legal-pages"
+APP = "Flirt Coach Pro"
+PAGES = {
+    "confidentialite.html": ("assets/legal/privacy_fr.txt", "Politique de confidentialité"),
+    "conditions.html": ("assets/legal/terms_fr.txt", "Conditions d'utilisation"),
+}
+
+STYLE = """
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #1A1033; color: #EDE6FA;
+  font: 17px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+header { background: #2A1D4A; border-bottom: 2px solid #FF4D79; }
+header div, main, footer { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+header div { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; padding: 14px 20px; }
+.brand { font-weight: 700; font-size: 20px; color: #FFFFFF; text-decoration: none; }
+.brand span { color: #FF4D79; }
+nav a { color: #FFD6E6; margin-right: 16px; }
+nav a[aria-current] { color: #FF4D79; font-weight: 600; }
+main { padding-top: 24px; padding-bottom: 32px; }
+h1 { font-size: 30px; line-height: 1.25; color: #FFFFFF; margin: 8px 0 4px; }
+h2 { font-size: 21px; color: #FFD6E6; margin: 32px 0 8px; }
+.updated { color: #B9A8DA; margin-top: 0; }
+ul { padding-left: 22px; }
+li { margin: 6px 0; }
+a { color: #FF7A9C; }
+footer { color: #B9A8DA; font-size: 14px; padding-top: 16px; padding-bottom: 32px;
+  border-top: 1px solid #3A2C5E; }
+"""
+
+
+def config() -> dict:
+    data = json.loads((ROOT / "config" / "prod.json").read_text(encoding="utf-8"))
+    missing = [k for k in ("LEGAL_PUBLISHER", "SUPPORT_EMAIL") if not data.get(k)]
+    if missing:
+        sys.exit("config/prod.json : à renseigner avant publication : " + ", ".join(missing))
+    return data
+
+
+def body(text: str, publisher: str, contact: str) -> str:
+    mail = f'<a href="mailto:{html.escape(contact)}">{html.escape(contact)}</a>'
+    out, bullets = [], []
+
+    def inline(value: str) -> str:
+        value = html.escape(value.strip())
+        return value.replace("{{EDITEUR}}", html.escape(publisher)).replace("{{CONTACT}}", mail)
+
+    def flush() -> None:
+        if bullets:
+            out.append("<ul>" + "".join(f"<li>{b}</li>" for b in bullets) + "</ul>")
+            bullets.clear()
+
+    for line in text.splitlines():
+        if line.startswith("- "):
+            bullets.append(inline(line[2:]))
+            continue
+        flush()
+        if line.startswith("## "):
+            out.append(f"<h2>{inline(line[3:])}</h2>")
+        elif line.startswith("# "):
+            out.append(f"<h1>{inline(line[2:])}</h1>")
+        elif line.startswith("Dernière mise à jour"):
+            out.append(f'<p class="updated">{inline(line)}</p>')
+        elif line.strip():
+            out.append(f"<p>{inline(line)}</p>")
+    flush()
+    return "\n".join(out)
+
+
+def page(title: str, content: str, current: str) -> str:
+    links = "".join(
+        f'<a href="{name}"{" aria-current=\"page\"" if name == current else ""}>{label}</a>'
+        for name, (_, label) in PAGES.items()
+    )
+    return f"""<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{html.escape(title)} — {APP}</title>
+<style>{STYLE}</style>
+</head>
+<body>
+<header><div><a class="brand" href="./">Flirt Coach <span>Pro</span></a><nav>{links}</nav></div></header>
+<main>
+{content}
+</main>
+<footer>{APP} — coach de drague et messages, réservé aux adultes.</footer>
+</body>
+</html>
+"""
+
+
+def main() -> None:
+    data = config()
+    OUT.mkdir(parents=True, exist_ok=True)
+    for name, (source, title) in PAGES.items():
+        text = (ROOT / source).read_text(encoding="utf-8")
+        content = body(text, data["LEGAL_PUBLISHER"], data["SUPPORT_EMAIL"])
+        (OUT / name).write_text(page(title, content, name), encoding="utf-8")
+    items = "".join(f'<li><a href="{name}">{label}</a></li>' for name, (_, label) in PAGES.items())
+    index = f"<h1>{APP}</h1>\n<p>Textes légaux de l'application.</p>\n<ul>{items}</ul>"
+    (OUT / "index.html").write_text(page("Textes légaux", index, ""), encoding="utf-8")
+    (OUT / ".nojekyll").write_text("", encoding="utf-8")
+    print(f"{len(PAGES) + 1} pages écrites dans {OUT.relative_to(ROOT)}")
+
+
+if __name__ == "__main__":
+    main()

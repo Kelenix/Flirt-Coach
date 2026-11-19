@@ -5,6 +5,78 @@
 
 ---
 
+## ADR-030 — Textes légaux en ligne sur GitHub Pages
+
+- **Date** : 2026-11-19
+- **Statut** : Accepté
+- **Décideur** : utilisateur (hébergement) ; Claude (rôle : documentation) pour la mise en œuvre
+- **Contexte** : Google Play exige une URL publique pour la politique de confidentialité (pas de
+  PDF), et l'App Store des conditions d'utilisation pour un abonnement. Le texte en ligne doit
+  être identique à celui de l'app.
+- **Décision** : pages générées par `scripts/legal_pages.py` à partir de `assets/legal/*.txt`
+  (éditeur et contact lus dans `config/prod.json`, comme dans l'app), au même format que
+  l'écran de l'app ; publiées sur la branche `gh-pages` du dépôt public :
+  https://kelenix.github.io/Flirt-Coach/. Pages autonomes : pas de police ni de script
+  externes, donc aucune requête vers des tiers.
+- **Alternatives écartées** : Firebase Hosting (proposé, non retenu par l'utilisateur) ; page
+  d'Edge Function Supabase (le domaine supabase.co ne sert pas de HTML) ; PDF (refusé par
+  Google Play).
+- **Conséquences** : toute modification des textes passe par `assets/legal/`, puis par la
+  génération et la publication (`docs/operations.md`) ; l'adresse ne change pas. La branche
+  `gh-pages` ne contient que les pages générées. La relecture par un juriste reste conseillée.
+- **Impact** : légal — fort (obligation des stores) ; technique — faible.
+
+---
+
+## ADR-029 — Nom de l'app : « Flirt Coach Pro »
+
+- **Date** : 2026-11-19
+- **Statut** : Accepté (remplace la partie « nom » d'ADR-028)
+- **Décideur** : utilisateur
+- **Contexte** : l'app a été créée dans la Play Console sous le nom « Flirt Coach Pro ».
+  L'utilisateur confirme que ce nom remplace « Flirt Coach » partout et demande de ne pas
+  modifier le logo.
+- **Décision** :
+  - « Flirt Coach Pro » partout où le nom est écrit : sous l'icône (Android `android:label`, iOS
+    `CFBundleDisplayName`), dans l'app (`appName` ; titre de l'écran Premium « Flirt Coach Pro
+    Premium »), mentions légales, aide intégrée, consignes du coach côté serveur, fiche du store,
+    README et documentation.
+  - Logo inchangé : symbole, mot-symbole « FlirtCoach » et bannière du README restent tels
+    quels ; le libellé d'accessibilité du logo annonce « Flirt Coach Pro ».
+  - Inchangés aussi : identifiants d'application, nom du paquet Dart `flirt_coach`, noms
+    internes des projets Supabase et RevenueCat, noms de fichiers.
+- **Alternatives écartées** : nouveau nom sur le store seulement ; mot-symbole retouché pour y
+  ajouter « Pro » (exclu : le logo ne doit pas changer).
+- **Conséquences** : certains lanceurs peuvent raccourcir le nom sous l'icône (15 caractères).
+  Les consignes du coach au nouveau nom ne seront en ligne qu'au prochain déploiement de
+  `generate`, `respect-check` et `conversation-analysis`.
+- **Impact** : métier (marque) — moyen ; technique — faible.
+
+---
+
+## ADR-028 — Publication Android d'abord ; nom et identifiants conservés
+
+- **Date** : 2026-11-19
+- **Statut** : Accepté
+- **Décideur** : utilisateur
+- **Contexte** : préparation de la publication (phase 6). L'utilisateur a déjà un compte Google
+  Play Console, utilisé pour d'autres applications, mais pas de compte Apple Developer. Il compile
+  les versions des stores sur une autre machine.
+- **Décision** :
+  - Nom « Flirt Coach » et identifiants conservés : Android `com.flirtcoach.flirt_coach`, iOS
+    `com.flirtcoach.flirtCoach`.
+  - Google Play d'abord. Le compte Apple Developer et toute la partie iOS (produits App Store,
+    apps iOS dans RevenueCat et AdMob, compilation iOS) viennent après la mise en ligne Android.
+  - Préparation guidée une étape à la fois, suivie dans `docs/manual-tasks.md`.
+- **Alternatives écartées** : identifiant bâti sur un nom de domaine possédé, sans « _ » ;
+  lancement simultané sur Android et iOS.
+- **Conséquences** : l'identifiant Android devient définitif à la création de l'app dans la Play
+  Console. Les identifiants diffèrent entre Android et iOS, sans effet : RevenueCat et AdMob
+  traitent chaque plateforme séparément. Les 99 $/an d'Apple sont reportés.
+- **Impact** : métier (calendrier de lancement) — moyen ; technique — aucun.
+
+---
+
 ## ADR-027 — Abonnement restauré sur une nouvelle installation (événement TRANSFER)
 
 - **Date** : 2026-11-18

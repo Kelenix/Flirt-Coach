@@ -1,4 +1,4 @@
-# Performance — Flirt Coach
+# Performance — Flirt Coach Pro
 
 Mesures de la phase 5 (2026-11-18). Appareil : émulateur Android 15, x86_64, GPU émulé,
 mode **profile**. Un émulateur n'est pas représentatif d'un téléphone modeste : les chiffres

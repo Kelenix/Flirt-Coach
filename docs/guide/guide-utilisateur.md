@@ -1,6 +1,6 @@
 # Guide utilisateur
 
-Comment utiliser Flirt Coach, fonctionnalité par fonctionnalité. Ce guide sert de référence au
+Comment utiliser Flirt Coach Pro, fonctionnalité par fonctionnalité. Ce guide sert de référence au
 support et de base aux textes des stores ; l'aide intégrée à l'app (Réglages → « Aide et
 questions fréquentes ») en reprend l'essentiel.
 
@@ -18,7 +18,7 @@ questions fréquentes ») en reprend l'essentiel.
 <img src="images/01-accueil.png" width="240" align="right" alt="Écran d'accueil">
 
 1. Ouvre l'app.
-2. Coche **« J'ai 18 ans ou plus »** : Flirt Coach est réservé aux adultes.
+2. Coche **« J'ai 18 ans ou plus »** : Flirt Coach Pro est réservé aux adultes.
 3. Touche **« Commencer »**.
 
 Aucune inscription : ni nom, ni e-mail, ni mot de passe. Un compte anonyme est créé sur ton
@@ -211,7 +211,7 @@ signalement aide à améliorer le coach.
 
 ### Ce que le coach refuse
 
-Flirt Coach aide à séduire avec respect. Il refuse les demandes sexuellement explicites,
+Flirt Coach Pro aide à séduire avec respect. Il refuse les demandes sexuellement explicites,
 haineuses, insistantes après un refus ou manipulatrices ; aucun crédit n'est alors utilisé.
 
 ### Sans connexion
@@ -237,7 +237,7 @@ haineuses, insistantes après un refus ou manipulatrices ; aucun crédit n'est a
 
 ### Changer de téléphone
 
-1. Installer Flirt Coach sur le nouveau téléphone et confirmer son âge.
+1. Installer Flirt Coach Pro sur le nouveau téléphone et confirmer son âge.
 2. Écran Premium → « Restaurer mes achats », avec le même compte Google Play ou Apple.
 3. Premium s'active en quelques secondes : « Achats restaurés : Premium est actif. ». Si le
    serveur met un peu plus de temps, l'app l'indique et Premium apparaît peu après.

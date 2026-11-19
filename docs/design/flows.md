@@ -1,4 +1,4 @@
-# Parcours et écrans — Flirt Coach
+# Parcours et écrans — Flirt Coach Pro
 
 > Phase 3 — UI/UX. Les 3 écrans du kit de marque servent de maquettes ; ce document fixe le
 > contenu et les états. Écarts au kit : pas de « Améliore ton profil » (ADR-007), « Drôle »

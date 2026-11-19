@@ -1,4 +1,4 @@
-# Design system — Flirt Coach
+# Design system — Flirt Coach Pro
 
 > Phase 3 — UI/UX. Source : `Kit di brand Flirt Coach in stile neon.png` (ADR-010).
 > Toutes ces valeurs vivent dans `lib/core/theme/` ; aucune valeur visuelle en dur ailleurs.

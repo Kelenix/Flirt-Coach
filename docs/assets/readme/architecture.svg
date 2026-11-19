@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1120" height="610" viewBox="0 0 1120 610" role="img" aria-labelledby="titre desc">
-  <title id="titre">Architecture de Flirt Coach</title>
+  <title id="titre">Architecture de Flirt Coach Pro</title>
   <desc id="desc">L'application Flutter parle à Supabase (authentification anonyme, Edge Functions, Postgres protégé par RLS). Les Edge Functions appellent Claude ; RevenueCat et AdMob confirment achats et récompenses au serveur.</desc>
   <defs>
     <radialGradient id="halo-violet" cx="8%" cy="0%" r="60%">

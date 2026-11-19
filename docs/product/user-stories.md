@@ -1,4 +1,4 @@
-# User stories — Flirt Coach (V1)
+# User stories — Flirt Coach Pro (V1)
 
 > Phase 1 — Product Owner. Chaque story trace vers l'INTAKE. MoSCoW : **M**ust / **S**hould /
 > **C**ould. Taille relative S/M/L. Toute génération exige le réseau : hors-ligne, l'app

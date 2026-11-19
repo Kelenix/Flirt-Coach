@@ -1,6 +1,6 @@
 # Aide et questions fréquentes
 
-## Comment fonctionne Flirt Coach ?
+## Comment fonctionne Flirt Coach Pro ?
 
 Colle le dernier message reçu (ou importe une capture d'écran de la conversation), choisis une situation et un style, puis touche « Générer 3 réponses ». Le coach propose trois messages prêts à copier. Tu restes libre de les modifier avant de les envoyer.
 
@@ -17,7 +17,7 @@ Ils repassent à 5 chaque jour à minuit, heure universelle (1 h ou 2 h du matin
 
 ## Pourquoi le coach refuse-t-il ma demande ?
 
-Flirt Coach aide à séduire avec respect. Il refuse les messages sexuellement explicites, haineux, insistants après un refus ou manipulateurs. Dans ce cas, aucun crédit n'est utilisé.
+Flirt Coach Pro aide à séduire avec respect. Il refuse les messages sexuellement explicites, haineux, insistants après un refus ou manipulateurs. Dans ce cas, aucun crédit n'est utilisé.
 
 ## Ma capture d'écran n'est pas lue
 
@@ -49,7 +49,7 @@ Touche l'icône drapeau sur la réponse, puis choisis un motif. Le signalement n
 
 ## Mes données et mon compte
 
-Flirt Coach ne demande ni nom, ni e-mail. Tu peux supprimer ton compte à tout moment : Réglages → « Supprimer mon compte ». Toutes tes données sont alors effacées. Le détail est dans la politique de confidentialité.
+Flirt Coach Pro ne demande ni nom, ni e-mail. Tu peux supprimer ton compte à tout moment : Réglages → « Supprimer mon compte ». Toutes tes données sont alors effacées. Le détail est dans la politique de confidentialité.
 
 ## Pourquoi y a-t-il des publicités ?
 

@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/assets/readme/banner.png" alt="Flirt Coach — Coach de drague et messages" width="100%">
+<img src="docs/assets/readme/banner.png" alt="Flirt Coach Pro — Coach de drague et messages" width="100%">
 
 <br>
 <br>
@@ -39,7 +39,7 @@
 
 ## À propos
 
-**Flirt Coach** est une application mobile qui aide les adultes à écrire leurs messages de
+**Flirt Coach Pro** est une application mobile qui aide les adultes à écrire leurs messages de
 séduction grâce à l'intelligence artificielle. L'utilisateur colle le message reçu, ou importe une
 capture d'écran de la conversation, choisit une situation et un style, et reçoit **trois réponses
 naturelles, prêtes à copier**.
@@ -48,7 +48,7 @@ Sa ligne est claire : **séduire avec respect**. Le coach refuse les demandes se
 explicites, haineuses, insistantes après un refus ou manipulatrices, et le **Mode Respect** aide à
 reformuler un message avant de l'envoyer.
 
-| Flirt Coach est | Flirt Coach n'est pas |
+| Flirt Coach Pro est | Flirt Coach Pro n'est pas |
 |-----------------|------------------------|
 | un coach bienveillant qui propose des mots | un outil de manipulation |
 | transparent : les réponses sont des suggestions d'IA | une promesse de résultat |
@@ -310,9 +310,10 @@ Menaces étudiées et protections : [sécurité](docs/security.md).
 | Qualité | [Stratégie de tests](docs/qa/test-plan.md) · [Sécurité](docs/security.md) · [Performance](docs/performance.md) · [Risques](docs/risks.md) | tests, menaces, mesures, risques |
 | Exploitation | [Exploitation](docs/operations.md) | déploiement, secrets, surveillance, incidents |
 | | [Tâches manuelles](docs/manual-tasks.md) | comptes, contrats, signatures, décisions |
-| | [Fiche store](docs/store/fiche-store.md) | textes Google Play et App Store |
+| | [Fiche store](docs/store/fiche-store.md) | textes Google Play et App Store ; visuels Google Play dans `docs/store/visuels/` |
+| Légal | [Politique de confidentialité](https://kelenix.github.io/Flirt-Coach/confidentialite.html) · [Conditions d'utilisation](https://kelenix.github.io/Flirt-Coach/conditions.html) | versions en ligne des textes de l'app |
 | Suivi | [Journal des modifications](CHANGELOG.md) · [Décisions](DECISION_LOG.md) · [État du projet](PROJECT_STATE.md) | versions, choix techniques, avancement |
 
 ## Licence
 
-Logiciel propriétaire. © 2026 Flirt Coach — tous droits réservés.
+Logiciel propriétaire. © 2026 Flirt Coach Pro — tous droits réservés.

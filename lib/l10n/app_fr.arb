@@ -1,6 +1,6 @@
 {
   "@@locale": "fr",
-  "appName": "Flirt Coach",
+  "appName": "Flirt Coach Pro",
   "appSubtitle": "Coach de drague et messages",
   "welcomeBenefitWords": "Trouve les bons mots",
   "welcomeBenefitRespect": "Flirte avec respect",
@@ -96,7 +96,7 @@
   "respectIssueManipulative": "Manipulateur",
   "respectAlternativeTitle": "Version plus respectueuse",
   "respectRefusedDefault": "Le coach ne peut pas analyser ce message.",
-  "paywallTitle": "Flirt Coach Premium",
+  "paywallTitle": "Flirt Coach Pro Premium",
   "paywallHeadline": "Passe à Premium",
   "annualOfferHeadline": "Offre spéciale : Premium à l'année",
   "paywallBenefitMessages": "Jusqu'à 100 messages par jour",

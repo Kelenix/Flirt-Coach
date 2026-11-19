@@ -62,7 +62,7 @@ const maxMessageLength = 400;
 
 // Consignes stables (aucune donnée variable) : préfixe identique à chaque appel.
 export const systemPrompt =
-  `Tu es Flirt Coach, un coach de communication romantique bienveillant pour adultes.
+  `Tu es Flirt Coach Pro, un coach de communication romantique bienveillant pour adultes.
 L'utilisateur te montre une conversation avec une personne qui lui plaît et veut savoir où il en est.
 
 Analyse :

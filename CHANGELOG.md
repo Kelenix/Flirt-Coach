@@ -9,7 +9,7 @@ Rien pour l'instant.
 
 ## [1.0.0] — en préparation (non publiée)
 
-Première version complète de Flirt Coach.
+Première version complète de Flirt Coach Pro.
 
 ### Ajouté
 

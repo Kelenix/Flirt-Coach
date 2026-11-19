@@ -1,4 +1,4 @@
-# Sécurité — Flirt Coach
+# Sécurité — Flirt Coach Pro
 
 État après la revue indépendante de la phase 5 (2026-11-18). Détail des constats et de leur
 traitement : `docs/qa/revue-phase5.md`.

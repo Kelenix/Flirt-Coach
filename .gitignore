@@ -51,7 +51,8 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Secrets des Edge Functions (clé IA) — jamais versionnés
+# Secrets des Edge Functions (clé IA, secret du webhook) — jamais versionnés
 /supabase/functions/.env
+/supabase/functions/.env.cloud
 /supabase/.temp/
 /supabase/.branches/

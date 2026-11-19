@@ -2,7 +2,7 @@
     <!-- Indispensable en production : serveur Supabase, IA, achats, publicités. -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="Flirt Coach"
+        android:label="Flirt Coach Pro"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

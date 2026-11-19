@@ -1,6 +1,6 @@
 # Configuration
 
-Flirt Coach a deux types de configuration, qui ne se mélangent jamais :
+Flirt Coach Pro a deux types de configuration, qui ne se mélangent jamais :
 
 | Où | Contenu | Visible par l'utilisateur ? |
 |----|---------|-----------------------------|
@@ -33,6 +33,7 @@ Les fichiers `config/*.json` ne sont **pas versionnés**. Partir des modèles :
 | `REVENUECAT_IOS_KEY` | non | idem pour l'App Store | idem |
 | `ADMOB_BANNER_ANDROID` | non | bloc d'annonces bannière Android. Vide : aucune bannière | AdMob → Apps → Ad units (les modèles contiennent les identifiants **de test** de Google) |
 | `ADMOB_REWARDED_ANDROID` | non | bloc d'annonces « récompensée » Android | idem |
+| `ADMOB_APP_ID_ANDROID` | publication | identifiant d'app AdMob Android, gardé ici pour la compilation (`-PadmobAppId=…`) ; l'app ne le lit pas | AdMob → Apps → App settings |
 | `ADMOB_BANNER_IOS` | non | bannière iOS | idem |
 | `ADMOB_REWARDED_IOS` | non | récompensée iOS | idem |
 | `LEGAL_PUBLISHER` | avant publication | nom et adresse de l'éditeur, cités dans les textes légaux. Vide : « (à compléter avant publication) » | à fournir |
@@ -47,7 +48,7 @@ En plus des blocs d'annonces, AdMob exige un **identifiant d'application** dans 
 
 | Plateforme | Où | Par défaut |
 |------------|----|------------|
-| Android | propriété Gradle à la compilation : `flutter build appbundle -PadmobAppId=ca-app-pub-XXXX~YYYY …` | identifiant de test de Google |
+| Android | propriété Gradle à la compilation : `flutter build appbundle -PadmobAppId=<ADMOB_APP_ID_ANDROID de config/prod.json> …` | identifiant de test de Google |
 | iOS | `ios/Runner/Info.plist`, clé `GADApplicationIdentifier` | identifiant de test de Google |
 
 ### Identifiant de l'application
@@ -57,8 +58,9 @@ En plus des blocs d'annonces, AdMob exige un **identifiant d'application** dans 
 | Android | `com.flirtcoach.flirt_coach` | `applicationId`, `android/app/build.gradle.kts` |
 | iOS | `com.flirtcoach.flirtCoach` | `PRODUCT_BUNDLE_IDENTIFIER`, `ios/Runner.xcodeproj/project.pbxproj` |
 
-Les identifiants sont **définitifs après la première publication** : à confirmer avant (tâche
-manuelle 3). Apple n'accepte pas le caractère « _ ».
+Identifiants confirmés le 2026-11-19 (tâche manuelle 3, ADR-028). L'identifiant Android devient
+**définitif** dès la création de l'app dans la Play Console. Apple n'accepte pas le caractère
+« _ ».
 
 ## 2. Secrets du serveur (Edge Functions)
 

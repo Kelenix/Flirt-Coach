@@ -5,14 +5,24 @@
 
 ## Snapshot
 
-- **Phase courante** : 7 — Documentation terminée ; prochaine : 6 — Publication (dépend des comptes stores)
-- **Dernière mise à jour** : 2026-11-18
+- **Phase courante** : 6 — Publication Android, préparation guidée pas à pas (étapes 1 à 10 faites)
+- **Dernière mise à jour** : 2026-11-19
 - **Santé** : 🟢 OK
 - **Mode** : PLAN_PUIS_VALIDATION (plan validé le 2026-11-18, options par défaut retenues)
-- **Prochaine action** : décision sur la protection anti-comptes en série (tâche 17), puis
-  phase 6 — Publication (tâches manuelles 3 à 15, textes prêts dans `docs/store/fiche-store.md`).
-  Rappels : vrais achats (comptes stores + RevenueCat) et vraie
-  récompense publicitaire (AdMob) restent à vérifier une fois les comptes créés.
+- **Prochaine action** : étape 11 proposée — fiche du store et déclarations sur le contenu dans
+  la Play Console (compte Kelenix : accord explicite de l'utilisateur requis), avec les textes de
+  `docs/store/fiche-store.md` et les visuels de `docs/store/visuels/`. Ensuite : clé de
+  signature et première version (autre machine), redéploiement des consignes renommées.
+  Après l'envoi de la première version : « Check again » sur les identifiants RevenueCat. Avant le
+  test fermé : redéployer `generate`, `respect-check` et `conversation-analysis` (consignes du
+  coach au nom « Flirt Coach Pro », ADR-029). Une étape à la fois, suivie dans
+  `docs/manual-tasks.md` ; Android d'abord, iOS après la mise en ligne (ADR-028) ; pas de
+  compilation ici (autre machine). Chemin critique : test fermé obligatoire (12 testeurs,
+  14 jours, tâche 19), à lancer au plus tôt ; il exige la configuration de l'app dans la console
+  et une première version. Ordre visé : RevenueCat, AdMob, politique de confidentialité en ligne
+  et fiche du store, version de test fermé, puis produits (débloqués par la première version).
+  Rappels : décision sur la tâche 17 avant publication ; vrais achats et vraie récompense
+  publicitaire à vérifier.
 
 ## Avancement par phase
 
@@ -24,7 +34,7 @@
 | 3 — Architecture & design   | ✅ fait | `docs/architecture.md`, `system-design.md`, `data-model.md`, `docs/design/` |
 | 4 — Implémentation          | ✅ fait | Inc-0 à Inc-10 ; US-04 (e-mail) reporté |
 | 5 — Qualité & performance   | ✅ fait | `docs/qa/revue-phase5.md`, `docs/security.md`, `docs/performance.md`, `docs/qa/test-plan.md` ; mesure sur téléphone réel à faire (tâche 18) |
-| 6 — Publication (stores)    | ⬜ à faire | |
+| 6 — Publication (stores)    | 🔄 en cours | Android d'abord, iOS après la mise en ligne (ADR-028) ; préparation guidée pas à pas, suivie dans `docs/manual-tasks.md` ; compilation sur une autre machine |
 | 7 — Documentation           | ✅ fait | `README.md` = documentation principale (bannière au logo, schéma d'architecture, toutes les sections) ; annexes dans `docs/` ; `CHANGELOG.md` ; aide dans l'app (ADR-026) |
 | 8 — Maintenance             | ⬜ à faire | |
 
@@ -271,6 +281,7 @@ phase 8 (passation).
 | Données de tiers dans les captures (RGPD) | Non-conservation, mention claire, politique de confidentialité, sous-traitant IA déclaré |
 | Poste Windows : build iOS impossible en local | iOS compilé via runner macOS GitHub Actions ; vérification locale sur Android uniquement (Q4) |
 | Injection de prompt via message collé / capture | Contenu utilisateur traité comme donnée, sortie structurée validée, modération en sortie |
+| Délai de mise en ligne Android (test fermé obligatoire de 14 jours, examens Google) | Lancer le test fermé au plus tôt ; finaliser achats et publicités pendant le test (tâche 19) |
 
 ## Décisions ouvertes / questions à l'utilisateur
 
@@ -280,7 +291,7 @@ Options par défaut validées en bloc par l'utilisateur le 2026-11-18 (« Oui, l
 - [x] **Q2** Achats intégrés : RevenueCat.
 - [x] **Q3** Premium : niveau unique, « illimité » plafonné à 100 générations/jour.
 - [x] **Q4** Android + iOS, français seul.
-- [x] **Q5** Nom : « Flirt Coach ».
+- [x] **Q5** Nom : « Flirt Coach », puis « Flirt Coach Pro » le 2026-11-19 (ADR-029).
 - [x] **Q6** Prix : 6,99 €/sem · 12,99 €/mois · 49,99 €/an ; packs 2,99 / 5,99 / 9,99 €.
 - [x] **Q7** Coach de profil : hors V1.
 - [x] **Q8** Style « Drôle » : Premium ; seul « Classique » est gratuit.
@@ -289,8 +300,10 @@ Reste ouvert :
 
 - [ ] **Q9 (financier)** Modèle IA : Claude Opus 5.5 (~0,01 $ par génération, ADR-014) ou
   Claude Haiku 5.5 (~40 fois moins cher, écriture moins fine) — défaut : Opus 5.5.
-- [ ] **Identifiant d'application** : provisoire `com.flirtcoach.flirt_coach`. À fixer avant la
-  première publication (définitif ensuite).
+- [x] **Identifiant d'application** : conservé — Android `com.flirtcoach.flirt_coach`, iOS
+  `com.flirtcoach.flirtCoach` (décision de l'utilisateur du 2026-11-19, ADR-028).
+- [x] **Nom affiché « Flirt Coach Pro »** : partout, logo inchangé (décision de l'utilisateur du
+  2026-11-19, ADR-029).
 
 ## Blocages
 
@@ -301,6 +314,38 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-19 — Étape 10 faite : visuels Google Play produits en local par `scripts/store_assets.py` dans `docs/store/visuels/` — icône 512 × 512 (PNG 32 bits, carré plein), bannière 1024 × 500 (logo du kit inchangé), 6 captures 1080 × 1920 avec accroche, à partir d'écrans de l'émulateur (`visuels/ecrans/`, conversations fictives ; capture importée = fausse conversation neutre générée, aucune appli réelle imitée). Formats vérifiés (dimensions, PNG sans transparence pour bannière et captures), rendu contrôlé visuellement ; accroches vérifiées dans le code (7 situations, 7 styles). `docs/store/fiche-store.md` (section 5) et `docs/manual-tasks.md` à jour.
+
+- 2026-11-19 — Étape 9 faite par Claude dans Chrome (AdMob, lionelkelenix@gmail.com) : message « Flirt Coach Pro - RGPD » publié pour l'app Flirt Coach Pro. Français par défaut ; boutons Consentir, Refuser (activé dans tous les pays, exigence de la CNIL) et Gérer les options ; URL de la politique de confidentialité GitHub Pages ; partenaires : les 199 partenaires courants (le « 0 partenaire » de l'aperçu n'était qu'un détail d'affichage). L'app intègre déjà le SDK UMP et le lien « Préférences publicitaires ».
+
+- 2026-11-19 — Étape 8 faite (choix de l'utilisateur : GitHub Pages, ADR-030) : `scripts/legal_pages.py` génère les pages depuis `assets/legal/*.txt` (sans aucun texte manquant) ; branche orpheline `gh-pages` (4 fichiers, commit 994bc5f) poussée depuis un worktree temporaire, sans toucher `main` ni le travail en cours ; Pages actif (build « built »). Vérifié : 3 adresses en 200, contenu identique, rendu contrôlé dans Chrome. Adresses reportées dans `docs/store/fiche-store.md`, `docs/manual-tasks.md`, README ; procédure de mise à jour dans `docs/operations.md`.
+
+- 2026-11-19 — Étape 7 (AdMob) faite par Claude dans Chrome, sur lionelkelenix@gmail.com : l'utilisateur a renvoyé sa demande depuis une fenêtre privée, et le compte est en cours de validation. Créés : app Android « Flirt Coach Pro », blocs « Flirt Coach Pro - Banniere » et « Flirt Coach Pro - Recompensee » (2 `credits`, vérification côté serveur validée par AdMob avec un identifiant utilisateur fictif, aucun crédit accordé). Blocages de l'app seule : « Rencontres » et « Références sexuelles », classification maximale T. Identifiants dans `config/prod.json` (nouvelle clé `ADMOB_APP_ID_ANDROID`, ajoutée au modèle et à `docs/configuration.md`). `ADMOB_AD_UNIT_IDS` posé sur Supabase : la faille « liste vide = aucun contrôle » est fermée sur le cloud (tâche 15).
+
+- 2026-11-19 — Étape 7b (« Renvoyer » sur lionelkelenix@gmail.com) demandée à Claude par l'utilisateur, après un échec de connexion de son côté. Dans Chrome, AdMob exige une nouvelle connexion (mot de passe) de lionelkelenix@gmail.com et revient sans cesse au compte Gmail principal. Ce compte principal propose maintenant d'ouvrir AdMob en le reliant à un compte AdSense déjà existant (éditeur personnel, Italie) : c'est probablement le « doublon » qui bloque lionelkelenix@gmail.com. Rien n'a été cliqué ; choix demandé à l'utilisateur.
+
+- 2026-11-19 — Étape 7 (AdMob) commencée puis bloquée. Consigne de l'utilisateur : tout se fait sur lionelkelenix@gmail.com, rien sur le compte Kelenix (Claude y avait seulement ouvert la page d'inscription AdMob, sans rien remplir ni valider). Sur lionelkelenix@gmail.com, comme sur le compte Gmail principal, AdMob affiche « Votre compte n'a pas été approuvé » : doublon d'un compte AdMob existant. Rien n'a été coché ni renvoyé ; décision laissée à l'utilisateur.
+
+- 2026-11-19 — Étape 6 faite, avec l'accord de l'utilisateur : secret du webhook généré localement (64 caractères, jamais affiché) et posé sur Supabase (`REVENUECAT_WEBHOOK_SECRET`) ; copie dans `supabase/functions/.env.cloud`, ajouté au `.gitignore`. Webhook RevenueCat « Supabase - Flirt Coach Pro » préparé par Claude dans Chrome ; l'en-tête d'autorisation a été collé par l'utilisateur. Événement de test : réponse 200 `{"status":"ignored","reason":"test"}` du serveur.
+
+- 2026-11-19 — Étape 5 faite par Claude dans Chrome, avec l'accord de l'utilisateur : « Connect to Google » refusé d'abord (le rôle Pub/Sub Editor ne permet pas de modifier les droits du sujet) ; Google Play (`google-play-developer-notifications@system.gserviceaccount.com`) ajouté comme « Diffuseur Pub/Sub » sur le seul sujet `Play-Store-Notifications`, sans élargir les droits de RevenueCat ; connexion RevenueCat réussie ; Play Console : notifications en temps réel activées (abonnements, achats annulés et tous les produits ponctuels), enregistrées ; notification de test reçue par RevenueCat (« Last received » 10:24 UTC). « Restore behavior » vérifié : Transfer to new App User ID.
+
+- 2026-11-19 — Clé JSON enregistrée dans RevenueCat par l'utilisateur (le premier dépôt n'avait pas été enregistré). Vérification RevenueCat : 2 contrôles sur 3 réussis (lecture du catalogue de produits et d'abonnements, donc les autorisations limitées à l'app suffisent) ; le 3e (achats d'abonnement) échoue parce que Google ne reconnaît pas encore le package : attendu tant qu'aucune version n'est envoyée. Fichier de la clé encore dans Téléchargements : à supprimer.
+
+- 2026-11-19 — Étape 4 faite par Claude dans Chrome, avec l'accord de l'utilisateur : projet Google Cloud « Flirt Coach Pro » (`flirt-coach-pro`, compte Gmail perso choisi par l'utilisateur, sans organisation) ; API Google Play Android Developer, Play Developer Reporting et Cloud Pub/Sub activées ; compte de service `revenuecat@flirt-coach-pro.iam.gserviceaccount.com` (rôles Pub/Sub Editor et Monitoring Viewer) ; clé JSON créée et téléchargée dans Téléchargements (contenu jamais lu) ; compte invité dans la Play Console (compte du domaine kelenix.com), avec des autorisations limitées à l'app Flirt Coach (informations, données financières, commandes et abonnements, présence sur le store, plus 2 autorisations ajoutées d'office par Google), état « Attivo ». Reste : l'utilisateur dépose la clé dans RevenueCat (Claude ne saisit pas de clé privée).
+
+- 2026-11-19 — Étape 2 confirmée : la Play Console (compte Google du domaine kelenix.com) indique que le groupe « Kelenix Tech » est inscrit au taux de 15 %. Vu dans la console : app « Flirt Coach » en brouillon (nom à passer à « Flirt Coach Pro » dans la fiche du store) ; déclaration du statut de commerçant demandée avant février 2027. Étape 4 commencée dans Chrome : la console Google Cloud de ce compte (organisation Workspace) exige le mot de passe, que Claude ne saisit pas ; choix du compte demandé à l'utilisateur.
+
+- 2026-11-19 — App renommée « Flirt Coach Pro » partout, à la demande de l'utilisateur (ADR-029) : nom sous l'icône Android et iOS, textes de l'app (`appName`, titre de l'écran Premium « Flirt Coach Pro Premium »), mentions légales, aide, consignes du coach (3 fonctions, à redéployer), fiche du store, README et documentation (25 fichiers, remplacements vérifiés par script). Logo inchangé, comme demandé. Fonctions `generate`, `respect-check` et `conversation-analysis` : format, lint, types et 25 tests verts. App Flutter : textes régénérés, format et analyse propres, 117 tests verts. Liens de la documentation revérifiés (111 + 15, 0 erreur).
+
+- 2026-11-19 — Étape 3 faite par Claude dans Chrome (Claude in Chrome), à la demande de l'utilisateur : dans le projet RevenueCat « Flirt Coach » (créé par l'assistant de démarrage), app Google Play ajoutée (package `com.flirtcoach.flirt_coach`, sans identifiants de service pour l'instant) ; clé publique `goog_…` lue sur la page API keys et ajoutée à `config/prod.json` (non versionné, JSON valide). L'utilisateur indique que l'app s'appelle « Flirt Coach Pro » : l'app RevenueCat est enregistrée sous « Flirt Coach Pro (Play Store) ». Portée du changement de nom à confirmer (icône, textes, mentions légales, fiche du store).
+
+- 2026-11-19 — Test fermé obligatoire confirmé par l'utilisateur (12 testeurs pendant 14 jours, déjà fait pour ses autres apps) : tâche manuelle 19 ajoutée, chemin critique de la mise en ligne. Étape 2 : groupe de comptes « Kelenix Tech » créé, inscription au taux de 15 % à confirmer. Parcours RevenueCat vérifié dans sa documentation officielle (app Google Play, clés publiques `goog_`, identifiants de service validés en 36 h au plus). Étape 3 envoyée : compte, projet et app Google Play dans RevenueCat.
+
+- 2026-11-19 — Étape 1 faite : app « Flirt Coach » créée dans la Play Console (interface en italien) ; profil de paiement déjà actif. Étape 2 envoyée : inscription au taux de commission de 15 %. Barème Google Play 2026 vérifié dans l'aide officielle : dans l'EEE, abonnements à 15 % ; packs à 15 % avec l'inscription, 25 % sans. Vérifié aussi : la création de produits exige qu'une première version soit envoyée.
+
+- 2026-11-19 — Phase 6 (Publication) lancée. Décisions de l'utilisateur (ADR-028) : nom et identifiants conservés ; compte Google Play existant (déjà utilisé pour d'autres applications) ; Apple et toute la partie iOS après la mise en ligne Android ; compilation des versions des stores sur une autre machine. `docs/manual-tasks.md` passé en cases à cocher : fait = tâches 0, 1 (région UE `eu-west-1` vérifiée ; reste le plan avec sauvegardes), 2, 3, 12 (éditeur et e-mail déjà dans `config/prod.json`), compte Play, dépôt et CI. Vérifié dans l'aide officielle Google Play : identifiant saisi à la création de l'app et définitif ensuite ; chemin du profil de paiement ; test fermé (12 testeurs pendant 14 jours) pour les comptes personnels créés après le 13 novembre 2023. Guidage pas à pas : étape 1 envoyée.
 
 - 2026-11-18 — Abonnement restauré sur un nouveau téléphone (S12, ADR-027) : le webhook traite l'événement RevenueCat `TRANSFER` (fonction SQL `transfer_premium`) ; l'app attend la confirmation du serveur après « Restaurer mes achats ». Essai de bout en bout sur le serveur local : Premium déplacé, rejeu sans effet. 117 tests Flutter, 110 SQL, 51 Deno, analyse propre. Documentation et aide intégrée mises à jour. Déployé sur le cloud (migration appliquée, 7 fonctions redéployées) ; contrôlé : fonction SQL présente et refusée à la clé publique, webhook en ligne (401 sans secret).
 

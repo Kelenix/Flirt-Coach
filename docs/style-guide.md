@@ -5,7 +5,7 @@ réponses du support. Elle complète le [design system](design/design-system.md)
 
 ## 1. Notre voix
 
-Flirt Coach parle comme **un ami de confiance qui sait écrire** : complice, encourageant, jamais
+Flirt Coach Pro parle comme **un ami de confiance qui sait écrire** : complice, encourageant, jamais
 moqueur ni vulgaire. Il aide à séduire **avec respect**.
 
 | Nous sommes | Nous ne sommes pas |

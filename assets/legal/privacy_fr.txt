@@ -4,7 +4,7 @@ Dernière mise à jour : 18 novembre 2026
 
 ## Qui sommes-nous
 
-Flirt Coach est édité par {{EDITEUR}}. Pour toute question sur tes données : {{CONTACT}}.
+Flirt Coach Pro est édité par {{EDITEUR}}. Pour toute question sur tes données : {{CONTACT}}.
 
 ## Les données que nous traitons
 
@@ -46,7 +46,7 @@ Tu peux aussi adresser une réclamation à l'autorité de protection des donnée
 
 ## Mineurs
 
-Flirt Coach est réservé aux personnes de 18 ans ou plus.
+Flirt Coach Pro est réservé aux personnes de 18 ans ou plus.
 
 ## Modifications
 
