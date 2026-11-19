@@ -44,6 +44,7 @@ flutter:
     - assets/images/logo_symbol.png
     - assets/images/logo_wordmark_dark.png
     - assets/legal/
+    - assets/help/
 
   fonts:
     - family: Poppins

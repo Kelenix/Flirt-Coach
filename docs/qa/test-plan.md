@@ -7,9 +7,9 @@
 
 | Niveau | Outil | Nombre | Lancement |
 |--------|-------|--------|-----------|
-| Base de données (RLS, crédits, quotas, achats, récompenses, historique, signalements, banque) | pgTAP | 99 | `supabase test db` |
-| Edge Functions (validation, consignes IA, lecture des sorties, webhooks, rappels AdMob) | Deno | 50 | `deno test --allow-env` dans chaque fonction |
-| App : logique, lecture des réponses serveur, écrans, parcours | flutter_test | 115 | `flutter test` |
+| Base de données (RLS, crédits, quotas, achats, récompenses, historique, signalements, banque, transfert d'abonnement) | pgTAP | 110 | `supabase test db` |
+| Edge Functions (validation, consignes IA, lecture des sorties, webhooks, rappels AdMob) | Deno | 51 | `deno test --allow-env` dans chaque fonction |
+| App : logique, lecture des réponses serveur, écrans, parcours | flutter_test | 117 (accessibilité comprise) | `flutter test` |
 | App : accessibilité (cibles tactiles Android/iOS, libellés, contraste) | flutter_test (guidelines) | 7 écrans | inclus dans `flutter test` |
 | Bout en bout sur appareil + mesure de fluidité | integration_test | 1 parcours | `flutter drive --profile --no-dds …` (voir `docs/performance.md`) |
 

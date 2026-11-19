@@ -166,6 +166,29 @@ void main() {
     expect(find.byType(GenerateScreen), findsOneWidget);
   });
 
+  testWidgets(
+    'nouveau téléphone : abonnement retrouvé, Premium attendu du serveur',
+    (tester) async {
+      final backend = await open(tester);
+      backend
+        ..hasStoreSubscription = true
+        ..webhookDelivered = false;
+      await openPaywall(tester);
+      await reveal(tester, find.text('Restaurer mes achats'));
+      await tester.tap(find.text('Restaurer mes achats'));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.text(
+          'Abonnement retrouvé : Premium s\'active dans quelques instants.',
+        ),
+        findsOneWidget,
+      );
+      expect(find.byType(PaywallScreen), findsOneWidget);
+      expect(backend.wallet.isPremium, isFalse);
+    },
+  );
+
   testWidgets('plus de crédit : bouton vers le paywall', (tester) async {
     await open(
       tester,

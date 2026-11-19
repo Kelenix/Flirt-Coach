@@ -11,6 +11,7 @@ abstract interface class PurchasesRepository {
   /// Lance l'achat ; `false` si l'utilisateur annule.
   Future<bool> buy(String productId);
 
-  /// Restaure les achats faits avec le même compte store.
-  Future<void> restore();
+  /// Restaure les achats faits avec le même compte store ; `true` si le store y voit
+  /// un abonnement Premium actif.
+  Future<bool> restore();
 }

@@ -1,0 +1,56 @@
+# Aide et questions fréquentes
+
+## Comment fonctionne Flirt Coach ?
+
+Colle le dernier message reçu (ou importe une capture d'écran de la conversation), choisis une situation et un style, puis touche « Générer 3 réponses ». Le coach propose trois messages prêts à copier. Tu restes libre de les modifier avant de les envoyer.
+
+## Combien ça coûte ?
+
+- Chaque jour, tu reçois 5 crédits gratuits (non cumulables). Une génération coûte 1 crédit, la lecture d'une capture 2 crédits.
+- Pour gagner 2 crédits, tu peux regarder une courte vidéo (5 fois par jour au maximum).
+- Les packs de crédits achetés n'expirent pas.
+- Premium débloque tous les styles, l'analyse de conversation et l'historique, inclut la lecture des captures d'écran, sans publicité, dans la limite de 100 générations par jour.
+
+## Quand mes crédits gratuits reviennent-ils ?
+
+Ils repassent à 5 chaque jour à minuit, heure universelle (1 h ou 2 h du matin en France selon la saison). Si l'app était ouverte, ils se mettent à jour quand tu y reviens.
+
+## Pourquoi le coach refuse-t-il ma demande ?
+
+Flirt Coach aide à séduire avec respect. Il refuse les messages sexuellement explicites, haineux, insistants après un refus ou manipulateurs. Dans ce cas, aucun crédit n'est utilisé.
+
+## Ma capture d'écran n'est pas lue
+
+Utilise une capture nette de la conversation, sans zoom, où l'on voit les bulles des deux personnes. Si la conversation est illisible, aucun crédit n'est utilisé. Ta capture n'est jamais conservée.
+
+## Les réponses sont dans une autre langue
+
+Le coach répond dans la langue de la conversation : un message reçu en anglais donne des réponses en anglais. Pour obtenir du français, écris le contexte en français et colle un message en français.
+
+## J'ai acheté, mais rien n'a changé
+
+La confirmation du magasin d'applications peut prendre quelques secondes. Reviens à l'écran principal, puis rouvre l'app. Si Premium n'apparaît toujours pas, touche « Restaurer mes achats » dans l'écran Premium.
+
+## Comment résilier mon abonnement ?
+
+L'abonnement se gère dans le magasin d'applications : Réglages de l'app → « Gérer mon abonnement », ou directement dans Google Play / l'App Store. La résiliation doit être faite au moins 24 heures avant le renouvellement.
+
+## Je change de téléphone
+
+Sur le nouveau téléphone, ouvre l'écran Premium et touche « Restaurer mes achats », avec le même compte Google Play ou Apple : ton abonnement passe sur la nouvelle installation en quelques secondes. Les crédits achetés et l'historique restent liés à l'ancienne installation : ils ne se transfèrent pas.
+
+## Puis-je utiliser l'app sans connexion ?
+
+La banque de messages reste consultable hors connexion après une première ouverture. La génération, l'analyse et le Mode Respect ont besoin d'Internet.
+
+## Une réponse me semble inappropriée
+
+Touche l'icône drapeau sur la réponse, puis choisis un motif. Le signalement nous aide à améliorer le coach.
+
+## Mes données et mon compte
+
+Flirt Coach ne demande ni nom, ni e-mail. Tu peux supprimer ton compte à tout moment : Réglages → « Supprimer mon compte ». Toutes tes données sont alors effacées. Le détail est dans la politique de confidentialité.
+
+## Pourquoi y a-t-il des publicités ?
+
+Elles financent la version gratuite. Tu peux modifier tes choix dans Réglages → « Préférences publicitaires ». Premium ne contient aucune publicité.

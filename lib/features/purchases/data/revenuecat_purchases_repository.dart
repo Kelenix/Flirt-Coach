@@ -130,5 +130,10 @@ class RevenueCatPurchasesRepository implements PurchasesRepository {
   });
 
   @override
-  Future<void> restore() => _guard(Purchases.restorePurchases);
+  Future<bool> restore() => _guard(() async {
+    final info = await Purchases.restorePurchases();
+    return info.activeSubscriptions
+        .map(StoreProducts.baseId)
+        .any(StoreProducts.plans.containsKey);
+  });
 }

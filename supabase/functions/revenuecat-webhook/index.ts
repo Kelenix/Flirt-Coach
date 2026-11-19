@@ -74,5 +74,14 @@ Deno.serve(async (request) => {
       if (error) throw error;
       return reply(200, { status: action.isPremium ? "premium_on" : "premium_off" });
     }
+    case "transfer_premium": {
+      const { data, error } = await admin.rpc("transfer_premium", {
+        p_from: action.from,
+        p_to: action.to,
+      });
+      if (error && isUnknownUser(error)) return reply(200, { status: "unknown_user" });
+      if (error) throw error;
+      return reply(200, { status: data ? "premium_transferred" : "nothing_to_transfer" });
+    }
   }
 });

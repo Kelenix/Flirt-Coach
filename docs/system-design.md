@@ -1,107 +1,136 @@
-# Conception détaillée — Flirt Coach
+# Flux principaux
 
-> Phase 3 — System Design. Le domaine ne connaît pas Supabase : il ne voit que ces contrats.
+Séquences des parcours critiques, telles qu'implémentées. Complète
+[`architecture.md`](architecture.md) (structure) et [`api-reference.md`](api-reference.md) (contrats).
 
-## Erreurs typées
-
-`Failure` (classe scellée) : `NetworkFailure` · `InsufficientCreditsFailure` ·
-`PremiumRequiredFailure` · `ModerationFailure` (demande refusée) · `DailyLimitFailure` ·
-`UnreadableImageFailure` · `UnexpectedFailure`. Chaque écran traduit un `Failure` en message
-utilisateur ; aucun message technique brut n'est affiché.
-
-## Contrats des repositories
-
-```dart
-abstract interface class AuthRepository {
-  bool get hasSession;
-  Future<void> signInAnonymously();          // sans effet si une session existe
-  Future<void> confirmAge();                 // RPC confirm_age()
-  Future<void> linkEmail(String email);      // Inc-10
-  Future<void> deleteAccount();              // Inc-10, Edge Function
-}
-
-abstract interface class GenerationRepository {            // Inc-1 → Inc-4, Inc-7
-  Future<GenerationResult> generate(GenerationRequest request);
-  Future<GenerationResult> replyToScreenshot(Uint8List image, MessageStyle style);
-  Future<RespectVerdict> checkRespect(String draft);
-  Future<ConversationAnalysis> analyze(String conversation);
-}
-
-abstract interface class WalletRepository {                // Inc-1, Inc-5, Inc-6
-  Future<Wallet> fetch();      // crédits du jour, crédits bonus, isPremium
-}
-
-abstract interface class HistoryRepository {               // Inc-9
-  Future<List<Generation>> page({DateTime? before, int limit = 20});
-  Future<void> delete(String id);
-}
-
-abstract interface class MessageBankRepository {           // Inc-8
-  Future<List<BankMessage>> byCategory(BankCategory category);
-}
-
-abstract interface class ReportRepository {                // Inc-10
-  Future<void> report({required String proposal, required ReportReason reason, String? generationId});
-}
-```
-
-Entités freezed : `GenerationRequest(situation, style, receivedMessage?, context?)`,
-`GenerationResult(id, proposals[3], wallet)`, `Wallet(daily, bonus, isPremium)`.
-
-## Flux critique 1 — premier lancement
+## 1. Premier lancement
 
 ```mermaid
 sequenceDiagram
-  participant U as Utilisateur
+  actor U as Utilisateur
   participant App
   participant Auth as Supabase Auth
   participant DB as Postgres
-  U->>App: coche « 18 ans ou plus », Commencer
-  App->>Auth: signInAnonymously()
-  Auth->>DB: insert auth.users → trigger crée profiles
-  App->>DB: rpc confirm_age()
-  App->>App: mémorise la confirmation, route « / »
-  Note over App: échec réseau → message + Réessayer, rien n'est mémorisé
+  U->>App: coche « J'ai 18 ans ou plus », Commencer
+  App->>Auth: connexion anonyme
+  Auth->>DB: nouvel utilisateur → profil + solde de 5 crédits (trigger)
+  App->>DB: confirm_age()
+  App->>App: confirmation mémorisée localement, portefeuille relu
+  App-->>U: écran Générer
 ```
 
-## Flux critique 2 — génération
+Les lancements suivants ouvrent directement l'écran Générer (session dans le Keychain/Keystore).
+Sans réseau au premier lancement, rien n'est mémorisé et « Commencer » peut être relancé.
+
+## 2. Génération (et Mode Respect, capture, analyse)
 
 ```mermaid
 sequenceDiagram
+  actor U as Utilisateur
   participant App
-  participant EF as Edge Function generate
+  participant EF as Edge Function
   participant DB as Postgres
-  participant IA
-  App->>EF: POST {situation, style, texte} + JWT
-  EF->>EF: valide l'entrée (longueur, énumérations)
-  EF->>DB: profil confirmé ? premium ? style autorisé ?
-  EF->>DB: consume_credits(coût) — atomique, échoue si solde insuffisant
-  EF->>IA: prompt système (règles éthiques) + texte utilisateur isolé
-  IA-->>EF: JSON {refused, proposals[3]}
-  alt réponse valide
-    EF->>DB: insert generations
-    EF-->>App: 200 {proposals, wallet}
-  else refus, erreur IA ou délai dépassé
-    EF->>DB: refund_credits(coût)
-    EF-->>App: 422 moderation / 502 erreur
+  participant AI as Claude
+  U->>App: message + situation + style, Générer
+  App->>EF: POST /generate (jeton)
+  EF->>DB: âge, Premium, spend_credits (quotas + débit sous verrou)
+  EF->>AI: consignes + données balisées, sortie JSON imposée
+  alt réponses valides
+    EF->>DB: génération enregistrée
+    EF-->>App: 3 propositions + portefeuille
+  else refus du coach / capture illisible / erreur
+    EF->>DB: refund_credits
+    EF-->>App: refus motivé ou code d'erreur
   end
+  App-->>U: Résultats (ou message clair)
 ```
 
-Le débit précède l'appel IA (sinon deux requêtes simultanées dépensent le même crédit) et
-est remboursé en cas d'échec. Premium : pas de débit, mais compteur journalier (plafond 100).
+Un double tap est ignoré par l'app ; deux requêtes simultanées sont comptées une à une par le
+verrou du portefeuille côté serveur.
 
-## Résilience
+## 3. Achat (abonnement ou pack)
 
-| Sujet | Règle |
-|-------|-------|
-| Délai | 30 s côté app pour une génération ; 25 s côté fonction vers l'IA |
-| Nouvelle tentative | aucune automatique sur une génération (éviter un double débit) ; l'utilisateur relance |
-| Idempotence | achats et récompenses identifiés par l'identifiant de transaction (contrainte `unique`) |
-| Pagination | historique par curseur (`created_at`), 20 par page |
-| Realtime | non utilisé ; le portefeuille est renvoyé par chaque réponse et relu à l'ouverture |
+```mermaid
+sequenceDiagram
+  actor U as Utilisateur
+  participant App
+  participant Store as Google Play / App Store
+  participant RC as RevenueCat
+  participant EF as revenuecat-webhook
+  participant DB as Postgres
+  U->>App: choisit une offre
+  App->>RC: achat (SDK)
+  RC->>Store: paiement
+  Store-->>RC: reçu validé
+  RC->>EF: webhook (secret partagé)
+  EF->>DB: set_premium() ou grant_credits() — idempotent
+  loop jusqu'à confirmation (quelques secondes)
+    App->>DB: get_wallet()
+  end
+  App-->>U: « Bienvenue dans Premium ! » / « Tes crédits ont été ajoutés. » / « Achat validé par le store… »
+```
 
-## Sécurité du prompt
+L'app n'accorde jamais un droit elle-même : elle attend que le serveur l'ait reçu. Un
+remboursement passe par le même webhook (Premium retiré, crédits restants repris).
 
-Le texte collé et le contenu d'une capture sont transmis comme données délimitées, jamais
-concaténés aux consignes. Le modèle n'a aucun outil. La sortie doit respecter un schéma JSON
-strict ; toute sortie non conforme est traitée comme une erreur (remboursement).
+## 4. Vidéo récompensée
+
+```mermaid
+sequenceDiagram
+  actor U as Utilisateur
+  participant App
+  participant Ad as AdMob
+  participant EF as admob-ssv
+  participant DB as Postgres
+  U->>App: « Regarder une pub (+2 crédits) »
+  App->>Ad: affiche la vidéo (identifiant utilisateur joint)
+  Ad->>EF: rappel signé (ECDSA) une fois la vidéo vue
+  EF->>EF: signature + bloc d'annonces autorisé
+  EF->>DB: claim_ad_reward() — 5 par jour, anti-rejeu
+  App->>DB: get_wallet() jusqu'à voir les crédits
+```
+
+## 5. Suppression du compte
+
+```mermaid
+sequenceDiagram
+  actor U as Utilisateur
+  participant App
+  participant EF as delete-account
+  participant RC as RevenueCat
+  participant Auth as Supabase Auth
+  U->>App: Réglages → Supprimer mon compte → confirmer
+  App->>EF: POST /delete-account (jeton)
+  EF->>RC: suppression du client (si clé configurée)
+  EF->>Auth: suppression de l'utilisateur → cascade sur toutes les tables
+  App->>App: session locale fermée, préférences effacées
+  App-->>U: accueil 18+ (premier lancement)
+```
+
+Un abonnement en cours n'est pas résilié par cette opération (l'utilisateur en est informé
+avant de confirmer) : il se gère dans le store.
+
+## 6. Restauration sur un nouveau téléphone
+
+```mermaid
+sequenceDiagram
+  actor U as Utilisateur
+  participant App
+  participant RC as RevenueCat
+  participant EF as revenuecat-webhook
+  participant DB as Postgres
+  U->>App: nouvelle installation, « Restaurer mes achats »
+  App->>RC: restauration (SDK)
+  RC-->>App: abonnement actif retrouvé
+  RC->>EF: TRANSFER (ancien compte → nouveau)
+  EF->>DB: transfer_premium() — Premium déplacé
+  loop jusqu'à confirmation (quelques secondes)
+    App->>DB: get_wallet()
+  end
+  App-->>U: « Achats restaurés : Premium est actif. »
+```
+
+La nouvelle installation a un nouveau compte anonyme : l'abonnement la suit, l'ancien compte perd
+Premium. Si le store ne trouve aucun abonnement actif, l'app répond tout de suite « Aucun
+abonnement actif à restaurer pour ce compte store. » ; si le serveur tarde, elle l'indique
+(« Abonnement retrouvé : Premium s'active dans quelques instants. »).

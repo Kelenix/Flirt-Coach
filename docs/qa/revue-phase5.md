@@ -20,7 +20,7 @@ Légende : ✅ corrigé · ⏸️ reporté (raison) · ❓ décision du proprié
 | S9 | Mineur | admob-ssv : rechargement des clés Google forçable | ✅ au plus une fois par minute, `key_id` numérique |
 | S10 | Mineur | `refund_credits` lit la date du remboursement, pas du débit | ⏸️ effet rare et faible (crédits du jour rendus le lendemain) |
 | S11 | Mineur, incertain | Événement RevenueCat tardif après remboursement | ⏸️ à traiter avec la mise en place réelle de RevenueCat |
-| S12 | Important avant publication | Événement `TRANSFER` (réinstallation + « Restaurer ») ignoré | ⏸️ nécessite la clé secrète RevenueCat (tâche 14) : à faire en phase 6 |
+| S12 | Important avant publication | Événement `TRANSFER` (réinstallation + « Restaurer ») ignoré | ✅ corrigé (ADR-027) : transfert du droit Premium en base, testé |
 
 ## Code de l'app
 

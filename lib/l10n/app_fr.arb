@@ -101,7 +101,7 @@
   "annualOfferHeadline": "Offre spéciale : Premium à l'année",
   "paywallBenefitMessages": "Jusqu'à 100 messages par jour",
   "paywallBenefitStyles": "Les 7 styles : Drôle, Romantique, Mystérieux…",
-  "paywallBenefitScreenshot": "Réponses à partir d'une capture d'écran",
+  "paywallBenefitScreenshot": "Lecture des captures d'écran incluse",
   "paywallBenefitAnalysis": "Analyse de conversation et historique",
   "paywallBenefitNoAds": "Aucune publicité",
   "planWeekly": "Hebdomadaire",
@@ -161,6 +161,7 @@
   "purchaseCreditsAdded": "Tes crédits ont été ajoutés.",
   "purchasePending": "Achat validé par le store. Tes avantages arrivent dans quelques instants.",
   "purchaseRestored": "Achats restaurés : Premium est actif.",
+  "purchaseRestorePending": "Abonnement retrouvé : Premium s'active dans quelques instants.",
   "purchaseNothingToRestore": "Aucun abonnement actif à restaurer pour ce compte store.",
   "upgradeButton": "Passer Premium",
   "watchAdForCredits": "Regarder une pub (+2 crédits)",
@@ -244,5 +245,6 @@
   "reportSent": "Merci, ton signalement a été envoyé.",
   "errorRateLimited": "Tu vas un peu vite : patiente une minute avant de recommencer.",
   "historyInput": "« {text} »",
-  "@historyInput": {"placeholders": {"text": {"type": "String"}}}
+  "@historyInput": {"placeholders": {"text": {"type": "String"}}},
+  "helpFaq": "Aide et questions fréquentes"
 }

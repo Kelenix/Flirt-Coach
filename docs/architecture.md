@@ -1,97 +1,175 @@
-# Architecture — Flirt Coach
+# Architecture
 
-> Phase 3 — Mobile Architect. Décisions détaillées : `DECISION_LOG.md`.
+Ce document décrit l'architecture **telle qu'implémentée** (version 1.0.0). Les raisons des choix
+sont dans [`DECISION_LOG.md`](../DECISION_LOG.md) (références ADR entre parenthèses).
 
 ## Vue d'ensemble
 
 ```mermaid
 flowchart LR
-  subgraph App[App Flutter]
-    P[Présentation<br/>écrans, widgets] --> A[Application<br/>notifiers Riverpod]
-    A --> D[Domaine<br/>entités, contrats]
-    I[Données<br/>repositories Supabase] --> D
+  subgraph Phone[Téléphone]
+    App[App Flutter]
+    KS[(Keychain / Keystore<br/>session)]
+    SP[(Préférences locales<br/>âge, banque hors-ligne)]
   end
-  I -->|lecture sous RLS| DB[(Postgres)]
-  I -->|invoke + JWT| EF[Edge Functions]
-  EF -->|service role| DB
-  EF -->|clé serveur| IA[API IA]
-  RC[RevenueCat webhook] --> EF
-  AD[AdMob SSV] --> EF
+  subgraph Supabase
+    Auth[Auth anonyme]
+    DB[(Postgres + RLS)]
+    EF[Edge Functions<br/>Deno]
+  end
+  App -- session --> KS
+  App -- lecture sous RLS<br/>+ RPC client --> DB
+  App -- appels IA + JWT --> EF
+  App -- connexion anonyme --> Auth
+  EF -- service_role --> DB
+  EF -- clé serveur --> Claude[API Claude]
+  Stores[Google Play / App Store] --> RC[RevenueCat]
+  RC -- webhook signé --> EF
+  AdMob -- rappel SSV signé ECDSA --> EF
+  App -. achats SDK .-> RC
+  App -. annonces SDK .-> AdMob
 ```
 
-**Règle centrale** : l'app lit ses données sous RLS, mais toute écriture sensible (crédits,
-droits Premium, générations) passe par une Edge Function. La clé IA et la clé `service_role`
-ne quittent jamais le serveur.
+**Trois règles structurantes**
 
-## Structure du code
+1. **Le serveur fait foi.** Crédits, droits Premium, récompenses et quotas ne sont modifiés que
+   par le serveur (Edge Functions et fonctions SQL `security definer`). L'app relit son
+   portefeuille, elle ne l'écrit jamais (ADR-005, ADR-017, ADR-025).
+2. **Aucun secret dans l'app.** Elle ne connaît que l'URL Supabase et la clé *publishable*.
+   La clé IA et `service_role` restent sur le serveur (ADR-003).
+3. **RLS partout.** Le client lit ses propres lignes ; aucune table n'accepte d'écriture directe.
+
+## Application Flutter
+
+### Couches
 
 ```
 lib/
-├── main.dart            # bootstrap (Supabase, préférences), ProviderScope
-├── app.dart             # MaterialApp.router, thème, l10n
-├── core/                # config, thème, erreurs, client Supabase, stockage sécurisé
-├── routing/             # go_router + garde d'accès
-├── l10n/                # app_fr.arb (source des textes)
-├── shared/              # widgets réutilisables (logo, boutons, fond dégradé)
+├── main.dart              démarrage : configuration, barres système, Supabase, préférences
+├── app.dart               MaterialApp.router, thème, l10n, relecture du portefeuille au retour
+├── core/                  config (Env), thème (tokens, icônes), erreurs (Failure),
+│                          client Supabase (garde, délais), état (GuardedAction), stockage
+├── routing/               go_router + garde d'accès
+├── shared/widgets/        composants du kit de marque (boutons, cartes, fond, logo…)
+├── l10n/app_fr.arb        tous les textes de l'interface
 └── features/<feature>/
-    ├── presentation/    # écrans, widgets
-    ├── application/     # notifiers
-    ├── domain/          # entités freezed, interfaces de repository
-    └── data/            # implémentations Supabase
-supabase/
-├── migrations/          # schéma + RLS, rejouables depuis zéro
-├── functions/           # Edge Functions (Deno/TypeScript)
-└── seed.sql
+    ├── presentation/      écrans et widgets (aucune logique métier)
+    ├── application/       contrôleurs Riverpod (AsyncNotifier)
+    ├── domain/            entités (freezed) et interfaces de dépôt
+    └── data/              implémentations Supabase / SDK
 ```
 
-Une feature ne crée que les couches dont elle a besoin (pas de dossiers vides).
+Une feature ne crée que les couches dont elle a besoin. Le **domaine** ne dépend ni de Supabase
+ni de Flutter : les tests remplacent chaque dépôt par un faux (`test/helpers/test_app.dart`).
 
-## Navigation (go_router)
+| Feature | Rôle |
+|---------|------|
+| `onboarding` | accueil 18+, création de la session anonyme, garde d'accès |
+| `generation` | écran Générer, situations, styles, capture, Résultats |
+| `respect` | Mode Respect |
+| `analysis` | analyse de conversation (Premium) |
+| `message_bank` | banque de messages, copie locale hors-ligne |
+| `history` | historique Premium, pagination, suppression |
+| `credits` | portefeuille (crédits du jour, bonus, Premium), pastille |
+| `purchases` | paywall, RevenueCat, offre annuelle à J+3 |
+| `ads` | consentement UMP, bannière, vidéo récompensée |
+| `report` | signalement d'une réponse |
+| `settings` | réglages, suppression du compte |
+| `legal` | textes légaux et aide embarqués |
+| `menu`, `auth` | menu des fonctionnalités, session |
+
+### Navigation
 
 | Route | Écran | Accès |
 |-------|-------|-------|
-| `/welcome` | Accueil 18+ | toujours |
-| `/` | Générer (accueil) | après confirmation d'âge + session |
+| `/welcome` | Accueil 18+ | sans session |
+| `/legal/privacy`, `/legal/terms` | Textes légaux | toujours, même avant l'âge |
+| `/` | Générer | âge confirmé + session |
 | `/results` | 3 propositions | idem |
-| `/screenshot`, `/respect`, `/analysis`, `/bank`, `/history` | fonctionnalités | idem (+ Premium vérifié serveur) |
-| `/paywall` | offres | idem |
-| `/settings`, `/legal/:doc` | réglages, textes légaux | `/legal` accessible dès `/welcome` |
+| `/respect`, `/analysis`, `/bank`, `/history` | fonctionnalités | idem |
+| `/paywall` (`?offer=annual`) | offres Premium et packs | idem |
+| `/settings`, `/help` | réglages, aide | idem |
 
-Garde unique : sans confirmation d'âge ou sans session → `/welcome`. Les écrans Premium ne sont
-pas protégés par la route (un gratuit voit l'écran verrouillé) ; la protection réelle est serveur.
+Une **garde unique** (`appRouterProvider`) renvoie vers `/welcome` tant que l'âge n'est pas
+confirmé ou qu'aucune session n'existe. Les écrans Premium ne sont pas bloqués par la route :
+un utilisateur gratuit voit un écran « Réservé à Premium » ; la vraie protection est serveur.
 
-## Gestion d'état
+### Gestion d'état
 
-Riverpod, sans génération de code. `AsyncNotifier` + `AsyncValue` pour tout l'asynchrone ;
-providers par feature ; dépendances injectées par providers (remplaçables en test).
-Sources de vérité : session → Supabase Auth ; crédits et Premium → serveur (relus après chaque
-action) ; confirmation d'âge → serveur, avec copie locale pour le démarrage hors-ligne.
+- Riverpod sans génération de code ; `AsyncNotifier` + `AsyncValue` pour tout l'asynchrone.
+- Les actions (générer, vérifier, acheter, regarder une vidéo, supprimer le compte) passent par le
+  mixin `GuardedAction` : état de chargement, contrôleur gardé en vie pendant l'appel, **double tap
+  ignoré** (ADR-025).
+- Le portefeuille (`walletProvider`) est relu au démarrage, après chaque action, au retour de
+  l'app au premier plan et après la création d'une session.
 
-## Hors-ligne
+### Erreurs
 
-Pas de mode hors-ligne fonctionnel : la génération exige le réseau. L'app détecte l'échec
-réseau, affiche un état d'erreur avec « Réessayer », et ne débite jamais sans réponse du
-serveur. Seule la banque de messages est mise en cache pour consultation hors-ligne (Inc-8).
+Toute erreur devient un `Failure` typé (réseau, crédits insuffisants, Premium requis, limite du
+jour, limite par minute, IA indisponible, capture illisible…) traduit en message clair. Aucun
+message technique n'est affiché. Délais maximaux : 20 s par appel, 70 s pour un appel IA.
 
-## Configuration et secrets
+### Hors-ligne
 
-| Valeur | Où | Remarque |
-|--------|----|----------|
-| `SUPABASE_URL`, `SUPABASE_ANON_KEY` | `--dart-define-from-file=config/<env>.json` | publiques par nature, protégées par RLS |
-| clé IA, `service_role`, secrets webhook | secrets Supabase (Edge Functions) | jamais dans l'app ni le dépôt |
-| jeton de session | Keychain / Keystore (`flutter_secure_storage`) | pas dans les préférences |
+La génération exige le réseau. Hors-ligne, Générer, Mode Respect et Analyse affichent « Pas de
+connexion. Vérifie ton réseau et réessaie. » et gardent leur bouton principal ; la Banque et
+l'Historique proposent un bouton « Réessayer ». Aucun débit sans réponse du serveur. Exception :
+la **banque de messages** reste consultable grâce à la dernière copie locale (ADR-022).
 
-Environnements : `config/dev.json` (Supabase local Docker) et `config/prod.json` (cloud), non
-versionnés ; modèle dans `config/dev.example.json`. Pas de flavors natifs tant qu'un seul
-identifiant d'application suffit (ADR-011).
+## Serveur (Supabase)
+
+### Edge Functions
+
+| Fonction | Appelée par | Authentification | Rôle |
+|----------|-------------|------------------|------|
+| `generate` | app | JWT utilisateur | 3 réponses pour une situation |
+| `screenshot-reply` | app | JWT | 3 réponses à partir d'une capture |
+| `respect-check` | app | JWT | verdict Respect + alternative |
+| `conversation-analysis` | app | JWT (Premium) | dynamique, conseil, rendez-vous |
+| `delete-account` | app | JWT | suppression définitive du compte |
+| `revenuecat-webhook` | RevenueCat | secret partagé | droits Premium, crédits achetés |
+| `admob-ssv` | Google AdMob | signature ECDSA | crédits de vidéo récompensée |
+
+Les quatre fonctions IA partagent un même socle (`_shared/ai_endpoint.ts`) :
+
+```mermaid
+flowchart LR
+  A[JWT vérifié] --> B[requête validée] --> C[âge confirmé] --> D[Premium si requis]
+  D --> E[quota + débit sous verrou] --> F[appel Claude<br/>sortie JSON contrainte]
+  F -->|succès| G[génération enregistrée]
+  F -->|refus, illisible, erreur| H[remboursement]
+```
+
+Le modèle est `claude-opus-5-5` (effort bas, sortie au format JSON imposé, repli serveur
+automatique) ; consignes et données utilisateur sont séparées par balises (ADR-014, ADR-016).
+
+### Base de données
+
+Schéma, règles d'accès et fonctions SQL : [`data-model.md`](data-model.md). Contrats des appels :
+[`api-reference.md`](api-reference.md).
 
 ## Capacités natives et permissions
 
-| Besoin | Plugin | Permission |
-|--------|--------|-----------|
-| Choisir une capture | `image_picker` (sélecteur système) | aucune permission permanente |
-| Achats | `purchases_flutter` | facturation |
-| Publicités | `google_mobile_ads` | Internet, identifiant pub (consentement UMP/ATT) |
-| Session | `flutter_secure_storage` | aucune |
+| Besoin | Paquet | Permission |
+|--------|--------|------------|
+| Session sécurisée | `flutter_secure_storage` | aucune |
+| Capture d'écran | `image_picker` (sélecteur système) | aucune permission permanente sur la galerie |
+| Achats | `purchases_flutter` | facturation du store |
+| Publicités | `google_mobile_ads` | Internet ; consentement UMP (RGPD) |
+| Liens externes | `url_launcher` | aucune |
 
-Aucune permission caméra, micro, contacts, localisation ni notification en V1.
+Le manifeste Android du projet ne déclare que `INTERNET`. Les SDK ajoutent au manifeste final :
+`ACCESS_NETWORK_STATE`, `AD_ID`, `ACCESS_ADSERVICES_AD_ID`, `ACCESS_ADSERVICES_ATTRIBUTION`,
+`ACCESS_ADSERVICES_TOPICS` (publicité), `BILLING` (achats), `WAKE_LOCK` et `FOREGROUND_SERVICE`.
+L'identifiant publicitaire (`AD_ID`) doit être déclaré dans la Play Console. Aucune permission
+caméra, micro, contacts, localisation ni notification.
+
+## Environnements
+
+| Environnement | Serveur | Configuration app |
+|---------------|---------|-------------------|
+| Développement | Supabase local (Docker) | `config/dev.json`, `config/phone.json` |
+| Cloud (test puis production) | projet Supabase UE | `config/prod.json` |
+
+Pas de *flavors* natifs : un seul identifiant d'application (ADR-011). Détail des variables :
+[`configuration.md`](configuration.md).

@@ -8,10 +8,12 @@ import '../../../l10n/app_localizations.dart';
 import '../../../routing/app_routes.dart';
 import '../../../shared/widgets/gradient_background.dart';
 
-/// Documents légaux embarqués (US-06), consultables avant et après l'accueil 18+.
+/// Textes embarqués : documents légaux (US-06), consultables avant et après
+/// l'accueil 18+, et aide de l'app (questions fréquentes).
 enum LegalDocument {
   privacy('assets/legal/privacy_fr.txt', AppRoutes.privacy),
-  terms('assets/legal/terms_fr.txt', AppRoutes.terms);
+  terms('assets/legal/terms_fr.txt', AppRoutes.terms),
+  help('assets/help/faq_fr.txt', AppRoutes.help);
 
   const LegalDocument(this.asset, this.route);
 
@@ -21,6 +23,7 @@ enum LegalDocument {
   String title(AppLocalizations l10n) => switch (this) {
     LegalDocument.privacy => l10n.legalPrivacy,
     LegalDocument.terms => l10n.legalTerms,
+    LegalDocument.help => l10n.helpFaq,
   };
 }
 

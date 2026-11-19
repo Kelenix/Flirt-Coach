@@ -1,60 +1,124 @@
-# Modèle de données — Flirt Coach
+# Modèle de données
 
-> Phase 3 — Database Architect. Base de développement : Supabase local sous Docker (ADR-009).
-> Les tables sont créées par l'incrément qui les utilise ; la colonne « Inc » l'indique.
+Base Postgres (Supabase), schéma `public`. Source de vérité : les migrations de
+`supabase/migrations/`, rejouables depuis zéro (`supabase db reset`). Tests : `supabase/tests/`.
+
+## Schéma
 
 ```mermaid
 erDiagram
-  auth_users ||--|| profiles : "1-1"
-  profiles ||--|| credit_balances : "1-1"
-  profiles ||--o{ credit_transactions : a
-  profiles ||--o| entitlements : a
-  profiles ||--o{ generations : produit
-  profiles ||--o{ reports : envoie
-  profiles ||--o{ ad_rewards : gagne
-  generations ||--o{ reports : concerne
+  AUTH_USERS ||--|| PROFILES : "1-1, cascade"
+  PROFILES ||--|| CREDIT_BALANCES : "1-1"
+  PROFILES ||--o{ CREDIT_TRANSACTIONS : "journal"
+  PROFILES ||--o| ENTITLEMENTS : "droits"
+  PROFILES ||--o{ GENERATIONS : "produit"
+  PROFILES ||--o{ AI_USAGE : "tentatives"
+  PROFILES ||--o{ REPORTS : "signale"
+  GENERATIONS ||--o{ REPORTS : "concerne"
+  MESSAGE_BANK
 ```
 
-## Dictionnaire
+Toutes les tables liées à un utilisateur sont supprimées en **cascade** depuis `auth.users` :
+supprimer le compte efface tout.
 
-| Table | Inc | Colonnes principales | Rôle |
-|-------|-----|----------------------|------|
-| `profiles` | 0 | `id` (= `auth.users.id`), `age_confirmed_at`, `created_at`, `updated_at` | Compte ; `created_at` sert à l'offre J+3 |
-| `credit_balances` | 1 | `user_id`, `daily_credits`, `daily_reset_on` (date UTC), `bonus_credits` | Solde courant |
-| `credit_transactions` | 1 | `id`, `user_id`, `amount`, `kind`, `reference`, `created_at` | Journal immuable des mouvements |
-| `entitlements` | 1 (écrit en 5) | `user_id`, `is_premium`, `product_id`, `expires_at` | Droits Premium |
-| `generations` | 1 | `id`, `user_id`, `kind`, `style`, `input_text`, `output` (jsonb), `created_at` | Historique + base des signalements + plafond Premium |
-| `message_bank` | 8 | `id`, `category`, `body`, `sort_order` | Contenu statique |
-| `reports` | 10 | `id`, `user_id`, `generation_id`, `proposal_text`, `reason`, `created_at` | Signalements |
-| `ad_rewards` | 6 | `id`, `user_id`, `transaction_id` (unique), `created_at` | Récompenses pub (anti-rejeu) |
+## Tables
 
-Types énumérés : `generation_kind` (reply, opener, flirt, follow_up, pre_date, apology,
-soft_breakup, screenshot, respect_check, conversation_analysis) · `credit_kind` (daily_use,
-bonus_use, refund, purchase, ad_reward) · `report_reason` · `bank_category`.
+| Table | Colonnes principales | Rôle |
+|-------|----------------------|------|
+| `profiles` | `id` (= `auth.users.id`), `age_confirmed_at`, `created_at`, `updated_at` | compte ; créé automatiquement à l'inscription |
+| `credit_balances` | `user_id`, `daily_credits` (0–5), `daily_reset_on` (date UTC), `bonus_credits` (≥ 0), `updated_at` | solde courant ; remise à 5 au premier accès d'un nouveau jour |
+| `credit_transactions` | `id`, `user_id`, `amount` (≠ 0), `kind`, `reference`, `created_at` | journal immuable des mouvements ; `reference` unique pour les achats et récompenses (anti-rejeu) |
+| `entitlements` | `user_id`, `is_premium`, `product_id`, `expires_at`, `updated_at` | droits Premium, écrits uniquement par le webhook RevenueCat |
+| `generations` | `id`, `user_id`, `kind`, `style`, `input_text` (≤ 4000), `context_text` (≤ 1000), `output` (jsonb), `created_at`, `deleted_at` | historique ; `input_text` vide pour une capture (jamais stockée) ; une entrée supprimée est vidée et marquée `deleted_at` |
+| `ai_usage` | `id`, `user_id`, `reference`, `created_at` | chaque tentative d'appel IA, pour les quotas (10/min, 100/jour) |
+| `message_bank` | `id`, `category`, `body` (≤ 400), `sort_order` | banque de messages (contenu statique, 40 lignes) |
+| `reports` | `id`, `user_id`, `generation_id`, `reported_text`, `reason`, `created_at` | signalements ; texte copié, unique par couple (génération, texte), donc au plus 3 par génération |
 
-## Règles d'accès (RLS activée partout)
+### Types énumérés
 
-| Table | Client (`authenticated`) | Écriture |
-|-------|--------------------------|----------|
-| `profiles` | lit sa ligne | trigger à l'inscription ; `confirm_age()` |
-| `credit_balances`, `credit_transactions`, `entitlements` | lit ses lignes | Edge Functions uniquement (`service_role`) |
-| `generations` | lit ses lignes si Premium ; supprime les siennes | Edge Function |
-| `message_bank` | lecture pour tous les connectés | migrations |
-| `reports` | insère et lit les siens | client (insert borné par policy) |
-| `ad_rewards` | aucune | Edge Function |
+| Type | Valeurs |
+|------|---------|
+| `generation_kind` | `reply`, `opener`, `flirt`, `follow_up`, `pre_date`, `apology`, `soft_breakup`, `screenshot`, `respect_check`, `conversation_analysis` |
+| `message_style` | `classic`, `funny`, `romantic`, `mysterious`, `direct`, `elegant`, `playful_bold` |
+| `credit_kind` | `daily_use`, `bonus_use`, `refund`, `purchase`, `ad_reward`, `purchase_refund` |
+| `bank_category` | `opener`, `follow_up`, `date`, `apology`, `soft_breakup` |
+| `report_reason` | `offensive`, `sexual`, `harassment`, `manipulative`, `other` |
 
-Fonctions SQL `security definer` réservées au `service_role` (droit d'exécution retiré aux
-rôles clients) : `consume_credits(user, cost)`, `refund_credits(user, cost)`,
-`grant_credits(user, amount, kind, reference)`. Elles verrouillent la ligne de solde, remettent
-les crédits du jour à 5 si la date a changé, puis débitent le jour avant le bonus.
+### Contenu de `generations.output`
+
+| `kind` | Forme |
+|--------|-------|
+| situations, `screenshot` | `{"proposals": ["…", "…", "…"]}` |
+| `respect_check` | `{"isRespectful": bool, "issues": [{"category", "explanation"}], "alternative": "…" \| null}` |
+| `conversation_analysis` | `{"momentum", "summary", "nextStep", "suggestedMessage", "dateSuggestion"}` |
+| entrée supprimée | `{}` |
+
+## Règles d'accès (RLS)
+
+La RLS est active sur **toutes** les tables. Aucune table n'accepte d'écriture directe du client.
+
+| Table | Lecture par l'utilisateur connecté | Écriture |
+|-------|-----------------------------------|----------|
+| `profiles` | sa ligne | trigger à l'inscription ; `confirm_age()` |
+| `credit_balances`, `credit_transactions`, `entitlements` | ses lignes | fonctions serveur uniquement |
+| `generations` | ses lignes non supprimées, **seulement en Premium** | Edge Functions ; `delete_generation()` |
+| `ai_usage`, `reports` | aucune | fonctions serveur uniquement |
+| `message_bank` | tout (connecté) | migrations |
+
+Un visiteur sans session (`anon`) ne lit rien.
+
+## Fonctions SQL
+
+Toutes, sauf les constantes (simples fonctions SQL immuables), sont `security definer` avec
+`search_path` vide et noms qualifiés.
+
+### Appelables par l'app (rôle `authenticated`, agissent sur `auth.uid()` uniquement)
+
+| Fonction | Rôle |
+|----------|------|
+| `confirm_age()` | enregistre la déclaration 18+ |
+| `get_wallet()` | portefeuille de l'appelant : crédits du jour, bonus, Premium, vidéos restantes |
+| `delete_generation(id)` | vide une entrée d'historique (texte, contexte, réponses) et la marque supprimée |
+| `report_generation(id, texte, motif)` | signale un texte réellement produit par une de ses générations ; 20 par 24 h glissantes |
+
+### Réservées au serveur (`service_role`)
+
+| Fonction | Rôle |
+|----------|------|
+| `spend_credits(user, coût, référence)` | verrouille le solde, applique les quotas (10/min, 100/jour), enregistre la tentative, débite le jour puis le bonus (rien pour Premium) |
+| `refund_credits(user, jour, bonus, référence)` | rend un débit (refus, capture illisible, erreur) |
+| `grant_credits(user, montant, type, référence)` | crédite un achat ou une récompense, idempotent |
+| `revoke_credits(user, montant, référence)` | reprend les crédits d'un pack remboursé (au plus le solde bonus), idempotent |
+| `set_premium(user, actif, produit, échéance, forcer)` | met à jour le droit Premium ; ignore un événement plus ancien sauf remboursement |
+| `transfer_premium(anciens, nouveaux)` | déplace un droit Premium actif des anciens comptes vers les nouveaux (abonnement restauré sur une autre installation) |
+| `claim_ad_reward(user, transaction)` | +2 crédits par vidéo vue, 5 par jour, refusé aux Premium |
+| `wallet_of(user)`, `is_premium(user)`, `lock_balance(user)` | lectures et verrou internes |
+
+Constantes : `daily_credit_allowance()` = 5, `premium_daily_limit()` = 100,
+`ai_rate_limit_per_minute()` = 10, `ad_reward_daily_limit()` = 5, `ad_reward_credits()` = 2.
 
 ## Conservation des données
 
-- Captures d'écran : jamais écrites (ADR-006). `input_text` est nul pour `kind = screenshot`.
-- `generations` d'un compte non Premium : purgées après 30 jours (tâche planifiée, Inc-9).
-- Suppression de compte : `on delete cascade` depuis `auth.users` sur toutes les tables.
+| Donnée | Durée |
+|--------|-------|
+| Captures d'écran | jamais stockées (ADR-006) |
+| Historique | contenu effacé quand l'utilisateur supprime une entrée ; la ligne vidée (type, style, date) reste jusqu'à la suppression du compte |
+| Signalements | jusqu'à la suppression du compte ; ils gardent la copie du texte signalé même si l'entrée d'historique est supprimée, et l'utilisateur ne peut pas les effacer lui-même |
+| Solde et mouvements de crédits | jusqu'à la suppression du compte |
+| Tentatives d'appel IA (`ai_usage`) | jusqu'à suppression du compte (purge périodique possible, non automatisée en 1.0) |
 
 ## Index
 
-`generations (user_id, created_at desc)` (historique, plafond journalier) ·
-`credit_transactions (user_id, created_at desc)` · `reports (generation_id)`.
+`credit_transactions (user_id, created_at desc)` · `credit_transactions (reference)` unique pour
+achats et récompenses · `generations (user_id, created_at desc)` · `ai_usage (user_id, created_at desc)`
+· `reports (created_at desc)` · `message_bank (category, sort_order)` unique · `reports (generation_id, reported_text)` unique.
+
+## Faire évoluer le schéma
+
+1. Créer une migration horodatée : `supabase migration new <nom>`.
+2. L'écrire de façon à pouvoir la rejouer depuis zéro ; ajouter ou adapter un test dans
+   `supabase/tests/`.
+3. `supabase migration up` puis `supabase test db` en local.
+4. Déployer : `scripts/deploy-cloud.ps1` (confirmation demandée avant d'appliquer).
+
+Ne jamais modifier une migration déjà appliquée sur le cloud : en créer une nouvelle.

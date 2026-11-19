@@ -9,6 +9,7 @@ abstract final class AppRoutes {
   static const settings = '/settings';
   static const privacy = '/legal/privacy';
   static const terms = '/legal/terms';
+  static const help = '/help';
 
   /// Pages consultables avant la confirmation d'âge (liens de l'accueil 18+).
   static const public = {privacy, terms};

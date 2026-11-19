@@ -5,6 +5,71 @@
 
 ---
 
+## ADR-027 — Abonnement restauré sur une nouvelle installation (événement TRANSFER)
+
+- **Date** : 2026-11-18
+- **Statut** : Accepté
+- **Décideur** : Claude (rôles : backend, achats)
+- **Contexte** : point S12 de la revue de phase 5. Une réinstallation ou un nouveau téléphone
+  crée un nouveau compte anonyme ; « Restaurer mes achats » y rattache l'abonnement chez
+  RevenueCat, qui envoie un événement `TRANSFER` (anciens identifiants → nouveaux). Le webhook
+  l'ignorait : l'abonné perdait Premium.
+- **Décision** :
+  - Le webhook traite `TRANSFER` : il garde les identifiants Supabase (UUID) des listes
+    `transferred_from` et `transferred_to` (l'événement ne porte ni utilisateur ni produit).
+  - Nouvelle fonction SQL `transfer_premium(anciens, nouveaux)`, réservée au serveur : en une
+    transaction, elle reporte le droit Premium actif le plus récent des anciens comptes sur les
+    nouveaux (via `set_premium`, sans écraser un droit plus récent) et le retire aux anciens.
+    Réponses du webhook : `premium_transferred` ou `nothing_to_transfer` ; rejouer l'événement
+    est sans effet.
+  - App : `restore()` indique si le store voit un abonnement Premium actif
+    (`activeSubscriptions`). Si oui, l'app attend la confirmation du serveur comme après un
+    achat ; sinon elle répond tout de suite « Aucun abonnement actif ». Nouveau message si le
+    serveur tarde : « Abonnement retrouvé : Premium s'active dans quelques instants. »
+- **Alternatives écartées** : interroger l'API REST RevenueCat à chaque `TRANSFER` (dépend de la
+  clé secrète et d'un appel réseau de plus) ; procédure manuelle permanente (non viable).
+- **Conséquences** : les crédits achetés et l'historique ne suivent toujours pas (inchangé). Si
+  l'ancien compte n'avait aucun droit connu (webhook manqué, compte supprimé), la réponse est
+  `nothing_to_transfer` et la procédure manuelle de `docs/operations.md` s'applique. Prérequis
+  RevenueCat : « Restore behavior » = « Transfer to new App User ID » (tâche manuelle 7). Migration
+  `20261118090000_premium_transfer` et webhook déployés sur le cloud le 2026-11-18.
+- **Impact** : métier (conservation des abonnés) — fort ; sécurité — neutre (fonction réservée au
+  serveur, 11 tests pgTAP, 1 test Deno, essai de bout en bout en local).
+
+---
+
+## ADR-026 — Organisation de la documentation
+
+- **Date** : 2026-11-18
+- **Statut** : Accepté
+- **Décideur** : Claude (rôle : documentation)
+- **Contexte** : Phase 7 ; l'utilisateur exige une documentation professionnelle, **dans le
+  README**, avec l'identité de la marque. Il a explicitement écarté un site de documentation.
+- **Décision** :
+  - Le **`README.md` est la documentation principale** : bannière au logo, badges, sommaire,
+    présentation, fonctionnalités, captures, modèle économique, schéma d'architecture, stack,
+    démarrage, configuration, tests, compilation, structure, sécurité, limites connues.
+  - Visuels du README dans `docs/assets/readme/` : bannière PNG générée depuis les logos et les
+    polices du kit, schéma d'architecture en SVG (lisible partout, sans dépendre de Mermaid).
+  - Les **annexes détaillées** restent dans `docs/` (une rubrique par document : architecture,
+    flux, données, API, configuration, exploitation, tâches manuelles, guide utilisateur, FAQ et
+    support, fiche store, charte éditoriale) et sont reliées depuis le README.
+  - **Aide intégrée à l'app** (Réglages → « Aide et questions fréquentes », texte
+    `assets/help/faq_fr.txt`), lisible hors connexion.
+  - `CHANGELOG.md` au format Keep a Changelog + SemVer.
+  - Contenu écrit **à partir du code** et relu par un agent indépendant (23 écarts corrigés) ;
+    liens, ancres et images vérifiés par script.
+- **Alternatives écartées** : site de documentation (MkDocs) — refusé par l'utilisateur ;
+  diagrammes Mermaid dans le README — non affichés par tous les lecteurs Markdown.
+- **Conséquences** : toute évolution met à jour le README ou l'annexe concernée dans le même
+  changement. Corrigés au passage dans l'app : l'aide et l'écran Premium laissaient croire que la
+  capture d'écran était réservée à Premium ; l'aide promettait une restauration de l'abonnement
+  après changement de téléphone, impossible tant que l'événement RevenueCat `TRANSFER` n'est pas
+  traité (procédure manuelle documentée, correctif à faire avant publication).
+- **Impact** : métier (support, stores) — faible.
+
+---
+
 ## ADR-025 — Corrections de la phase 5 (qualité, sécurité, performance)
 
 - **Date** : 2026-11-18

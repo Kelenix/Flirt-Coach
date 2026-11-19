@@ -26,6 +26,7 @@ export type WebhookAction =
     expiresAt: string | null;
     force: boolean;
   }
+  | { kind: "transfer_premium"; from: string[]; to: string[] }
   | { kind: "ignore"; reason: string };
 
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -48,6 +49,15 @@ export function resolveUserId(event: Record<string, unknown>): string | null {
     }
   }
   return null;
+}
+
+/** Identifiants Supabase d'une liste d'alias RevenueCat (les identifiants anonymes sont écartés). */
+function userIds(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  const ids = value
+    .filter((id): id is string => typeof id === "string" && uuidPattern.test(id))
+    .map((id) => id.toLowerCase());
+  return [...new Set(ids)];
 }
 
 const activatingEvents = new Set([
@@ -80,6 +90,15 @@ export function actionFor(
   // Un achat sandbox est gratuit : il ne doit jamais donner de vrais droits en production.
   if (fields.environment === "SANDBOX" && !options.allowSandbox) {
     return { kind: "ignore", reason: "sandbox" };
+  }
+
+  // Abonnement restauré sur une nouvelle installation : RevenueCat le rattache au nouveau
+  // compte. L'événement ne porte ni utilisateur ni produit, seulement les identifiants.
+  if (type === "TRANSFER") {
+    const from = userIds(fields.transferred_from);
+    const to = userIds(fields.transferred_to).filter((id) => !from.includes(id));
+    if (from.length === 0 || to.length === 0) return { kind: "ignore", reason: "unknown_user" };
+    return { kind: "transfer_premium", from, to };
   }
 
   const userId = resolveUserId(fields);

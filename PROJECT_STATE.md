@@ -5,13 +5,14 @@
 
 ## Snapshot
 
-- **Phase courante** : 5 — Qualité & performance terminée (sauf mesure sur téléphone réel) ; prochaine : 6 — Publication
+- **Phase courante** : 7 — Documentation terminée ; prochaine : 6 — Publication (dépend des comptes stores)
 - **Dernière mise à jour** : 2026-11-18
 - **Santé** : 🟢 OK
 - **Mode** : PLAN_PUIS_VALIDATION (plan validé le 2026-11-18, options par défaut retenues)
-- **Prochaine action** : décision sur la protection anti-comptes en série (tâche 17), puis phase 6 — Publication, puis 7 — Documentation pro. Rappels : vrais achats
-  (comptes stores + RevenueCat) et vraie récompense publicitaire (Supabase cloud + AdMob)
-  restent à vérifier une fois les comptes créés.
+- **Prochaine action** : décision sur la protection anti-comptes en série (tâche 17), puis
+  phase 6 — Publication (tâches manuelles 3 à 15, textes prêts dans `docs/store/fiche-store.md`).
+  Rappels : vrais achats (comptes stores + RevenueCat) et vraie
+  récompense publicitaire (AdMob) restent à vérifier une fois les comptes créés.
 
 ## Avancement par phase
 
@@ -24,7 +25,7 @@
 | 4 — Implémentation          | ✅ fait | Inc-0 à Inc-10 ; US-04 (e-mail) reporté |
 | 5 — Qualité & performance   | ✅ fait | `docs/qa/revue-phase5.md`, `docs/security.md`, `docs/performance.md`, `docs/qa/test-plan.md` ; mesure sur téléphone réel à faire (tâche 18) |
 | 6 — Publication (stores)    | ⬜ à faire | |
-| 7 — Documentation           | ⬜ à faire | |
+| 7 — Documentation           | ✅ fait | `README.md` = documentation principale (bannière au logo, schéma d'architecture, toutes les sections) ; annexes dans `docs/` ; `CHANGELOG.md` ; aide dans l'app (ADR-026) |
 | 8 — Maintenance             | ⬜ à faire | |
 
 > États : ⬜ à faire · 🔄 en cours · ✅ fait · ⏸️ en attente (raison)
@@ -300,6 +301,10 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-18 — Abonnement restauré sur un nouveau téléphone (S12, ADR-027) : le webhook traite l'événement RevenueCat `TRANSFER` (fonction SQL `transfer_premium`) ; l'app attend la confirmation du serveur après « Restaurer mes achats ». Essai de bout en bout sur le serveur local : Premium déplacé, rejeu sans effet. 117 tests Flutter, 110 SQL, 51 Deno, analyse propre. Documentation et aide intégrée mises à jour. Déployé sur le cloud (migration appliquée, 7 fonctions redéployées) ; contrôlé : fonction SQL présente et refusée à la clé publique, webhook en ligne (401 sans secret).
+
+- 2026-11-18 — Phase 7 (Documentation), reprise après retour de l'utilisateur (« pas professionnelle, même pas de logo », « la documentation dans le README, pas un site ») : `README.md` refait comme documentation principale (bannière générée depuis le logo et les polices du kit, badges, sommaire, captures, modèle économique, schéma d'architecture SVG, démarrage, configuration, tests, compilation, structure, sécurité, limites connues) ; annexes de `docs/` corrigées après relecture indépendante (23 écarts : restauration d'abonnement après changement de téléphone, identifiant iOS, offre de lancement, codes de l'API, conservation des données, permissions Android…) ; 113 liens, ancres et images vérifiés. Le site MkDocs commencé par erreur a été retiré. Aide intégrée corrigée (capture d'écran pas réservée à Premium ; changement de téléphone → support). 116 tests Flutter verts. README validé par l'utilisateur.
 
 - 2026-11-18 — Phase 5 (Qualité & performance) : deux revues indépendantes, 24 corrections (quotas IA sûrs, achats sandbox refusés, packs remboursés repris, rappels AdMob limités à nos blocs, signalements vérifiés, erreurs après succès, portefeuille relu, double tap…), tests d'accessibilité et de bout en bout, mesures de performance (ADR-025). Erreur de ma part corrigée avant déploiement : contrôle des signalements contourné par un `NULL` (trouvé par le test). 115 Flutter, 99 SQL, 50 Deno.
 

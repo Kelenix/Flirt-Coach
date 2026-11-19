@@ -110,8 +110,13 @@ class SettingsScreen extends ConsumerWidget {
                 label: l10n.settingsAdPreferences,
                 onTap: ref.read(adsServiceProvider).showPrivacyOptions,
               ),
-            if (Env.supportEmail.isNotEmpty) ...[
-              _Section(l10n.settingsSectionHelp),
+            _Section(l10n.settingsSectionHelp),
+            _Item(
+              icon: AppIcons.help,
+              label: l10n.helpFaq,
+              onTap: () => context.push(AppRoutes.help),
+            ),
+            if (Env.supportEmail.isNotEmpty)
               _Item(
                 icon: AppIcons.generate,
                 label: l10n.settingsContact,
@@ -124,7 +129,6 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-            ],
             _Section(l10n.settingsSectionAccount),
             _Item(
               icon: AppIcons.delete,

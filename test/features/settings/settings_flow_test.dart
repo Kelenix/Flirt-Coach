@@ -88,6 +88,17 @@ void main() {
     );
   });
 
+  testWidgets('aide : questions fréquentes accessibles depuis les réglages', (
+    tester,
+  ) async {
+    await openSettings(tester);
+    await tester.tap(find.text('Aide et questions fréquentes'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(LegalScreen), findsOneWidget);
+    expect(find.text('Combien ça coûte ?'), findsOneWidget);
+  });
+
   testWidgets('suppression annulée : rien ne change', (tester) async {
     final backend = await openSettings(tester);
     await tester.tap(find.text('Supprimer mon compte'));

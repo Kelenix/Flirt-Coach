@@ -41,6 +41,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
         PurchaseOutcome.creditsAdded => l10n.purchaseCreditsAdded,
         PurchaseOutcome.pending => l10n.purchasePending,
         PurchaseOutcome.restored => l10n.purchaseRestored,
+        PurchaseOutcome.restorePending => l10n.purchaseRestorePending,
         PurchaseOutcome.nothingToRestore => l10n.purchaseNothingToRestore,
       };
 

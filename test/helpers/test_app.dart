@@ -323,9 +323,14 @@ class FakeBackend
     return true;
   }
 
+  /// Le store retrouve l'abonnement ; le serveur le rattache au compte si le webhook
+  /// (TRANSFER) arrive.
   @override
-  Future<void> restore() async {
-    if (hasStoreSubscription) wallet = wallet.copyWith(isPremium: true);
+  Future<bool> restore() async {
+    if (hasStoreSubscription && webhookDelivered) {
+      wallet = wallet.copyWith(isPremium: true);
+    }
+    return hasStoreSubscription;
   }
 
   @override

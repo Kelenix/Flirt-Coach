@@ -72,6 +72,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             const LegalScreen(document: LegalDocument.terms),
       ),
       GoRoute(
+        path: AppRoutes.help,
+        builder: (context, state) =>
+            const LegalScreen(document: LegalDocument.help),
+      ),
+      GoRoute(
         path: AppRoutes.paywall,
         builder: (context, state) => PaywallScreen(
           annualOffer: state.uri.queryParameters['offer'] == 'annual',

@@ -21,6 +21,7 @@ abstract final class AppIcons {
   static const IconData delete = LucideIcons.trash2;
   static const IconData flag = LucideIcons.flag;
   static const IconData settings = LucideIcons.settings;
+  static const IconData help = LucideIcons.circleQuestionMark;
   static const IconData external = LucideIcons.externalLink;
   static const IconData chevronRight = LucideIcons.chevronRight;
   static const IconData lock = LucideIcons.lock;

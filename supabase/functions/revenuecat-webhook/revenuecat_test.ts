@@ -140,6 +140,43 @@ Deno.test("achat sandbox : ignoré en production, accepté en phase de test", ()
   );
 });
 
+Deno.test("transfert : Premium suit l'abonnement vers la nouvelle installation", () => {
+  const nouveau = "8a1d2c3b-4e5f-4a6b-9c7d-0e1f2a3b4c5d";
+  const transfer = (fields: Record<string, unknown>) => ({
+    api_version: "1.0",
+    event: { id: "evt-2", type: "TRANSFER", environment: "PRODUCTION", ...fields },
+  });
+
+  assertEquals(
+    actionFor(transfer({
+      transferred_from: ["$RCAnonymousID:abc", user.toUpperCase()],
+      transferred_to: [nouveau, nouveau],
+    })),
+    { kind: "transfer_premium", from: [user], to: [nouveau] },
+  );
+  // Un identifiant présent des deux côtés ne se transfère pas à lui-même.
+  assertEquals(
+    actionFor(transfer({ transferred_from: [user], transferred_to: [user, nouveau] })),
+    { kind: "transfer_premium", from: [user], to: [nouveau] },
+  );
+  assertEquals(
+    actionFor(transfer({ transferred_from: ["$RCAnonymousID:abc"], transferred_to: [nouveau] })),
+    { kind: "ignore", reason: "unknown_user" },
+  );
+  assertEquals(
+    actionFor(transfer({ transferred_from: [user] })),
+    { kind: "ignore", reason: "unknown_user" },
+  );
+  assertEquals(
+    actionFor(transfer({
+      environment: "SANDBOX",
+      transferred_from: [user],
+      transferred_to: [nouveau],
+    })),
+    { kind: "ignore", reason: "sandbox" },
+  );
+});
+
 Deno.test("pack remboursé : crédits repris, une seule fois par transaction", () => {
   assertEquals(
     actionFor(event({

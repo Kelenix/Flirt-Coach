@@ -38,7 +38,7 @@ traitement : `docs/qa/revue-phase5.md`.
 | Risque | Statut |
 |--------|--------|
 | **Création en série de comptes anonymes** (5 crédits gratuits chacun) | ❓ décision : CAPTCHA (Turnstile / hCaptcha) ou attestation d'appareil (Play Integrity / App Attest). Limite actuelle : celle de Supabase par adresse IP |
-| Événement RevenueCat `TRANSFER` (réinstallation + « Restaurer ») | ⏸️ à traiter avec la mise en place réelle de RevenueCat (clé secrète requise) — avant publication |
+| Événement RevenueCat `TRANSFER` (réinstallation + « Restaurer ») | ✅ traité (ADR-027) : le droit Premium est déplacé de l'ancien compte vers le nouveau, en base, sans clé secrète |
 | Événement RevenueCat tardif après remboursement | ⏸️ idem |
 | Pinning de certificat | Non retenu : pas de données bancaires, HTTPS + RLS suffisent ; complexité de rotation |
 

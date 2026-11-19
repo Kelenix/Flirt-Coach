@@ -18,6 +18,9 @@ enum PurchaseOutcome {
   /// Le store a validé, mais le serveur n'a pas encore reçu le webhook.
   pending,
   restored,
+
+  /// Abonnement retrouvé par le store, pas encore rattaché à ce compte par le serveur.
+  restorePending,
   nothingToRestore,
 }
 
@@ -41,13 +44,19 @@ class PurchaseController extends AutoDisposeAsyncNotifier<PurchaseOutcome?>
     });
   }
 
+  /// Sur une nouvelle installation, le serveur rattache l'abonnement à ce compte
+  /// (événement RevenueCat TRANSFER) : on attend sa confirmation, comme pour un achat.
   Future<void> restore() async {
     await runGuarded(() async {
-      await ref.read(purchasesRepositoryProvider).restore();
-      final wallet = await _refreshWallet();
-      return wallet.isPremium
+      final subscribed = await ref.read(purchasesRepositoryProvider).restore();
+      if (!subscribed) return PurchaseOutcome.nothingToRestore;
+      final (_, confirmed) = await awaitServerConfirmation(
+        ref,
+        (wallet) => wallet.isPremium,
+      );
+      return confirmed
           ? PurchaseOutcome.restored
-          : PurchaseOutcome.nothingToRestore;
+          : PurchaseOutcome.restorePending;
     });
   }
 
@@ -64,11 +73,5 @@ class PurchaseController extends AutoDisposeAsyncNotifier<PurchaseOutcome?>
     return wallet.isPremium && !before.isPremium
         ? PurchaseOutcome.premiumActivated
         : PurchaseOutcome.creditsAdded;
-  }
-
-  Future<Wallet> _refreshWallet() async {
-    final wallet = await ref.read(walletRepositoryProvider).fetch();
-    ref.read(walletProvider.notifier).replace(wallet);
-    return wallet;
   }
 }
