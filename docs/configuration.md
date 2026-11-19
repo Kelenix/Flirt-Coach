@@ -71,6 +71,8 @@ Identifiants confirmés le 2026-11-19 (tâche manuelle 3, ADR-028). L'identifian
 | `REVENUECAT_SECRET_API_KEY` | recommandé | `delete-account` | efface aussi le client RevenueCat à la suppression d'un compte (RGPD) |
 | `REVENUECAT_ALLOW_SANDBOX` | phase de test uniquement | `revenuecat-webhook` | `true` : les achats de test (sandbox) donnent des droits. **À retirer avant la publication** |
 | `ADMOB_AD_UNIT_IDS` | pour les pubs | `admob-ssv` | blocs « récompensée » autorisés à créditer, séparés par des virgules (partie après « / ») |
+| `REVIEW_ACCESS_CODE_SHA256` | pour la revue des stores | `redeem-code` | empreinte SHA-256 (hexadécimal) du code d'accès Premium, en majuscules sans tirets ; vide : aucun code accepté (ADR-031). Le code en clair n'est que dans `supabase/functions/.env.cloud` (non versionné) |
+| `REVIEW_ACCESS_MAX_REDEMPTIONS` | non (20 par défaut) | `redeem-code` | nombre maximal d'activations par code |
 | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | automatique | toutes | fournis par Supabase lui-même, ne jamais les définir à la main |
 
 ### En local

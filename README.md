@@ -74,6 +74,7 @@ reformuler un message avant de l'envoyer.
 | **Banque de messages** : 40 messages en 5 catégories, consultable hors connexion | gratuite | gratuite |
 | **Historique** des générations, copie et suppression | — | inclus |
 | **Signalement** d'une réponse, aide intégrée, suppression du compte | oui | oui |
+| **Code d'accès** (Réglages → « J'ai un code ») : Premium 30 jours avec un code fourni par l'éditeur, par exemple aux testeurs des stores | oui | — |
 | Publicités | bannière discrète, vidéo facultative | aucune |
 
 ## Aperçu
@@ -128,7 +129,7 @@ Détails : [architecture](docs/architecture.md) · [flux principaux](docs/system
 | Couche | Technologies |
 |--------|--------------|
 | Application | Flutter 3.41 (Dart 3.11) · Riverpod 2.6 · go_router · freezed · `flutter_secure_storage` (Keychain / Keystore) |
-| Serveur | Supabase : Postgres 17 avec RLS, authentification anonyme, 7 Edge Functions en Deno / TypeScript |
+| Serveur | Supabase : Postgres 17 avec RLS, authentification anonyme, 8 Edge Functions en Deno / TypeScript |
 | Intelligence artificielle | Claude Opus 5.5 (Anthropic), sortie JSON imposée, appelé uniquement depuis le serveur |
 | Achats | RevenueCat (Google Play, App Store) |
 | Publicité | Google AdMob, consentement RGPD (UMP), vérification côté serveur (SSV) |
@@ -225,7 +226,7 @@ Détail de chaque variable et constantes métier : [configuration](docs/configur
 
 **Intégration continue** (`.github/workflows/ci.yml`) à chaque envoi sur `main` et chaque demande
 de fusion : génération de code, format, analyse et tests de l'application ; format, lint, typage et
-tests des 7 Edge Functions ; migrations rejouées et tests de la base.
+tests des 8 Edge Functions ; migrations rejouées et tests de la base.
 
 **Performance mesurée** : démarrage à froid en 1,75 à 1,90 s (budget 2 s), construction d'une
 image en 2,1 ms en moyenne, APK de 24,4 Mo par architecture. Détails :
@@ -242,7 +243,7 @@ image en 2,1 ms en moyenne, APK de 24,4 Mo par architecture. Détails :
 | Base et fonctions sur le cloud | `powershell -ExecutionPolicy Bypass -File scripts\deploy-cloud.ps1` |
 
 - Le script de déploiement vérifie le projet, applique les nouvelles migrations après
-  confirmation, déploie les 7 Edge Functions et liste les secrets présents.
+  confirmation, déploie les 8 Edge Functions et liste les secrets présents.
 - Une version publiable exige la clé de signature et les comptes des stores : voir les
   [tâches manuelles](docs/manual-tasks.md).
 - Exploitation courante (secrets, surveillance, incidents) : [exploitation](docs/operations.md).

@@ -99,20 +99,23 @@ l'émulateur, 1080 × 2400, conversations fictives) :
 |---------|----------------------------------|--------|
 | `icone-512.png` | Icône de l'application | 512 × 512, PNG 32 bits |
 | `banniere-1024x500.png` | Image de présentation | 1024 × 500, PNG sans transparence |
-| `capture-1-resultats.png` à `capture-6-banque.png` | Captures d'écran du téléphone, dans l'ordre | 1080 × 1920 (9:16), PNG sans transparence |
+| `capture-1-accueil.png` à `capture-7-banque.png` | Captures d'écran du téléphone, dans l'ordre | 1080 × 1920 (9:16), PNG sans transparence |
 
 Accroche incrustée au-dessus de chaque capture (fond du kit de marque, titres en Poppins) :
 
 | # | Écran | Accroche |
 |---|-------|----------|
-| 1 | Résultats | Trouve les bons mots |
-| 2 | Générer un message | 7 situations, 7 styles |
-| 3 | Capture d'écran importée | Réponds à partir d'une capture |
-| 4 | Mode Respect (« À revoir ») | Flirte avec respect |
-| 5 | Analyse de conversation | Sache où vous en êtes |
-| 6 | Banque de messages | Des idées, même hors connexion |
+| 1 | Accueil (premier écran) | Gagne en confiance |
+| 2 | Résultats | Trouve les bons mots |
+| 3 | Générer un message | 7 situations, 7 styles |
+| 4 | Capture d'écran importée | Réponds à partir d'une capture |
+| 5 | Mode Respect (« À revoir ») | Flirte avec respect |
+| 6 | Analyse de conversation | Sache où vous en êtes |
+| 7 | Banque de messages | Des idées, même hors connexion |
 
-La bannière reprend le logo du kit tel quel. Pour changer une accroche, modifier `CAPTIONS` dans
+Déposés dans la Play Console le 2026-11-19 (fiche par défaut, fr-FR). L'icône, la bannière et
+la capture 1 montrent le logo, créé avec une IA : ils y sont déclarés « créés avec l'IA »
+(ADR-032). La bannière reprend le logo du kit tel quel. Pour changer une accroche, modifier `CAPTIONS` dans
 le script ; pour changer un écran, remplacer son fichier dans `visuels/ecrans/` ; puis relancer
 le script. Toujours des conversations fictives, sans nom ni photo de personne réelle.
 App Store (tâche 5) : captures iPhone 6,9" (1320 × 2868 px) à produire le moment venu ; vérifier
@@ -122,12 +125,12 @@ les formats exigés dans chaque console au moment de la soumission.
 
 | Champ | Google Play | App Store |
 |-------|-------------|-----------|
-| Catégorie | Style de vie | Style de vie (secondaire : Réseaux sociaux) |
+| Catégorie | Style de vie (« Lifestyle » dans la console) | Style de vie (secondaire : Réseaux sociaux) |
 | Public cible | 18 ans et plus uniquement (section « Public cible et contenu ») | — |
-| Classification | questionnaire IARC : thèmes romantiques, pas de nudité ni de contenu sexuel explicite ; contenu généré par IA | questionnaire d'âge : choisir la tranche la plus élevée proposée (18+) |
+| Classification | questionnaire IARC envoyé le 2026-11-19 (réponses ci-dessous) : PEGI 3, USK 12, ESRB 13+, ClassInd 14 | questionnaire d'âge : choisir la tranche la plus élevée proposée (18+) |
 | Annonces | « Contient des annonces » : oui | — |
 | Achats intégrés | oui | oui |
-| Coordonnées | `{{EMAIL_SUPPORT}}` | URL d'assistance (page web avec `{{EMAIL_SUPPORT}}`) |
+| Coordonnées | `{{EMAIL_SUPPORT}}` ; site web : `https://kelenix.github.io/Flirt-Coach/` | URL d'assistance (page web avec `{{EMAIL_SUPPORT}}`) |
 | Politique de confidentialité | `https://kelenix.github.io/Flirt-Coach/confidentialite.html` | `https://kelenix.github.io/Flirt-Coach/confidentialite.html` |
 | Conditions (CLUF) | — | `https://kelenix.github.io/Flirt-Coach/conditions.html` dans la description (obligatoire avec un abonnement) |
 
@@ -135,19 +138,56 @@ les formats exigés dans chaque console au moment de la soumission.
 sur chaque proposition) et filtre les contenus interdits côté serveur ; le mentionner si la
 console le demande.
 
-## 7. Déclarations de confidentialité (à faire valider avec la tâche manuelle 10)
+**Réponses IARC** (catégorie « Tous les autres types d'app », ADR-032) :
+- Contenu dans le paquet de l'app : non.
+- Échanges entre utilisateurs : non.
+- Contenu en ligne (IA, banque de messages) : oui.
+  - Violence : non.
+  - Sexualité : oui, uniquement dans le texte et ce n'est pas le but de l'app (style
+    « Provocateur léger », jamais explicite).
+  - Langage offensant : non.
+  - Substances : oui, dans le texte seulement (« boire un verre »).
+- Promotion de produits pour adultes : non.
+- Divers : achats numériques oui, sans achat aléatoire ; pas de position partagée ; pas de prix
+  en argent ; ni navigateur ni app d'actualités.
 
-| Donnée | Collectée | Finalité | Liée à l'utilisateur | Partagée |
-|--------|-----------|----------|----------------------|----------|
-| Identifiant utilisateur (anonyme) | oui | fonctionnement de l'app | oui | non |
-| Messages saisis et réponses (historique) | oui | fonctionnement de l'app | oui | non (traités par le fournisseur d'IA pour le compte de l'éditeur) |
-| Captures d'écran | traitées, **non conservées** | fonctionnement de l'app | — | non (traitement éphémère) |
-| Historique d'achats | oui | fonctionnement de l'app (droits Premium, crédits) | oui | non |
-| Identifiant publicitaire, interactions avec les annonces | oui, version gratuite | publicité (AdMob) | selon le consentement | oui (Google) |
-| Nom, e-mail, contacts, localisation précise | **non** | — | — | — |
+**Accès pour la revue Google** (« Dettagli di accesso », en anglais, ADR-031) : nom « Premium
+access for review » ; le code d'accès va dans le champ *Password* (saisi par l'éditeur, jamais
+écrit ici) ; attester l'accès complet seulement une fois le code en service. Texte du champ
+*Other information* :
 
-- Données chiffrées en transit : **oui**.
-- Suppression des données : **oui**, dans l'app (Réglages → « Supprimer mon compte »).
+```text
+No sign-in needed: the app creates an anonymous account automatically.
+1. On first launch, tick "J'ai 18 ans ou plus" (I am 18 or older) and tap "Commencer" (Start).
+2. Free features use the 5 daily credits.
+3. To unlock Premium (all styles, history, no ads): tap the menu icon (top left) > "Réglages" (Settings) > "J'ai un code" (I have a code), enter the access code given in the Password field, then confirm. Premium stays active for 30 days.
+```
+
+## 7. Déclarations de confidentialité (saisies dans la Play Console le 2026-11-19, ADR-032)
+
+Les noms entre parenthèses sont ceux de la console (en italien).
+
+| Donnée (console) | Origine | Partagée | Temporaire | Obligatoire | Finalités |
+|------------------|---------|----------|------------|-------------|-----------|
+| Position approximative | AdMob (adresse IP) | oui (Google) | non | oui | analyse, publicité, prévention des fraudes |
+| ID utilisateur | compte anonyme, RevenueCat | non | non | oui | fonctionnement, prévention des fraudes |
+| Autres informations personnelles | déclaration d'âge (18+) | non | non | oui | fonctionnement, conformité |
+| Historique d'achats | crédits, abonnements | non | non | oui | fonctionnement |
+| Autres messages dans l'app | messages collés (historique, limites) | non (fournisseur d'IA = sous-traitant) | non | oui | fonctionnement |
+| Photos | captures importées, **non conservées** | non | **oui** | non | fonctionnement |
+| Interactions avec l'app | AdMob | oui (Google) | non | oui | analyse, publicité, prévention des fraudes |
+| Autres contenus générés par l'utilisateur | contexte, signalements | non | non | non | fonctionnement, prévention des fraudes |
+| Données de diagnostic | AdMob | oui (Google) | non | oui | analyse, publicité, prévention des fraudes |
+| Identifiants de l'appareil | AdMob (identifiant publicitaire) | oui (Google) | non | oui | analyse, publicité, prévention des fraudes |
+
+- **Non collectés** : nom, e-mail, contacts, localisation précise.
+- **Données chiffrées en transit** : **oui**.
+- **Création de compte** : « l'app ne permet pas de créer un compte » (compte anonyme sans
+  identifiant ni connexion, ADR-032).
+- **Suppression des données** : **oui**, dans l'app (Réglages → « Supprimer mon compte ») ou par
+  e-mail. Lien déclaré : la page de confidentialité.
+- **État** : enregistrée le 2026-11-19, avec toutes les déclarations du contenu. Tout partira
+  en revue avec la première version.
 - Suivi publicitaire (App Store) : déclaré, avec la demande d'autorisation iOS.
 - Identifiant publicitaire (Play Console) : **oui**. Le SDK AdMob ajoute la permission `AD_ID`
   au manifeste final, avec `ACCESS_NETWORK_STATE`, `BILLING` (achats) et les permissions
@@ -175,7 +215,7 @@ support pour un cas particulier ([réponses types](../support/faq.md#3-réponses
 - [ ] Version et numéro de build incrémentés dans `pubspec.yaml`, `CHANGELOG.md` à jour.
 - [ ] Textes légaux de l'app identiques aux pages publiées ; « (à compléter avant publication) »
       n'apparaît plus nulle part.
-- [ ] Compte de démonstration : inutile (connexion anonyme), le préciser dans les notes pour la
-      revue Apple ; mentionner que Premium se teste avec un compte sandbox.
+- [ ] Accès pour la revue : code d'accès Premium en service et saisi dans « Dettagli di
+      accesso » (Google, ADR-031) ; pour Apple, le préciser dans les notes de revue.
 - [ ] Captures au bon format, sans donnée personnelle réelle.
 - [ ] Achat et restauration testés en sandbox sur les deux plateformes.

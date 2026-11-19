@@ -23,13 +23,19 @@ Future<Map<String, dynamic>> invokeAiFunction(
 }, timeout: aiCallTimeout);
 
 /// Code d'erreur renvoyé par une Edge Function (`{"error": "..."}`) → [Failure].
-Failure failureForFunctionError(Object? details) =>
-    switch (details is Map ? details['error'] : null) {
-      'insufficient_credits' => const InsufficientCreditsFailure(),
-      'premium_required' => const PremiumRequiredFailure(),
-      'daily_limit' => const DailyLimitFailure(),
-      'rate_limited' => const RateLimitedFailure(),
-      'ai_unavailable' => const AiUnavailableFailure(),
-      'unusable_input' => const UnreadableScreenshotFailure(),
-      _ => const UnexpectedFailure(),
-    };
+Failure failureForFunctionError(Object? details) => switch (details is Map
+    ? details['error']
+    : null) {
+  'insufficient_credits' => const InsufficientCreditsFailure(),
+  'premium_required' => const PremiumRequiredFailure(),
+  'daily_limit' => const DailyLimitFailure(),
+  'rate_limited' => const RateLimitedFailure(),
+  'ai_unavailable' => const AiUnavailableFailure(),
+  'unusable_input' => const UnreadableScreenshotFailure(),
+  'invalid_code' => const AccessCodeFailure(AccessCodeProblem.invalid),
+  'code_unavailable' => const AccessCodeFailure(AccessCodeProblem.unavailable),
+  'too_many_attempts' => const AccessCodeFailure(
+    AccessCodeProblem.tooManyAttempts,
+  ),
+  _ => const UnexpectedFailure(),
+};

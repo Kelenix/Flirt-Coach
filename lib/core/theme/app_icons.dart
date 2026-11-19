@@ -11,6 +11,7 @@ abstract final class AppIcons {
   static const IconData messageBank = LucideIcons.layers;
   static const IconData respect = LucideIcons.shieldCheck;
   static const IconData premium = LucideIcons.crown;
+  static const IconData accessCode = LucideIcons.ticket;
   static const IconData credits = LucideIcons.database;
   static const IconData history = LucideIcons.history;
 

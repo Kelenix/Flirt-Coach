@@ -44,6 +44,7 @@ void main() {
     expect(find.text('Politique de confidentialité'), findsOneWidget);
     expect(find.text('Conditions d\'utilisation'), findsOneWidget);
     expect(find.text('Supprimer mon compte'), findsOneWidget);
+    expect(find.text('J\'ai un code'), findsOneWidget);
     // Gratuit et sans consentement publicitaire requis : liens masqués.
     expect(find.text('Gérer mon abonnement'), findsNothing);
     expect(find.text('Préférences publicitaires'), findsNothing);
@@ -58,6 +59,48 @@ void main() {
     );
 
     expect(find.text('Gérer mon abonnement'), findsOneWidget);
+    expect(find.text('J\'ai un code'), findsNothing);
+  });
+
+  Future<void> enterAccessCode(WidgetTester tester, String code) async {
+    await tester.tap(find.text('J\'ai un code'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), code);
+    await tester.tap(find.text('Valider'));
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets('code d\'accès valide : Premium activé et confirmé', (
+    tester,
+  ) async {
+    final backend = await openSettings(tester);
+    await enterAccessCode(tester, 'REVUE2026');
+
+    expect(backend.redeemedCodes, ['REVUE2026']);
+    expect(find.text('Premium activé jusqu\'au 19 décembre 2026.'), findsOne);
+    // Premium : l'entrée disparaît au profit de la gestion de l'abonnement.
+    expect(find.text('J\'ai un code'), findsNothing);
+    expect(find.text('Gérer mon abonnement'), findsOneWidget);
+  });
+
+  testWidgets('code d\'accès refusé : message, rien ne change', (tester) async {
+    final backend = await openSettings(tester);
+    await enterAccessCode(tester, 'MAUVAIS1');
+
+    expect(backend.redeemedCodes, ['MAUVAIS1']);
+    expect(find.textContaining('Ce code n\'est pas valable'), findsOneWidget);
+    expect(find.text('J\'ai un code'), findsOneWidget);
+    expect(backend.wallet.isPremium, isFalse);
+  });
+
+  testWidgets('code d\'accès annulé : aucun appel', (tester) async {
+    final backend = await openSettings(tester);
+    await tester.tap(find.text('J\'ai un code'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Annuler'));
+    await tester.pumpAndSettle();
+
+    expect(backend.redeemedCodes, isEmpty);
   });
 
   testWidgets('préférences publicitaires : rouvre le formulaire', (

@@ -16,7 +16,7 @@ Le script (projet cible lu dans `config/prod.json`) :
 1. vérifie que le compte Supabase connecté voit le projet, sinon lance `supabase login` ;
 2. relie le dossier au projet (`supabase link`, mot de passe de la base demandé) ;
 3. applique les nouvelles migrations (`supabase db push`, **confirmation demandée**) ;
-4. déploie les 7 Edge Functions (regroupées côté serveur, sans Docker) ;
+4. déploie les 8 Edge Functions (regroupées côté serveur, sans Docker) ;
 5. affiche les noms des secrets présents.
 
 Règles : une migration appliquée sur le cloud n'est jamais modifiée (en créer une nouvelle) ;
@@ -135,6 +135,28 @@ main :
    ```
 
 4. Demander à l'utilisateur de rouvrir l'app : « Premium » apparaît dans le badge de crédits.
+
+## Code d'accès Premium (revue des stores)
+
+Les testeurs de Google et d'Apple n'ont le droit ni d'acheter ni d'utiliser un essai gratuit.
+Dans l'app, Réglages → « J'ai un code » donne Premium pendant 30 jours (ADR-031).
+
+- **Où est le code** : en commentaire dans `supabase/functions/.env.cloud` (non versionné).
+  Le serveur n'en connaît que l'empreinte (`REVIEW_ACCESS_CODE_SHA256`).
+- **Où le donner** : Play Console → Contenuti app → Dettagli di accesso, champ *Password*
+  (instructions en anglais : [fiche du store](store/fiche-store.md), section 6). Pour Apple :
+  notes de revue d'App Store Connect.
+- **Suivre les activations** (SQL Editor) :
+  `select count(*) from public.access_code_redemptions;`
+- **Changer le code** (divulgué, ou plafond de 20 atteint) :
+  1. Générer 16 caractères aléatoires parmi `ABCDEFGHJKMNPQRSTVWXYZ23456789`.
+  2. Calculer l'empreinte SHA-256 du code en majuscules, sans tirets.
+  3. `supabase secrets set REVIEW_ACCESS_CODE_SHA256=<empreinte>`.
+  4. Mettre le nouveau code dans `.env.cloud` et dans la Play Console.
+
+  L'ancien code cesse aussitôt de fonctionner. Les accès déjà donnés vont jusqu'à leur terme.
+- **Désactiver** : `supabase secrets unset REVIEW_ACCESS_CODE_SHA256` ; plus aucun code n'est
+  accepté.
 
 ## Tests des Edge Functions
 

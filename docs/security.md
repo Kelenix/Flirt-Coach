@@ -26,6 +26,7 @@ traitement : `docs/qa/revue-phase5.md`.
 | Faux rappel AdMob (bloc d'un autre éditeur) | Signature ECDSA vérifiée + liste `ADMOB_AD_UNIT_IDS` |
 | Appels IA sans payer (refus, captures illisibles remboursés), requêtes simultanées | Chaque tentative comptée sous verrou avant l'appel : 10 par minute, 100 par jour |
 | Webhook RevenueCat forgé | Secret partagé comparé en temps constant |
+| Code d'accès Premium (revue des stores) deviné ou divulgué | Code de 16 caractères aléatoires (~78 bits), seule son empreinte est sur le serveur, comparée en temps constant ; 5 essais par heure et par compte ; une activation par compte ; 20 activations au plus par code ; Premium 30 jours ; code changeable à tout moment (ADR-031) |
 | Injection de consignes dans le message ou la capture | Données balisées, sortie contrainte par schéma JSON, aucun outil ; aucune donnée d'un autre utilisateur dans le contexte |
 | Lecture des données d'un autre utilisateur | RLS ; historique lisible seulement par son auteur Premium |
 | Faux signalements / inondation de la modération | Texte vérifié dans la génération ; 20 signalements par jour |

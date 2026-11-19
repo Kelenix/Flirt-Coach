@@ -5,6 +5,77 @@
 
 ---
 
+## ADR-032 — Déclarations de la Play Console (contenu, données, visuels IA)
+
+- **Date** : 2026-11-19
+- **Statut** : Accepté
+- **Décideur** : Claude (rôle : publication / sécurité). L'utilisateur a choisi l'étiquetage IA
+  (logo créé avec une IA) et l'acceptation des conditions de l'IARC.
+- **Contexte** : la fiche et les déclarations doivent décrire l'app telle qu'elle est. Une
+  déclaration fausse peut entraîner un refus ou un retrait de l'app.
+- **Décision** :
+  - Classification IARC, catégorie « autres apps ». Contenu en ligne (IA) : oui.
+    Contenu sexuel : oui, uniquement dans le texte et ce n'est pas le but de l'app (style
+    « Provocateur léger », jamais explicite). Substances : oui, dans le texte (« boire un
+    verre »). Pas de violence ni de langage offensant. Achats numériques : oui, sans achat
+    aléatoire. Résultat : PEGI 3, USK 12, ESRB 13+, ClassInd 14.
+  - Sécurité des données : pas de « création de compte ». Le compte anonyme n'a ni
+    identifiant ni moyen de connexion, il n'entre donc pas dans la définition Google d'un
+    « compte d'app ». Suppression des données : oui (app + e-mail), avec pour lien la
+    politique de confidentialité. Données d'AdMob déclarées collectées et partagées
+    (position approximative, interactions, diagnostic, identifiants) selon la documentation
+    Google. Captures d'écran : traitement temporaire et facultatif.
+  - Étiquette « créé avec l'IA » sur l'icône, la bannière et la capture d'accueil, qui
+    montrent le logo. Les autres captures sont de vrais écrans.
+  - Catégorie « Lifestyle » ; e-mail de contact public = e-mail de support ; site web =
+    pages légales.
+- **Alternatives écartées** :
+  - Déclarer « pas de contenu sexuel ni de substances », ce qui sous-déclarerait la sortie de
+    l'IA.
+  - Déclarer un compte « Altro », ce qui imposerait une page de suppression de compte pour un
+    compte que l'utilisateur ne voit pas.
+- **Conséquences** :
+  - À revoir si l'app ajoute une connexion (e-mail, Google) ou un nouveau SDK.
+  - Une ancre vers la section « Tes droits » de la page de confidentialité rendrait le lien
+    de suppression plus direct.
+  - Réponses détaillées : `docs/store/fiche-store.md`, sections 6 et 7.
+- **Impact** : légal / publication — fort.
+
+---
+
+## ADR-031 — Accès à Premium pour la revue Google par code
+
+- **Date** : 2026-11-19
+- **Statut** : Accepté (choix de l'utilisateur). Mis en œuvre et déployé le 2026-11-19 :
+  migration `20261119000000_access_codes`, fonction `redeem-code`, Réglages → « J'ai un
+  code ». Le secret est posé sur le cloud et le code est saisi dans la Play Console.
+- **Décideur** : utilisateur ; Claude (rôle : sécurité / backend) pour la conception
+- **Contexte** : la Play Console (« Dettagli di accesso ») exige que les testeurs de Google
+  accèdent à toute l'app, Premium compris, sans acheter ni utiliser d'essai gratuit. Elle
+  exige aussi d'attester que les accès fournis ouvrent tout le contenu payant. L'app n'a pas
+  d'identifiants (compte anonyme).
+- **Décision** :
+  - Ajouter dans Réglages « J'ai un code ». Le code saisi est vérifié par une Edge Function.
+  - Le code secret est un secret Supabase, jamais dans l'app.
+  - Un code valide donne Premium 30 jours au compte courant.
+  - Le nombre d'activations est plafonné, une seule par compte, avec un nombre de tentatives
+    limité. Le code peut être changé à tout moment.
+  - L'utilisateur saisit lui-même le code dans la console.
+- **Alternatives écartées** :
+  - Instructions seules : risque de refus, Premium resterait fermé.
+  - Codes promo Google Play : assimilés à un essai gratuit, que les testeurs n'ont pas le droit
+    d'utiliser.
+  - Compte de démonstration avec mot de passe : l'app n'a pas de connexion.
+- **Conséquences** :
+  - Les déclarations « Détails d'accès » et « Public cible » restent à finir.
+  - La sécurité des données ne peut être validée qu'après le public cible.
+  - Le code doit être dans la première version envoyée au test fermé.
+  - Instructions anglaises prêtes dans `docs/store/fiche-store.md`.
+- **Impact** : sécurité — moyen (un code divulgué donnerait Premium, d'où le plafond et la
+  rotation) ; publication — fort.
+
+---
+
 ## ADR-030 — Textes légaux en ligne sur GitHub Pages
 
 - **Date** : 2026-11-19

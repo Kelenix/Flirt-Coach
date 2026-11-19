@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/config/env.dart';
@@ -14,8 +15,10 @@ import '../../../routing/app_routes.dart';
 import '../../../shared/widgets/gradient_background.dart';
 import '../../ads/data/ads_service.dart';
 import '../../credits/application/wallet_controller.dart';
+import '../application/access_code_controller.dart';
 import '../application/account_controller.dart';
 import '../../../shared/widgets/snack.dart';
+import 'access_code_dialog.dart';
 
 /// Réglages (INTAKE §7) : abonnement, confidentialité, aide, suppression du compte.
 class SettingsScreen extends ConsumerWidget {
@@ -61,6 +64,13 @@ class SettingsScreen extends ConsumerWidget {
     }
   }
 
+  Future<void> _enterAccessCode(BuildContext context, WidgetRef ref) async {
+    final code = await showAccessCodeDialog(context);
+    if (code != null) {
+      await ref.read(accessCodeControllerProvider.notifier).redeem(code);
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -68,11 +78,22 @@ class SettingsScreen extends ConsumerWidget {
     final hasAdChoices =
         ref.watch(adPrivacyOptionsProvider).valueOrNull ?? false;
     final deletion = ref.watch(accountControllerProvider);
+    final redeeming = ref.watch(accessCodeControllerProvider).isLoading;
 
     ref.listen(accountControllerProvider, (previous, next) {
       if (next case AsyncError(:final error)) {
         ScaffoldMessenger.of(context).showMessage(failureMessage(l10n, error));
       }
+    });
+    ref.listen(accessCodeControllerProvider, (previous, next) {
+      final message = switch (next) {
+        AsyncData(value: final until?) => l10n.accessCodeSuccess(
+          DateFormat.yMMMMd(l10n.localeName).format(until),
+        ),
+        AsyncError(:final error) => failureMessage(l10n, error),
+        _ => null,
+      };
+      if (message != null) ScaffoldMessenger.of(context).showMessage(message);
     });
 
     return Scaffold(
@@ -92,6 +113,13 @@ class SettingsScreen extends ConsumerWidget {
                 icon: AppIcons.external,
                 label: l10n.settingsManageSubscription,
                 onTap: () => _open(context, _subscriptionsUrl),
+              )
+            else
+              _Item(
+                icon: AppIcons.accessCode,
+                label: l10n.settingsAccessCode,
+                isLoading: redeeming,
+                onTap: redeeming ? null : () => _enterAccessCode(context, ref),
               ),
             _Section(l10n.settingsSectionPrivacy),
             _Item(
@@ -125,7 +153,7 @@ class SettingsScreen extends ConsumerWidget {
                   Uri(
                     scheme: 'mailto',
                     path: Env.supportEmail,
-                    query: 'subject=Flirt%20Coach',
+                    query: 'subject=Flirt%20Coach%20Pro',
                   ),
                 ),
               ),

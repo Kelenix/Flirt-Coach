@@ -5,7 +5,11 @@ versions : [SemVer](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
-Rien pour l'instant.
+### Ajouté
+
+- **Code d'accès** (Réglages → « J'ai un code ») : active Premium 30 jours avec un code fourni
+  par l'éditeur, par exemple aux testeurs des stores qui n'ont pas le droit d'acheter. Le code est
+  vérifié par le serveur ; essais et activations sont limités.
 
 ## [1.0.0] — en préparation (non publiée)
 

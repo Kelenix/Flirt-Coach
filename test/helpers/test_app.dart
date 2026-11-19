@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flirt_coach/app.dart';
+import 'package:flirt_coach/core/errors/failure.dart';
 import 'package:flirt_coach/features/ads/data/ads_service.dart';
 import 'package:flirt_coach/features/analysis/data/supabase_analysis_repository.dart';
 import 'package:flirt_coach/features/analysis/domain/analysis_repository.dart';
@@ -132,6 +133,10 @@ class FakeBackend
   bool accountDeleted = false;
   Object? accountError;
   bool adPrivacyRequired = false;
+
+  /// Codes d'accès saisis ; seul [validAccessCode] donne Premium (jusqu'au 19/12/2026).
+  final redeemedCodes = <String>[];
+  String validAccessCode = 'REVUE2026';
   int privacyOptionsShown = 0;
 
   /// Historique (le plus récent d'abord) et identifiants supprimés.
@@ -261,6 +266,16 @@ class FakeBackend
   Future<void> deleteAccount() async {
     if (accountError case final error?) throw error;
     accountDeleted = true;
+  }
+
+  @override
+  Future<DateTime> redeemAccessCode(String code) async {
+    redeemedCodes.add(code);
+    if (code != validAccessCode) {
+      throw const AccessCodeFailure(AccessCodeProblem.invalid);
+    }
+    wallet = wallet.copyWith(isPremium: true);
+    return DateTime(2026, 12, 19);
   }
 
   @override

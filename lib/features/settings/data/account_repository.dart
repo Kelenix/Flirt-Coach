@@ -20,4 +20,10 @@ class SupabaseAccountRepository implements AccountRepository {
     // Le compte n'existe plus côté serveur : on oublie seulement la session locale.
     await guardSupabase(() => _client.auth.signOut(scope: SignOutScope.local));
   }
+
+  @override
+  Future<DateTime> redeemAccessCode(String code) async {
+    final data = await invokeAiFunction(_client, 'redeem-code', {'code': code});
+    return DateTime.parse(data['expires_at'] as String).toLocal();
+  }
 }

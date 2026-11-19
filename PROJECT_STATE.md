@@ -5,17 +5,17 @@
 
 ## Snapshot
 
-- **Phase courante** : 6 — Publication Android, préparation guidée pas à pas (étapes 1 à 10 faites)
+- **Phase courante** : 6 — Publication Android, préparation guidée pas à pas (étapes 1 à 12 faites)
 - **Dernière mise à jour** : 2026-11-19
 - **Santé** : 🟢 OK
 - **Mode** : PLAN_PUIS_VALIDATION (plan validé le 2026-11-18, options par défaut retenues)
-- **Prochaine action** : étape 11 proposée — fiche du store et déclarations sur le contenu dans
-  la Play Console (compte Kelenix : accord explicite de l'utilisateur requis), avec les textes de
-  `docs/store/fiche-store.md` et les visuels de `docs/store/visuels/`. Ensuite : clé de
-  signature et première version (autre machine), redéploiement des consignes renommées.
-  Après l'envoi de la première version : « Check again » sur les identifiants RevenueCat. Avant le
-  test fermé : redéployer `generate`, `respect-check` et `conversation-analysis` (consignes du
-  coach au nom « Flirt Coach Pro », ADR-029). Une étape à la fois, suivie dans
+- **Prochaine action** : étape 13 en cours — pays du test fermé faits (tous). Reste la
+  nouvelle liste de testeurs « Flirt Coach Pro » (adresses à fournir par l'utilisateur,
+  15 à 20 conseillées), avec l'e-mail de support pour les retours. Tout cela en attendant la
+  première version compilée sur l'autre machine. Ensuite : première version dans le test fermé,
+  « Check again » sur les identifiants RevenueCat, produits (tâche 6). Déjà fait : configuration
+  de l'app dans la console, code d'accès Premium en ligne, consignes renommées déployées.
+  Une étape à la fois, suivie dans
   `docs/manual-tasks.md` ; Android d'abord, iOS après la mise en ligne (ADR-028) ; pas de
   compilation ici (autre machine). Chemin critique : test fermé obligatoire (12 testeurs,
   14 jours, tâche 19), à lancer au plus tôt ; il exige la configuration de l'app dans la console
@@ -314,6 +314,42 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-19 — Étape 13 commencée (Play Console, canal « Test chiusi - Alpha »).
+  - Choix de l'utilisateur : tous les pays pour le test fermé (178 ajoutés au ciblage, enregistré) et une nouvelle liste de testeurs plutôt que les 6 listes existantes du compte.
+  - En attente : les adresses des testeurs.
+  - Un clic mal placé a coché un pays seul (Îles Salomon) avant la sélection de tous les pays ; sans effet, puisque tous sont désormais inclus.
+
+- 2026-11-19 — Étapes 11 et 12 terminées.
+  - L'utilisateur a posé les secrets. Claude a vérifié que l'empreinte du code, le plafond et le secret du webhook en ligne sont identiques au fichier local, sans afficher les valeurs.
+  - L'utilisateur a saisi le code et l'attestation dans « Détails d'accès ».
+  - Claude a déclaré le public cible (18+ uniquement), envoyé la sécurité des données et enregistré la fiche du store, qui était restée en brouillon.
+  - Contrôlé : aucune déclaration en attente, la section « Terminer la configuration » a disparu du tableau de bord, le test fermé n'est plus verrouillé, la console affiche « Flirt Coach Pro ».
+  - Rien n'est envoyé en revue : tout partira avec la première version.
+
+- 2026-11-19 — Déploiement lancé par l'utilisateur (`scripts\deploy-cloud.ps1`).
+  - Contrôlé par Claude : les 8 fonctions sont actives, dont `redeem-code` (v1) et les 3 consignes renommées. Migration `access_codes` présente sur le cloud, fonction SQL refusée à la clé publique (42501). `redeem-code` répond 401 sans connexion.
+  - L'outil de Claude a bloqué l'écriture des secrets de production : l'utilisateur doit lancer `supabase secrets set --env-file supabase/functions/.env.cloud`.
+  - « Détails d'accès » préparés dans la Play Console : nom et instructions en anglais. Le code, l'attestation et l'enregistrement restent à l'utilisateur.
+
+- 2026-11-19 — Étape 12 : code d'accès Premium pour la revue des stores (ADR-031), en local.
+  - Migration `20261119000000_access_codes` : activations et essais, en accès interne seulement. Fonction SQL `redeem_access_code` : 5 essais par heure et par compte, une activation par compte, plafond par code, pas d'effet sur un compte déjà Premium, Premium 30 jours via `set_premium`.
+  - Edge Function `redeem-code` : seule l'empreinte SHA-256 du code est sur le serveur, comparée en temps constant.
+  - Réglages → « J'ai un code » (masqué en Premium), relecture du portefeuille, messages d'erreur dédiés. Objet du mail au support corrigé en « Flirt Coach Pro ».
+  - Vérifié : 13 tests SQL de plus (123 en tout, verts), 5 tests Deno (format, analyse, types), 121 tests Flutter, analyse propre.
+  - Essai réel sur le serveur local avec un code jetable : mauvais code 400, bon code 200 (Premium vu dans le portefeuille), second essai 409, 6e essai 429, sans connexion 401.
+  - Vrai code généré (16 caractères), jamais affiché : en commentaire dans `.env.cloud`, avec l'empreinte et le plafond (20).
+  - CI, README, `docs/configuration.md`, `docs/operations.md`, `docs/security.md`, `CHANGELOG.md` mis à jour. Rien n'est déployé ni commité.
+
+- 2026-11-19 — Étape 11 presque finie par Claude dans Chrome (Play Console Kelenix, accord de l'utilisateur).
+  - Fiche par défaut fr-FR : nom « Flirt Coach Pro » (la console a pris le nouveau nom), textes vérifiés identiques à la fiche (empreinte), icône, bannière et 7 captures dans l'ordre. À la demande de l'utilisateur, l'écran d'accueil a été ajouté en n° 1 (« Gagne en confiance ») et `scripts/store_assets.py` mis à jour.
+  - Étiquette « créé avec l'IA » sur les 3 visuels montrant le logo (logo fait avec une IA, selon l'utilisateur).
+  - Catégorie Lifestyle, coordonnées (e-mail de support, site des pages légales), politique de confidentialité, annonces.
+  - Classification IARC envoyée (conditions IARC acceptées avec l'accord de l'utilisateur) : PEGI 3, USK 12, ESRB 13+.
+  - Identifiant publicitaire, déclarations gouvernement, finances et santé.
+  - Sécurité des données : brouillon complet (ADR-032). Google n'autorise l'envoi qu'après le public cible, qui exige les détails d'accès.
+  - Les détails d'accès imposent un accès Premium sans achat : l'utilisateur a choisi le code d'accès (ADR-031), à développer. L'attestation n'a pas été cochée tant que le code n'existe pas.
+  - Rien n'a été envoyé en revue. La déclaration de commerçant n'a pas été touchée.
 
 - 2026-11-19 — Étape 10 faite : visuels Google Play produits en local par `scripts/store_assets.py` dans `docs/store/visuels/` — icône 512 × 512 (PNG 32 bits, carré plein), bannière 1024 × 500 (logo du kit inchangé), 6 captures 1080 × 1920 avec accroche, à partir d'écrans de l'émulateur (`visuels/ecrans/`, conversations fictives ; capture importée = fausse conversation neutre générée, aucune appli réelle imitée). Formats vérifiés (dimensions, PNG sans transparence pour bannière et captures), rendu contrôlé visuellement ; accroches vérifiées dans le code (7 situations, 7 styles). `docs/store/fiche-store.md` (section 5) et `docs/manual-tasks.md` à jour.
 

@@ -58,6 +58,25 @@ void main() {
     expect(failureForFunctionError('pas un objet'), isA<UnexpectedFailure>());
   });
 
+  test('code d\'accès : chaque refus du serveur a sa cause', () {
+    expect(
+      {
+        for (final code in [
+          'invalid_code',
+          'code_unavailable',
+          'too_many_attempts',
+        ])
+          code: (failureForFunctionError({'error': code}) as AccessCodeFailure)
+              .problem,
+      },
+      {
+        'invalid_code': AccessCodeProblem.invalid,
+        'code_unavailable': AccessCodeProblem.unavailable,
+        'too_many_attempts': AccessCodeProblem.tooManyAttempts,
+      },
+    );
+  });
+
   test('génération : propositions, ou refus motivé', () {
     final result = generationResultFromJson({
       'refused': false,

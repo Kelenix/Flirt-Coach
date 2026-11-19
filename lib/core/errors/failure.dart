@@ -48,6 +48,15 @@ final class PurchaseFailedFailure extends Failure {
   const PurchaseFailedFailure();
 }
 
+/// Code d'accès Premium refusé (ADR-031).
+enum AccessCodeProblem { invalid, unavailable, tooManyAttempts }
+
+final class AccessCodeFailure extends Failure {
+  const AccessCodeFailure(this.problem);
+
+  final AccessCodeProblem problem;
+}
+
 final class UnexpectedFailure extends Failure {
   const UnexpectedFailure();
 }
@@ -63,5 +72,10 @@ String failureMessage(AppLocalizations l10n, Object error) => switch (error) {
   ImageTooLargeFailure() => l10n.errorImageTooLarge,
   PurchasesUnavailableFailure() => l10n.errorPurchasesUnavailable,
   PurchaseFailedFailure() => l10n.errorPurchaseFailed,
+  AccessCodeFailure(:final problem) => switch (problem) {
+    AccessCodeProblem.invalid => l10n.errorAccessCodeInvalid,
+    AccessCodeProblem.unavailable => l10n.errorAccessCodeUnavailable,
+    AccessCodeProblem.tooManyAttempts => l10n.errorAccessCodeAttempts,
+  },
   _ => l10n.errorUnexpected,
 };

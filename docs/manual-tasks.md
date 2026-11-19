@@ -31,8 +31,17 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
   relecture par un juriste toujours conseillée (tâche 10).
 - **Étape 9 faite** : message de consentement RGPD publié dans AdMob (tâche 8).
 - **Étape 10 faite** : visuels Google Play prêts dans `docs/store/visuels/` (icône 512 × 512,
-  bannière 1024 × 500, 6 captures 1080 × 1920 avec accroche) ; à déposer avec la fiche du
-  store (tâche 19).
+  bannière 1024 × 500, 7 captures 1080 × 1920 avec accroche, accueil en premier).
+- **Étape 11 faite** (Play Console, avec ton accord) :
+  - Fiche « Flirt Coach Pro » (textes, visuels, étiquette IA).
+  - Catégorie et coordonnées.
+  - Toutes les déclarations du contenu : confidentialité, annonces, détails d'accès,
+    classification, public cible 18+, sécurité des données, identifiant publicitaire,
+    gouvernement, finances, santé.
+  - La configuration de l'app est terminée et le test fermé est débloqué. Rien n'est envoyé
+    en revue : tout partira avec la première version.
+- **Étape 12 faite** : code d'accès Premium (Réglages → « J'ai un code »), déployé sur le
+  cloud, secret posé ; le code est en commentaire dans `supabase/functions/.env.cloud`.
 - **Test fermé obligatoire** pour ce compte (tâche 19) : c'est l'étape la plus longue
   (14 jours) ; les étapes sont ordonnées pour le lancer au plus tôt.
 - La compilation des versions envoyées aux stores se fait sur une autre machine ; elle sera
@@ -46,7 +55,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 1 | Projet Supabase cloud | tests sur téléphone, publication | ✅ Fait (reste : plan avec sauvegardes) |
 | 2 | Clé API Anthropic | toute génération | ✅ Fait, en local et sur le cloud |
 | 3 | Nom et identifiants de l'app | publication | ✅ Décidé : « Flirt Coach Pro », identifiants inchangés |
-| 4 | Compte Google Play Console | achats réels Android, publication | App créée, profil de paiement et taux de 15 % actifs |
+| 4 | Compte Google Play Console | achats réels Android, publication | App « Flirt Coach Pro » créée et configurée, paiement et taux de 15 % actifs ; reste la déclaration de commerçant (avant février 2027) |
 | 5 | Compte Apple Developer | iOS | Après la mise en ligne Android |
 | 6 | Produits d'achat dans les stores | achats réels | À faire, guidé |
 | 7 | RevenueCat (et 7b : prix de lancement de l'annuel) | achats réels | Projet, app, clé, notifications et webhook en place ; produits à faire |
@@ -61,7 +70,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 16 | Achats sandbox (phase de test) | tests d'achat | Plus tard, avec la tâche 7 |
 | 17 | Protection contre la création de comptes en série | publication | **Décision attendue** |
 | 18 | Mesure de fluidité sur ton téléphone | qualité | Plus tard |
-| 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | À faire, au plus tôt (textes et visuels de la fiche prêts) |
+| 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Configuration de l'app terminée ; restent la première version (autre machine), les testeurs et les 14 jours |
 
 ---
 
@@ -121,8 +130,7 @@ doit être unique : à vérifier avec la tâche 5.
   - [x] Inscription au taux de commission de 15 % (premier million de dollars de revenus
     annuels), confirmée par la Play Console le 2026-11-19. Sans elle, les packs de crédits
     seraient taxés à 25 % au lieu de 15 % dans l'EEE.
-  - [ ] Nom de l'app dans la console : encore « Flirt Coach » ; le passer à « Flirt Coach Pro »
-    dans la fiche du store.
+  - [x] Nom de l'app dans la console : « Flirt Coach Pro » (fiche du store, 2026-11-19).
   - [ ] Déclarer le statut de commerçant (exigence de l'UE) avant février 2027 : bannière
     « Dichiara il tuo stato di commerciante » de la Play Console.
   - [x] Test fermé obligatoire pour ce compte (déjà fait pour d'autres apps) : voir tâche 19.
@@ -370,9 +378,21 @@ doit être unique : à vérifier avec la tâche 5.
   Google). Achats et publicités peuvent être finalisés pendant le test, par des versions mises
   à jour.
 - **Étapes** :
-  - [ ] Terminer la configuration de l'app dans la console (fiche du store, déclarations sur le
-    contenu, URL de la politique de confidentialité). Textes prêts dans la
-    [fiche du store](store/fiche-store.md), visuels dans `docs/store/visuels/`.
+  - [x] Terminer la configuration de l'app dans la console (2026-11-19 ; réponses détaillées
+    dans la [fiche du store](store/fiche-store.md), sections 6 et 7) :
+    - [x] Fiche du store : nom, descriptions, icône, bannière, 7 captures, étiquette IA.
+    - [x] Catégorie et coordonnées.
+    - [x] Déclarations : confidentialité, annonces, classification, identifiant publicitaire,
+      gouvernement, finances, santé.
+    - [x] Code d'accès Premium (ADR-031) : développé, déployé, secret posé sur le cloud. Le code
+      est en commentaire dans `supabase/functions/.env.cloud` (non versionné).
+    - [x] Détails d'accès : instructions en anglais, code et attestation saisis par toi.
+    - [x] Public cible et contenu : 18 ans et plus uniquement.
+    - [x] Sécurité des données : envoyée.
+  - [x] Canal « Test chiusi - Alpha » : disponible dans tous les pays (178), choix du
+    2026-11-19. Les pays de la version publique se choisiront à part.
+  - [ ] Nouvelle liste de testeurs « Flirt Coach Pro » : tes adresses e-mail à me donner.
+    Vise 15 à 20 personnes pour garder 12 inscrits sans interruption.
   - [ ] Envoyer une version dans le canal de test fermé (depuis l'autre machine).
   - [ ] Inviter au moins 12 testeurs (liste d'e-mails ou groupe Google) ; chacun accepte avec le
     lien d'inscription.
