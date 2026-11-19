@@ -40,7 +40,10 @@ poste de développement. Le projet ne la lit que si `android/key.properties` exi
 fichier, la version est signée avec la clé de débogage et Google Play la refuse.
 
 1. **Machine** : Flutter 3.41.7 (stable), Android SDK et JDK 17 ; `flutter doctor` sans
-   erreur pour Android.
+   erreur pour Android. Fait le 2026-11-20, sans Android Studio : Flutter dans
+   `%USERPROFILE%\dev\flutter`, SDK dans `%USERPROFILE%\dev\android-sdk` avec les outils en
+   ligne de commande 20.0 (la 23.0 ne démarre pas sur cette machine). Licences du SDK :
+   `sdkmanager --licenses`, à accepter soi-même.
 2. **Projet** : `git pull` de la dernière version, commitée et poussée depuis le poste de
    développement.
 3. **Configuration** : copier `config/prod.json` (non versionné) par un moyen sûr, par exemple
@@ -51,7 +54,8 @@ fichier, la version est signée avec la clé de débogage et Google Play la refu
    keytool -genkey -v -keystore C:/Users/<toi>/cles/flirt-coach-pro-upload.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
    ```
 
-   - Noter les deux mots de passe dans un gestionnaire de mots de passe.
+   - Noter le mot de passe dans un gestionnaire de mots de passe. Il n'y en a qu'un : au
+     format PKCS12 de Java 17, le fichier et la clé partagent le même.
    - Garder une copie chiffrée du fichier `.jks` hors de cette machine. Sans elle, il faut
      demander à Google de réinitialiser la clé d'envoi, ce qui prend plusieurs jours.
 5. **Brancher la clé** : copier `android/key.properties.example` en `android/key.properties`
@@ -64,7 +68,8 @@ fichier, la version est signée avec la clé de débogage et Google Play la refu
 
    Résultat : `build/app/outputs/bundle/release/app-release.aab`. Contrôle de la signature :
    `keytool -printcert -jarfile build/app/outputs/bundle/release/app-release.aab` doit
-   afficher ta clé, et non « Android Debug ».
+   afficher ta clé, et non « Android Debug » (`keytool` n'est pas dans le PATH :
+   `C:\Program Files\Java\jdk-17\bin\keytool.exe`).
 7. **Envoyer dans le test fermé** : Play Console → Test e rilascio → Test chiusi → « Test
    chiusi - Alpha » → Crea nuova release.
    - Signature : garder la « Firma dell'app di Google Play ». Google conserve la clé de

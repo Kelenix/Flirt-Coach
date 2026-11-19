@@ -2,6 +2,6 @@
 # les versions des stores, jamais ailleurs. key.properties n'est jamais versionné.
 # Chemin de la clé avec des barres obliques, en dehors du dépôt.
 storeFile=C:/Users/<toi>/cles/flirt-coach-pro-upload.jks
-storePassword=<mot de passe du fichier de clé>
+storePassword=<mot de passe de la clé>
 keyAlias=upload
-keyPassword=<mot de passe de la clé>
+keyPassword=<le même mot de passe (un seul au format PKCS12)>

@@ -44,8 +44,8 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
   cloud, secret posé ; le code est en commentaire dans `supabase/functions/.env.cloud`.
 - **Test fermé obligatoire** pour ce compte (tâche 19) : c'est l'étape la plus longue
   (14 jours) ; les étapes sont ordonnées pour le lancer au plus tôt.
-- La compilation des versions envoyées aux stores se fait sur une autre machine ; elle sera
-  abordée plus tard.
+- La compilation des versions envoyées aux stores se fait sur une autre machine : équipée, et
+  première version (AAB) compilée le 2026-11-20.
 
 ## Récapitulatif
 
@@ -62,7 +62,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 8 | AdMob | publicités réelles | App, blocs, blocages et consentement RGPD en place ; compte en validation ; Play Store à associer après la mise en ligne |
 | 9 | GitHub et CI macOS | compilation iOS | En partie (CI faite ; iOS avec la tâche 5) |
 | 10 | Textes légaux relus et hébergés | publication | En ligne (GitHub Pages) ; relecture par un juriste à faire |
-| 11 | Clés de signature Android et iOS | publication | Plus tard, avec la compilation |
+| 11 | Clés de signature Android et iOS | publication | Clé Android créée sur l'autre machine (2026-11-20), reste sa sauvegarde ; iOS avec la tâche 5 |
 | 12 | Éditeur et e-mail de support | publication | ✅ Fait |
 | 13 | Modération des signalements | après publication | Après la publication |
 | 14 | Clé secrète RevenueCat | suppression de compte complète | Plus tard, avec la tâche 7 |
@@ -70,7 +70,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 16 | Achats sandbox (phase de test) | tests d'achat | Plus tard, avec la tâche 7 |
 | 17 | Protection contre la création de comptes en série | publication | **Décision attendue** |
 | 18 | Mesure de fluidité sur ton téléphone | qualité | Plus tard |
-| 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Configuration de l'app terminée ; restent la première version (autre machine), les testeurs et les 14 jours |
+| 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Configuration de l'app terminée ; AAB 1.0.0 prêt (autre machine), reste à le déposer ; puis les testeurs et les 14 jours |
 
 ---
 
@@ -285,9 +285,12 @@ doit être unique : à vérifier avec la tâche 5.
 - **Quand** : avec la compilation, **uniquement sur ton autre machine**. Ta consigne : la clé
   n'est jamais créée ni enregistrée sur ce poste.
 - **Étapes Android** :
-  - [ ] Créer une clé :
-    `keytool -genkey -v -keystore upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload`.
-  - [ ] La conserver **hors du dépôt** (gestionnaire de mots de passe et copie de secours).
+  - [x] Créer une clé (2026-11-20, sur l'autre machine) : `%USERPROFILE%\cles\flirt-coach-pro-upload.jks`,
+    hors du dépôt, alias `upload`, RSA 2048, valide jusqu'en 2054 ; `android/key.properties`
+    créé à côté. Empreinte SHA-256 du certificat d'envoi :
+    `98:ED:4E:73:EA:F6:52:A8:9E:CD:7D:B8:97:4C:BC:86:04:A4:0A:E4:42:CC:B3:2B:92:B3:6D:BE:47:E6:A1:67`.
+  - [ ] La sauvegarder : mot de passe dans le gestionnaire de mots de passe, copie chiffrée du
+    `.jks` hors de l'autre machine.
   - [ ] Activer « Signature d'application par Google Play » dans la console.
   - [x] Configuration de signature préparée ici sans aucune clé : Gradle lit
     `android/key.properties` s'il existe (modèle : `android/key.properties.example`).
@@ -424,6 +427,7 @@ avec la clé de débogage.
     interruption.
   - [ ] Envoyer une version dans le canal de test fermé (depuis l'autre machine, guide :
     [Première version Google Play](operations.md#première-version-google-play-sur-lautre-machine)).
+    AAB 1.0.0 (1) compilé et signé le 2026-11-20 sur l'autre machine ; reste à le déposer.
   - [ ] Inviter au moins 12 testeurs (liste d'e-mails ou groupe Google) ; chacun accepte avec le
     lien d'inscription.
   - [ ] Garder au moins 12 testeurs inscrits sans interruption pendant 14 jours.

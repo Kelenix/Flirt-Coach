@@ -6,15 +6,17 @@
 ## Snapshot
 
 - **Phase courante** : 6 — Publication Android, préparation guidée pas à pas (étapes 1 à 12 faites)
-- **Dernière mise à jour** : 2026-11-19
+- **Dernière mise à jour** : 2026-11-20
 - **Santé** : 🟢 OK
 - **Mode** : PLAN_PUIS_VALIDATION (plan validé le 2026-11-18, options par défaut retenues)
 - **Prochaine action** :
-  1. Commiter et pousser le travail, sur demande de l'utilisateur, pour que l'autre machine
-     l'ait.
-  2. Sur l'autre machine, l'utilisateur suit le guide « Première version Google Play » de
-     `docs/operations.md` : clé d'envoi, `key.properties`, AAB, release dans « Test chiusi -
-     Alpha », sans encore envoyer en revue.
+  1. Sur l'autre machine, l'AAB 1.0.0 (1) signé est prêt depuis le 2026-11-20
+     (`build/app/outputs/bundle/release/app-release.aab`). L'utilisateur le dépose dans « Test
+     chiusi - Alpha » (étape 7 du guide « Première version Google Play » de
+     `docs/operations.md`) et lit les avertissements, sans encore envoyer en revue. Sauvegarde
+     de la clé à faire (mot de passe dans le gestionnaire, copie chiffrée du `.jks` ailleurs).
+  2. Commiter et pousser depuis l'autre machine les notes du 2026-11-20, puis `git pull` sur le
+     poste de développement avant d'y reprendre.
   3. Ensuite, ensemble : liste de testeurs, produits (tâche 6), « Check again » RevenueCat, envoi
      en revue, 14 jours de test.
 
@@ -320,6 +322,18 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-20 — Autre machine équipée, première version Android compilée et signée, à la demande de l'utilisateur.
+  - Installés hors d'`AppData` : Flutter 3.41.7 (`%USERPROFILE%\dev\flutter`, ajouté au PATH du compte, télémétrie désactivée) et SDK Android (`%USERPROFILE%\dev\android-sdk`) : outils en ligne de commande 20.0, platform-tools, Android 36 et 35, build-tools 35.0.0, NDK 28.2.13676358, CMake 3.22.1. Licences acceptées par l'utilisateur. JDK 17 déjà présent, pas d'Android Studio.
+  - Outils en ligne de commande 23.0 écartés : leur nouvel « Android CLI » ne démarre pas ici (bibliothèque `jimage` de son Java 25 impossible à charger).
+  - Piège : l'app Claude de bureau redirige les écritures de ses commandes dans `AppData` vers une copie privée, invisible du terminal. D'où le SDK hors d'`AppData`, la configuration de Flutter et la compilation lancées dans le terminal de l'utilisateur.
+  - Vérifié : `flutter analyze` sans problème, 121 tests verts, `app-release.aab` (52,4 Mo, version 1.0.0 (1), `targetSdk` 36, identifiant AdMob réel, non débogable) signé par la clé d'envoi (`CN=Flirt Coach`, SHA-256 `98:ED:…:A1:67`). Première compilation Gradle : 10 min environ.
+
+- 2026-11-20 — Clé d'envoi Google Play créée sur l'autre machine (clone du dépôt du 2026-11-19), à la demande de l'utilisateur.
+  - `%USERPROFILE%\cles\flirt-coach-pro-upload.jks`, hors du dépôt : alias `upload`, PKCS12, RSA 2048, SHA256withRSA, valide jusqu'au 2054-04-07, `CN=Flirt Coach`. Empreinte SHA-256 dans la tâche 11.
+  - Mot de passe choisi et tapé par l'utilisateur dans son terminal (saisie masquée, jamais affiché) ; le même script a écrit `android/key.properties`, ignoré par git (vérifié).
+  - Vérifié : `key.properties`, lu comme le fait Gradle, ouvre la clé et son alias. AAB pas encore compilé : Flutter et le SDK Android manquent sur cette machine (JDK 17 présent).
+  - Reste à l'utilisateur : mot de passe dans le gestionnaire, copie chiffrée du `.jks` hors de cette machine.
 
 - 2026-11-19 — Signature préparée sans aucune clé, à la demande de l'utilisateur (la clé reste sur l'autre machine).
   - `android/app/build.gradle.kts` lit `android/key.properties` s'il existe, sinon il signe avec la clé de débogage. Le TODO du modèle Flutter est retiré, le commentaire sur l'identifiant mis à jour.
