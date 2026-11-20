@@ -223,7 +223,7 @@ Une préférence de genre dans les réglages l'éviterait (non demandé par l'IN
 | Rappels RevenueCat / AdMob d'un compte supprimé ignorés (200) au lieu d'être rejoués sans fin | ✅ 1 test Deno ; 47 au total |
 | Textes légaux (US-06) : confidentialité et conditions, accessibles depuis l'accueil 18+ (avant confirmation), le paywall et les réglages ; éditeur et contact par configuration | ✅ ; ⚠️ relecture juridique + valeurs à fournir (tâches 10, 12) |
 | Réglages : Premium et crédits, gérer l'abonnement (Premium), confidentialité, conditions, préférences publicitaires (formulaire UMP), contact (si configuré), suppression du compte | ✅ 8 tests Flutter ; vérifié sur émulateur |
-| Rattacher un e-mail (US-04) | ⏸️ reporté (ADR-024) |
+| Rattacher un e-mail (US-04) | ⏸️ reporté (ADR-024) : il faut d'abord un service d'envoi d'e-mails (SMTP) branché sur Supabase |
 | Tests | 93 Flutter, 84 SQL, 47 Deno ; `flutter analyze` propre |
 | Cloud | ✅ 7 Edge Functions déployées dont `delete-account` ; vérifié : génération réelle, signalement (204), signalements illisibles depuis l'app, suppression sans jeton refusée (401), compte supprimé (200). Correctif : génération inconnue → 400 au lieu de 500 (migration `20261118070100`) |
 
@@ -266,10 +266,10 @@ Une préférence de genre dans les réglages l'éviterait (non demandé par l'IN
 | En réel (local) | ✅ clés Google téléchargées ; faux rappel → 403, rien crédité ; rappel incomplet → 400 ; `generate` renvoie le nouveau portefeuille |
 | App : consentement Google (UMP) avant toute annonce, bannière 320×50 en bas (gratuits seulement), vidéo récompensée quand les crédits manquent, attente honnête du serveur, bouton masqué après 5 vidéos | ✅ 9 tests ; 60 tests Flutter au total |
 | Émulateur (identifiants de test Google) | ✅ formulaire de consentement RGPD affiché ; refus → bannière de test non personnalisée affichée ; vidéo récompensée lue jusqu'au bout. Retouches faites après coup : bannière « grande adaptative » trop haute → format standard ; libellé « Passer Premium » ; bouton grisé masqué sans crédit ; bouton vidéo lisible pendant le chargement |
-| Crédits gagnés par une vraie vidéo | ⬜ le rappel d'AdMob exige une URL publique (Supabase cloud) : en local, la récompense reste « en attente » |
-| Formulaire de consentement en français et à la marque | ⬜ se configure dans AdMob (tâche 8) ; celui affiché est le formulaire de test de Google |
+| Crédits gagnés par une vraie vidéo | 🔄 serveur prêt : rappel AdMob vers le serveur en ligne validé par AdMob, bloc autorisé (2026-11-19). Aucun crédit vidéo en base au 2026-11-20 : à vérifier avec une vraie vidéo, une fois le compte AdMob approuvé |
+| Formulaire de consentement en français et à la marque | ✅ message RGPD publié dans AdMob le 2026-11-19 (français, Consentir / Refuser / Gérer les options), à la place du formulaire de test |
 | Lien « Préférences publicitaires » (modifier son consentement) | ✅ Inc-10 (réglages, affiché si le consentement s'applique) |
-| Catégories « rencontres » et « adulte » bloquées | ⬜ réglage de la console AdMob (tâche 8) |
+| Catégories « rencontres » et « adulte » bloquées | ✅ bloquées dans AdMob le 2026-11-19 (« Rencontres », « Références sexuelles », classification maximale T) |
 | iOS (ATT, SKAdNetwork) | ✅ déclaré dans `Info.plist`, non vérifié sur iPhone |
 
 Puis : phase 5 (perf, QA, revue), phase 6 (fiches stores, .aab / iOS, Fastlane), phase 7 (docs),
@@ -318,6 +318,11 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-20 — États d'Inc-6 et Inc-10 remis à jour à la demande de l'utilisateur.
+  - Consentement RGPD et blocages AdMob : faits le 2026-11-19 (étapes 7 et 9), lignes corrigées.
+  - Vraie vidéo récompensée : base de production interrogée en lecture seule (`supabase db query --linked`, comptage sans donnée personnelle) : 0 crédit vidéo accordé. Reste à vérifier, une fois le compte AdMob approuvé.
+  - US-04 : toujours reporté ; la raison (service d'envoi d'e-mails) est maintenant écrite dans le tableau.
 
 - 2026-11-20 — État de la CI corrigé dans ce fichier : elle tourne sur GitHub à chaque envoi depuis le 2026-11-18 (les mentions « jamais exécutée » dataient d'avant le dépôt).
   - 8 dernières exécutions : toutes vertes, sauf celle du commit `86753d3`, lancée à 00:00:20 UTC. Deux tests SQL de plafond journalier ont échoué (`credits_test.sql` n° 14, `usage_limits_test.sql` n° 5) ; le commit suivant, sans changement de code, est vert.

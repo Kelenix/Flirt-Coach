@@ -273,7 +273,8 @@ doit être unique : à vérifier avec la tâche 5.
 - **iOS** (avec la tâche 5) : app iOS, mêmes blocs, message IDFA, identifiant d'app dans
   `ios/Runner/Info.plist`.
 - **Coût** : gratuit (AdMob reverse une part des revenus).
-- **Vérification** : une vidéo vue jusqu'au bout ajoute 2 crédits dans l'app.
+- **Vérification** : une vidéo vue jusqu'au bout ajoute 2 crédits dans l'app. Pas encore
+  observé en production : 0 crédit vidéo en base au 2026-11-20.
 
 ## 9. GitHub et CI macOS
 
