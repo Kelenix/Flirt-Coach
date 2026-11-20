@@ -1,4 +1,14 @@
 -- Limites d'usage des appels IA (phase 5, revue S1/S2). Lancer : supabase test db
+
+-- Les tentatives « du jour » sont datées de 2 minutes plus tôt (hors limite par minute).
+-- Juste après minuit UTC, elles tomberaient la veille : on attend la 3e minute du jour avant
+-- d'ouvrir la transaction, qui fige now().
+do $$
+begin
+  perform pg_sleep(greatest(0, 121 - extract(epoch from (now() - date_trunc('day', now(), 'UTC')))));
+end
+$$;
+
 begin;
 create extension if not exists pgtap with schema extensions;
 select plan(7);

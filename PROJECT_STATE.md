@@ -120,7 +120,7 @@ de génération (l'IA exige le réseau).
 | Parcours serveur réel (HTTP local) | ✅ connexion anonyme → `confirm_age` → profil lu et horodaté ; appel sans session refusé (401) |
 | Compilation Android (`flutter build apk --debug`) | ✅ APK produit par l'utilisateur (Gradle ne démarre pas depuis la session Claude : `Unable to establish loopback connection`, limite de l'environnement) |
 | L'app démarre sur émulateur avec la base locale | ✅ émulateur Android 15 : écran 18+ conforme au kit (trait sombre du logo corrigé en Inc-2) |
-| CI GitHub Actions | ⚠️ fichier écrit, jamais exécuté (pas de dépôt Git) |
+| CI GitHub Actions | ✅ exécutée sur GitHub à chaque envoi depuis la création du dépôt (2026-11-18) : app, 8 fonctions, base. Échec isolé le 2026-11-20 à 00:00 UTC : 2 tests de plafond journalier sensibles à l'heure, corrigés (voir journal) |
 | Liens Confidentialité / Conditions sur l'accueil | ✅ Inc-10 |
 
 L'écran d'accueil après confirmation est provisoire (marque + avertissement) : l'écran
@@ -171,7 +171,7 @@ Une préférence de genre dans les réglages l'éviterait (non demandé par l'IN
 | Écran Mode Respect (accès par l'icône bouclier de l'accueil) : verdict, problèmes expliqués, alternative copiable, crédits, erreurs | ✅ 7 tests ; 28 tests Flutter au total |
 | Garde-fou automatique sur chaque génération (H6 a) | ✅ déjà dans les consignes de `generate` depuis Inc-1 |
 | Contrôle sur émulateur | ✅ parcours complet dans l'app : message insistant → « À revoir », « Trop insistant » expliqué, version respectueuse copiable, crédit décompté (19 → 18). Le résultat apparaît sous les champs : il faut faire défiler pour lire l'alternative |
-| CI : les deux fonctions testées | ✅ (fichier mis à jour, jamais exécuté : pas de dépôt Git) |
+| CI : les deux fonctions testées | ✅ (exécutée sur GitHub depuis la création du dépôt, 2026-11-18) |
 
 ### Inc-4 — état de la Definition of Done
 
@@ -184,7 +184,7 @@ Une préférence de genre dans les réglages l'éviterait (non demandé par l'IN
 | Vignette : débordement trouvé par les tests (image large / illisible) → taille fixe + remplacement | ✅ |
 | iOS : texte d'usage de la photothèque (`NSPhotoLibraryUsageDescription`) | ✅ (non vérifié sur iPhone) |
 | Contrôle sur émulateur | ✅ sélecteur photo système (aucune permission demandée), aperçu, génération depuis la capture : 3 réponses pertinentes, 17 → 15 crédits. Défaut vu à l'écran : « Régénérer (1 crédit) » au lieu de 2 → libellé désormais calculé (et sans coût pour Premium) |
-| CI : les trois fonctions testées | ✅ fichier à jour, jamais exécuté |
+| CI : les trois fonctions testées | ✅ (exécutée sur GitHub depuis la création du dépôt, 2026-11-18) |
 
 ### Inc-5 — état de la Definition of Done
 
@@ -318,6 +318,11 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-20 — État de la CI corrigé dans ce fichier : elle tourne sur GitHub à chaque envoi depuis le 2026-11-18 (les mentions « jamais exécutée » dataient d'avant le dépôt).
+  - 8 dernières exécutions : toutes vertes, sauf celle du commit `86753d3`, lancée à 00:00:20 UTC. Deux tests SQL de plafond journalier ont échoué (`credits_test.sql` n° 14, `usage_limits_test.sql` n° 5) ; le commit suivant, sans changement de code, est vert.
+  - Cause : ces tests datent 99 tentatives de « il y a 2 minutes » pour éviter la limite par minute. Juste après minuit UTC, elles tombent la veille et le plafond du jour (remis à zéro à minuit UTC) n'est pas atteint. Défaut des tests, pas de l'app.
+  - Corrigé, à la demande de l'utilisateur : les deux fichiers attendent, avant d'ouvrir leur transaction, la 3e minute du jour UTC si besoin (121 s au plus, seulement juste après minuit). Calcul vérifié sur des heures simulées (101 s à 00:00:20, 2 s à 00:01:59, 0 ensuite) ; 123 tests SQL verts en local. Non rejoué à minuit en conditions réelles.
 
 - 2026-11-20 — Test fermé envoyé en revue chez Google, avec l'accord de l'utilisateur.
   - Release 1.0.0 (1) confirmée (plus aucun avertissement), puis 14 modifications envoyées depuis la panoramique de publication : release, pays (177 + reste du monde), réactivation du canal, testeurs, fiche du store, classification, public cible, confidentialité, annonces, sécurité des données, santé, catégorie. Signalés à Google : détails d'accès, identifiant publicitaire, gouvernement, finances.
