@@ -78,9 +78,12 @@ fichier, la version est signée avec la clé de débogage et Google Play la refu
      [fiche du store](store/fiche-store.md).
    - Enregistrer et lire les avertissements, sans encore envoyer en revue. L'envoi part avec
      toutes les déclarations de l'app ; on le fait ensemble, après la liste de testeurs.
+   - Un fichier déjà envoyé (dans un autre canal, par exemple) est refusé avec « Il codice di
+     versione 1 è già stato utilizzato » : il est dans la bibliothèque, on l'ajoute avec
+     « Aggiungi dalla raccolta ». Fait ainsi le 2026-11-20.
 8. **Ensuite** :
    - liste de testeurs (15 à 20 adresses) ;
-   - produits d'achat (tâche manuelle 6) ;
+   - produits d'achat (tâche manuelle 6, faite le 2026-11-20 ; prix : ADR-033) ;
    - « Check again » sur les identifiants RevenueCat ;
    - 14 jours de test fermé.
 

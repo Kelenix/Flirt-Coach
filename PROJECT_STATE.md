@@ -5,32 +5,28 @@
 
 ## Snapshot
 
-- **Phase courante** : 6 — Publication Android, préparation guidée pas à pas (étapes 1 à 12 faites)
+- **Phase courante** : 6 — Publication Android : test fermé envoyé en revue le 2026-11-20 (produits et RevenueCat prêts)
 - **Dernière mise à jour** : 2026-11-20
 - **Santé** : 🟢 OK
 - **Mode** : PLAN_PUIS_VALIDATION (plan validé le 2026-11-18, options par défaut retenues)
 - **Prochaine action** :
-  1. Sur l'autre machine, l'AAB 1.0.0 (1) signé est prêt depuis le 2026-11-20
-     (`build/app/outputs/bundle/release/app-release.aab`). L'utilisateur le dépose dans « Test
-     chiusi - Alpha » (étape 7 du guide « Première version Google Play » de
-     `docs/operations.md`) et lit les avertissements, sans encore envoyer en revue. Sauvegarde
-     de la clé à faire (mot de passe dans le gestionnaire, copie chiffrée du `.jks` ailleurs).
-  2. Commiter et pousser depuis l'autre machine les notes du 2026-11-20, puis `git pull` sur le
-     poste de développement avant d'y reprendre.
-  3. Ensuite, ensemble : liste de testeurs, produits (tâche 6), « Check again » RevenueCat, envoi
-     en revue, 14 jours de test.
+  1. Attendre la revue Google (envoyée le 2026-11-20 ; contrôles rapides puis revue, souvent
+     moins de 7 jours). Si Google signale un problème, le corriger ensemble.
+  2. Après l'approbation (test fermé publié automatiquement) :
+     - « Check again » dans RevenueCat ;
+     - l'utilisateur complète la liste (15 à 20 adresses) et partage le lien d'inscription ;
+     - il désinstalle l'APK de test, installe la version du Play Store et teste les achats
+       (testeur de licence, `REVENUECAT_ALLOW_SANDBOX` le temps du test, tâche 16) ;
+     - 14 jours avec au moins 12 testeurs inscrits, puis demande d'accès à la production.
+  2. Décision de l'utilisateur à prendre : prix de lancement de l'abonnement annuel (tâche 7b).
+  3. Sur l'autre machine : sauvegarde de la clé d'envoi (mot de passe dans le gestionnaire,
+     copie chiffrée du `.jks` ailleurs).
+  4. Décision de l'utilisateur à prendre : protection contre les comptes en série (tâche 17).
 
-  APK de test validée sur son téléphone ; pays du test fermé déjà faits (tous). Ensuite : première version dans le test fermé,
-  « Check again » sur les identifiants RevenueCat, produits (tâche 6). Déjà fait : configuration
-  de l'app dans la console, code d'accès Premium en ligne, consignes renommées déployées.
-  Une étape à la fois, suivie dans
-  `docs/manual-tasks.md` ; Android d'abord, iOS après la mise en ligne (ADR-028) ; pas de
-  compilation ici (autre machine). Chemin critique : test fermé obligatoire (12 testeurs,
-  14 jours, tâche 19), à lancer au plus tôt ; il exige la configuration de l'app dans la console
-  et une première version. Ordre visé : RevenueCat, AdMob, politique de confidentialité en ligne
-  et fiche du store, version de test fermé, puis produits (débloqués par la première version).
-  Rappels : décision sur la tâche 17 avant publication ; vrais achats et vraie récompense
-  publicitaire à vérifier.
+  Une étape à la fois, suivie dans `docs/manual-tasks.md` ; Android d'abord, iOS après la mise
+  en ligne (ADR-028) ; versions des stores compilées uniquement sur l'autre machine. Chemin
+  critique : test fermé obligatoire (12 testeurs, 14 jours, tâche 19). Rappels : décision sur la
+  tâche 17 avant publication ; vrais achats et vraie récompense publicitaire à vérifier.
 
 ## Avancement par phase
 
@@ -322,6 +318,31 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-20 — Test fermé envoyé en revue chez Google, avec l'accord de l'utilisateur.
+  - Release 1.0.0 (1) confirmée (plus aucun avertissement), puis 14 modifications envoyées depuis la panoramique de publication : release, pays (177 + reste du monde), réactivation du canal, testeurs, fiche du store, classification, public cible, confidentialité, annonces, sécurité des données, santé, catégorie. Signalés à Google : détails d'accès, identifiant publicitaire, gouvernement, finances.
+  - État : « Modifiche in fase di revisione » ; contrôles rapides en cours (au plus 14 minutes) avant la revue. Publication gérée désactivée : publication automatique à l'approbation.
+
+- 2026-11-20 — Liste de testeurs « Flirt Coach Pro » créée avec une première adresse (celle de l'utilisateur) et associée à « Test chiusi - Alpha », à sa demande ; il ajoutera les autres plus tard.
+  - Canal : 3 étapes de configuration sur 4 terminées ; reste l'envoi en revue.
+  - Lien d'inscription des testeurs, actif après la publication : https://play.google.com/apps/testing/com.flirtcoach.flirt_coach
+  - Le compte développeur a déjà d'autres listes (pour d'autres apps), non cochées.
+
+- 2026-11-20 — RevenueCat configuré (tâche 7), avec l'accord de l'utilisateur.
+  - « Check again » : catalogues des produits et des abonnements lisibles ; l'accès aux achats reste refusé (« package name was not found ») tant qu'aucune version n'est publiée, comme prévu.
+  - 6 produits importés (packs consommables) ; droit `premium` relié aux 3 abonnements ; offre `main` « Premium et crédits » (6 paquets) marquée par défaut.
+  - Le droit `flirt_coach_pro` et l'offre `default` du magasin de test de RevenueCat sont laissés tels quels.
+
+- 2026-11-20 — 6 produits Google Play créés et actifs (tâche 6), avec l'accord de l'utilisateur.
+  - Abonnements `flirtcoach_premium_weekly|monthly|annual` avec un forfait de base chacun (`weekly`, `monthly`, `annual`) ; packs `flirtcoach_credits_20|50|100` avec l'option d'achat `buy`.
+  - La console ajoute la TVA au prix saisi (6,99 € saisis = 8,49 € payés en France). La base hors taxe est donc saisie pour obtenir les prix décidés en France (ADR-033).
+  - Vérifié dans la console : 6 produits actifs, avantages enregistrés. Pièges notés : la description des packs doit être tapée au clavier (une valeur injectée n'est pas prise en compte) ; les cases à cocher et menus demandent un vrai clic.
+
+- 2026-11-20 — Première version déposée dans la Play Console depuis l'autre machine, puis rangée d'ici dans le test fermé.
+  - Le fichier était parti dans un brouillon des « Test interni ». Le second envoi dans « Test chiusi - Alpha » avait été refusé : « Il codice di versione 1 è già stato utilizzato ».
+  - Corrigé avec l'accord de l'utilisateur : version ajoutée au brouillon de « Test chiusi - Alpha » depuis la bibliothèque (nom `1.0.0 (1)`, notes en français), brouillon des « Test interni » supprimé. Aperçu : un seul avertissement, attendu (aucun testeur choisi) ; 14,6 Mo à l'installation. Rien n'est envoyé en revue.
+  - Signature d'application par Google Play active, clé de signature gérée par Google ; la clé d'envoi a été enregistrée au premier dépôt.
+  - Création d'abonnements débloquée (tâche 6).
 
 - 2026-11-20 — Autre machine équipée, première version Android compilée et signée, à la demande de l'utilisateur.
   - Installés hors d'`AppData` : Flutter 3.41.7 (`%USERPROFILE%\dev\flutter`, ajouté au PATH du compte, télémétrie désactivée) et SDK Android (`%USERPROFILE%\dev\android-sdk`) : outils en ligne de commande 20.0, platform-tools, Android 36 et 35, build-tools 35.0.0, NDK 28.2.13676358, CMake 3.22.1. Licences acceptées par l'utilisateur. JDK 17 déjà présent, pas d'Android Studio.

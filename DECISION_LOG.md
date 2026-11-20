@@ -5,6 +5,43 @@
 
 ---
 
+## ADR-033 — Produits Google Play : prix TTC en France
+
+- **Date** : 2026-11-20
+- **Statut** : Accepté
+- **Décideur** : Claude (rôle : publication), sur l'accord de l'utilisateur pour créer les
+  produits aux prix décidés (tâche 6).
+- **Contexte** : la Play Console traite le prix saisi comme un prix **hors taxe** et ajoute la
+  TVA de chaque pays. Avec 6,99 € saisis, un Français paierait 8,49 €. Or les prix décidés
+  (6,99 / 12,99 / 49,99 € et 2,99 / 5,99 / 9,99 €) sont ceux affichés à l'utilisateur.
+- **Décision** :
+  - Prix décidés = prix TTC payés en France. Base hors taxe saisie pour tous les pays :
+    5,83 / 10,83 / 41,66 € et 2,49 / 4,99 / 8,33 € (prix TTC ÷ 1,20). Les autres pays suivent
+    la conversion automatique de Google (taux de change et arrondis locaux).
+  - Abonnements : un forfait de base par abonnement (`weekly`, `monthly`, `annual`),
+    renouvellement automatique, délai de grâce et suspension recommandés par Google (3, 7 et
+    14 jours), réabonnement autorisé. Avantages repris de l'écran Premium de l'app.
+  - Packs : produits à paiement unique, option d'achat `buy` compatible avec les anciennes
+    versions de la bibliothèque de facturation, classés « contenus numériques ».
+  - Les 6 produits sont actifs (175 pays pour les abonnements, 174 pour les packs).
+- **Alternatives écartées** :
+  - Saisir les prix décidés tels quels : +21 % pour l'utilisateur français, contraire à la
+    décision.
+  - Fixer à la main le prix de chaque pays de la zone euro : long, peu utile pour une app en
+    français ; possible plus tard, pays par pays.
+- **Conséquences** :
+  - La TVA varie dans la zone euro, donc quelques prix diffèrent de la France. Hebdomadaire :
+    7,49 € en Croatie et en Finlande. Annuel : 48,99 € au Luxembourg. Packs : de 2,89 à
+    3,09 € pour 20 crédits selon le pays.
+  - Hors zone euro, prix convertis automatiquement, par exemple :
+    - États-Unis : 6,49 / 11,99 / 45,99 $ et 2,69 / 5,49 / 8,99 $ ;
+    - Royaume-Uni : 5,99 / 10,99 / 41,99 £ et 2,49 / 4,99 / 8,49 £.
+  - L'app affiche toujours le prix du store (ADR-017), donc rien à changer dans le code.
+  - Pour changer un prix : même méthode (prix TTC visé ÷ 1,20 en base).
+- **Impact** : financier — moyen.
+
+---
+
 ## ADR-032 — Déclarations de la Play Console (contenu, données, visuels IA)
 
 - **Date** : 2026-11-19

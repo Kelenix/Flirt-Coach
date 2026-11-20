@@ -46,6 +46,16 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
   (14 jours) ; les étapes sont ordonnées pour le lancer au plus tôt.
 - La compilation des versions envoyées aux stores se fait sur une autre machine : équipée, et
   première version (AAB) compilée le 2026-11-20.
+- **Première version déposée** (2026-11-20) : AAB 1.0.0 (1) en brouillon dans « Test chiusi -
+  Alpha », pas encore envoyé en revue. Signature Google Play active.
+- **Produits créés** (2026-11-20, tâche 6) : 3 abonnements et 3 packs actifs, aux prix décidés
+  payés en France (ADR-033).
+- **RevenueCat configuré** (2026-11-20, tâche 7) : 6 produits importés, droit `premium`, offre
+  `main` par défaut. « Check again » à refaire après la publication du test fermé.
+- **Liste de testeurs** « Flirt Coach Pro » créée et associée au test fermé (2026-11-20), avec
+  une première adresse ; les autres seront ajoutées plus tard.
+- **Envoyé en revue** (2026-11-20) : le test fermé sera publié dès l'approbation de Google.
+  Ensuite : « Check again » dans RevenueCat, testeurs, test des achats, 14 jours.
 
 ## Récapitulatif
 
@@ -57,12 +67,12 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 3 | Nom et identifiants de l'app | publication | ✅ Décidé : « Flirt Coach Pro », identifiants inchangés |
 | 4 | Compte Google Play Console | achats réels Android, publication | App « Flirt Coach Pro » créée et configurée, paiement et taux de 15 % actifs ; reste la déclaration de commerçant (avant février 2027) |
 | 5 | Compte Apple Developer | iOS | Après la mise en ligne Android |
-| 6 | Produits d'achat dans les stores | achats réels | À faire, guidé |
-| 7 | RevenueCat (et 7b : prix de lancement de l'annuel) | achats réels | Projet, app, clé, notifications et webhook en place ; produits à faire |
+| 6 | Produits d'achat dans les stores | achats réels | ✅ Google Play : 6 produits actifs (2026-11-20) ; App Store avec la tâche 5 |
+| 7 | RevenueCat (et 7b : prix de lancement de l'annuel) | achats réels | Projet, app, clé, notifications, webhook, produits, droit `premium` et offre `main` en place (2026-11-20) ; restent « Check again » après la publication et la décision 7b |
 | 8 | AdMob | publicités réelles | App, blocs, blocages et consentement RGPD en place ; compte en validation ; Play Store à associer après la mise en ligne |
 | 9 | GitHub et CI macOS | compilation iOS | En partie (CI faite ; iOS avec la tâche 5) |
 | 10 | Textes légaux relus et hébergés | publication | En ligne (GitHub Pages) ; relecture par un juriste à faire |
-| 11 | Clés de signature Android et iOS | publication | Clé Android créée sur l'autre machine (2026-11-20), reste sa sauvegarde ; iOS avec la tâche 5 |
+| 11 | Clés de signature Android et iOS | publication | Clé d'envoi Android créée sur l'autre machine et signature Google Play active (2026-11-20) ; reste la sauvegarde de la clé ; iOS avec la tâche 5 |
 | 12 | Éditeur et e-mail de support | publication | ✅ Fait |
 | 13 | Modération des signalements | après publication | Après la publication |
 | 14 | Clé secrète RevenueCat | suppression de compte complète | Plus tard, avec la tâche 7 |
@@ -70,7 +80,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 16 | Achats sandbox (phase de test) | tests d'achat | Plus tard, avec la tâche 7 |
 | 17 | Protection contre la création de comptes en série | publication | **Décision attendue** |
 | 18 | Mesure de fluidité sur ton téléphone | qualité | Plus tard |
-| 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Configuration de l'app terminée ; AAB 1.0.0 prêt (autre machine), reste à le déposer ; puis les testeurs et les 14 jours |
+| 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Envoyé en revue le 2026-11-20 (version 1.0.0 (1), liste « Flirt Coach Pro » avec 1 adresse) ; après l'approbation : 12 testeurs inscrits et 14 jours |
 
 ---
 
@@ -156,19 +166,25 @@ doit être unique : à vérifier avec la tâche 5.
 - **Quand** : Google Play après la tâche 4 et avant la tâche 7 ; App Store avec la tâche 5.
   Prérequis Google Play : une première version de l'app (elle contient la bibliothèque de
   facturation) doit avoir été envoyée dans la console ; avant cela, la création de produits
-  reste bloquée.
+  reste bloquée. Débloquée le 2026-11-20 (AAB 1.0.0 (1) déposé).
 - **Étapes Google Play** :
-  - [ ] 3 abonnements distincts, chacun avec un forfait de base à renouvellement automatique :
-    `flirtcoach_premium_weekly`, `flirtcoach_premium_monthly`, `flirtcoach_premium_annual`
-    (un seul abonnement à 3 forfaits ne serait pas reconnu par l'app).
-  - [ ] 3 produits consommables : `flirtcoach_credits_20`, `flirtcoach_credits_50`,
-    `flirtcoach_credits_100`.
-  - [ ] Prix décidés : 6,99 € / 12,99 € / 49,99 € et 2,99 € / 5,99 € / 9,99 €.
+  - [x] 3 abonnements distincts (2026-11-20), chacun avec un forfait de base à renouvellement
+    automatique : `flirtcoach_premium_weekly` (forfait `weekly`), `flirtcoach_premium_monthly`
+    (`monthly`), `flirtcoach_premium_annual` (`annual`). Un seul abonnement à 3 forfaits ne
+    serait pas reconnu par l'app. Noms : « Premium hebdomadaire », « Premium mensuel »,
+    « Premium annuel » ; 4 avantages repris de l'écran Premium.
+  - [x] 3 packs de crédits (produits à paiement unique, option d'achat `buy`) :
+    `flirtcoach_credits_20`, `flirtcoach_credits_50`, `flirtcoach_credits_100`. À déclarer
+    comme consommables dans RevenueCat (tâche 7).
+  - [x] Prix décidés, payés en France : 6,99 € / 12,99 € / 49,99 € et 2,99 € / 5,99 € /
+    9,99 €. La console ajoute la TVA au prix saisi : on saisit la base hors taxe, les autres
+    pays suivent la conversion automatique (ADR-033).
 - **App Store** (avec la tâche 5) : mêmes identifiants et mêmes prix ; les 3 abonnements dans un
   même groupe.
 - **Coût** : commission du store sur chaque vente. Google Play (barème 2026) : 15 % sur les
   abonnements ; sur les packs, 15 % avec l'inscription au taux de 15 % (tâche 4), 25 à 30 % sans.
-- **Vérification** : les 6 produits sont « actifs » ou « prêts à soumettre ».
+- **Vérification** : les 6 produits sont « actifs » ou « prêts à soumettre ». Google Play :
+  actifs, vérifié le 2026-11-20.
 
 ## 7. RevenueCat
 
@@ -189,17 +205,23 @@ doit être unique : à vérifier avec la tâche 5.
   - [x] Clé JSON déposée dans RevenueCat (page de l'app, « Service Account Credentials JSON »),
     jamais dans le projet. Vérification RevenueCat : catalogue des produits et des abonnements
     lisible ; accès aux achats d'abonnement pas encore validé, car Google ne reconnaît le
-    package qu'après l'envoi de la première version (attendu). Après cet envoi : « Check
-    again ».
+    package qu'après l'envoi de la première version (attendu). « Check again » du
+    2026-11-20 : même résultat (« package name was not found ») tant qu'aucune version n'est
+    publiée ; à refaire après la publication du test fermé.
   - [ ] Supprimer le fichier de la clé de Téléchargements (ou le ranger dans un gestionnaire
     de mots de passe).
   - [x] Notifications Google en temps réel : sujet
     `projects/flirt-coach-pro/topics/Play-Store-Notifications` (Google Play y a le rôle
     « Diffuseur Pub/Sub »), relié à RevenueCat ; Play Console : abonnements, achats annulés et
     tous les produits ponctuels ; notification de test reçue par RevenueCat (étape 5).
-  - [ ] Créer un droit (*entitlement*) `premium` relié aux 3 abonnements ; importer les 3 packs.
-  - [ ] Créer une offre (*offering*) contenant les 6 produits et la marquer **Current** : l'app
-    affiche l'offre « Current », quel que soit son nom.
+  - [x] 6 produits Google Play importés (2026-11-20) : abonnements sous la forme
+    `flirtcoach_premium_weekly:weekly`, packs déclarés consommables.
+  - [x] Droit (*entitlement*) `premium` relié aux 3 abonnements.
+  - [x] Offre (*offering*) `main` « Premium et crédits », marquée par défaut (**Current**) :
+    l'app affiche cette offre, quel que soit son nom. Paquets `$rc_weekly`, `$rc_monthly`,
+    `$rc_annual`, `credits_20`, `credits_50`, `credits_100`.
+  - Le droit `flirt_coach_pro` et l'offre `default`, créés automatiquement par RevenueCat pour
+    son magasin de test, sont laissés tels quels : l'app ne s'en sert pas.
   - [x] Project settings → *Restore behavior* : **Transfer to new App User ID** (valeur par
     défaut, vérifiée le 2026-11-19). C'est ce qui rattache un abonnement à une nouvelle
     installation.
@@ -291,7 +313,8 @@ doit être unique : à vérifier avec la tâche 5.
     `98:ED:4E:73:EA:F6:52:A8:9E:CD:7D:B8:97:4C:BC:86:04:A4:0A:E4:42:CC:B3:2B:92:B3:6D:BE:47:E6:A1:67`.
   - [ ] La sauvegarder : mot de passe dans le gestionnaire de mots de passe, copie chiffrée du
     `.jks` hors de l'autre machine.
-  - [ ] Activer « Signature d'application par Google Play » dans la console.
+  - [x] Signature d'application par Google Play : active (vérifié le 2026-11-20), clé de
+    signature gérée par Google ; la clé d'envoi a été enregistrée au premier dépôt.
   - [x] Configuration de signature préparée ici sans aucune clé : Gradle lit
     `android/key.properties` s'il existe (modèle : `android/key.properties.example`).
   - [ ] Sur l'autre machine, suivre le guide pas à pas :
@@ -395,8 +418,9 @@ avec la clé de débogage.
   - vidéo récompensée (+2 crédits) ;
   - Réglages → « J'ai un code », avec le code de `.env.cloud` : il donne Premium 30 jours et
     utilise 1 activation sur 20.
-- **Pas encore testable** : les achats. Les produits n'existeront qu'après l'envoi de la
-  première version au Play Store (tâche 6).
+- **Pas encore testable** : les achats. Produits et offre RevenueCat en place depuis le
+  2026-11-20 ; restent la version installée depuis le test fermé, un compte testeur de
+  licence et `REVENUECAT_ALLOW_SANDBOX` (tâche 16).
 
 ## 19. Test fermé Google Play
 
@@ -422,14 +446,26 @@ avec la clé de débogage.
     - [x] Sécurité des données : envoyée.
   - [x] Canal « Test chiusi - Alpha » : disponible dans tous les pays (178), choix du
     2026-11-19. Les pays de la version publique se choisiront à part.
-  - [ ] Nouvelle liste de testeurs « Flirt Coach Pro », à créer quand la première version sera
-    en ligne (ta décision du 2026-11-19). Vise 15 à 20 personnes pour garder 12 inscrits sans
-    interruption.
-  - [ ] Envoyer une version dans le canal de test fermé (depuis l'autre machine, guide :
-    [Première version Google Play](operations.md#première-version-google-play-sur-lautre-machine)).
-    AAB 1.0.0 (1) compilé et signé le 2026-11-20 sur l'autre machine ; reste à le déposer.
+  - [x] Nouvelle liste de testeurs « Flirt Coach Pro » (ta décision du 2026-11-19), créée et
+    associée au canal le 2026-11-20 avec une première adresse (la tienne). Vise 15 à 20
+    personnes pour garder 12 inscrits sans interruption. Ajouter des adresses : Test chiusi -
+    Alpha → Tester → flèche de la liste « Flirt Coach Pro ».
+  - [x] Déposer la première version dans la console (depuis l'autre machine, guide :
+    [Première version Google Play](operations.md#première-version-google-play-sur-lautre-machine)) :
+    AAB 1.0.0 (1) compilé, signé et déposé le 2026-11-20 ; il est dans la bibliothèque des app
+    bundles.
+  - [x] Le placer dans le brouillon de « Test chiusi - Alpha » (2026-11-20, « Aggiungi dalla
+    raccolta ») : nom `1.0.0 (1)`, notes en français, 14,6 Mo à l'installation. Un seul
+    avertissement, attendu : aucun testeur choisi. Le brouillon des « Test interni », créé
+    par erreur, est supprimé.
+  - [x] Envoyé en revue le 2026-11-20 : 14 modifications (release 1.0.0 (1), pays, testeurs,
+    fiche, déclarations, catégorie). Google fait d'abord des contrôles rapides (au plus
+    14 minutes), puis la revue (souvent moins de 7 jours). La publication gérée est désactivée :
+    le test fermé sera publié dès l'approbation. Suivi : Play Console → Panoramica della
+    pubblicazione, et les e-mails de Google.
   - [ ] Inviter au moins 12 testeurs (liste d'e-mails ou groupe Google) ; chacun accepte avec le
-    lien d'inscription.
+    lien d'inscription, actif après la publication :
+    https://play.google.com/apps/testing/com.flirtcoach.flirt_coach
   - [ ] Garder au moins 12 testeurs inscrits sans interruption pendant 14 jours.
   - [ ] Demander l'accès à la production depuis le tableau de bord (questions sur le test).
 - **Coût** : aucun.
