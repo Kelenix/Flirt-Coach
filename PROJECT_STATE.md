@@ -335,9 +335,9 @@ Reste ouvert :
     `scripts/legal_pages.py` ; fiche store anglaise (section 10 de la fiche).
   - Vérifié : `flutter analyze` sans problème, 137 tests Flutter verts (dont 23 nouveaux sur les
     langues, les tests existants tournant sur un appareil simulé en français) ; 126 tests SQL
-    verts en local (migration rejouée depuis zéro). Non vérifiés : format, lint et tests Deno des
-    fonctions (Deno absent de ce poste), à faire passer par la CI ou en local. Rien de déployé
-    ni de publié.
+    verts en local (migration rejouée depuis zéro). CI GitHub verte sur le commit `69491aa`
+    (Flutter, base, et format, lint, typage et tests Deno des 8 fonctions). Rien de déployé ni
+    de publié : mise en ligne avec la 1.1.0 (tâche 20).
 
 - 2026-11-20 — États d'Inc-6 et Inc-10 remis à jour à la demande de l'utilisateur.
   - Consentement RGPD et blocages AdMob : faits le 2026-11-19 (étapes 7 et 9), lignes corrigées.
