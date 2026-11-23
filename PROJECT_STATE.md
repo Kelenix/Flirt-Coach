@@ -25,9 +25,9 @@
   5. Anglais (ADR-034) : serveur déployé, pages légales en ligne, fiche anglaise en revue.
      Allemand (ADR-035) : serveur à jour, pages légales en ligne, fiche enregistrée dans la
      Play Console (non envoyée). Espagnol (ADR-036) : pages légales en ligne, fiches es-419
-     et es-ES enregistrées (non envoyées), serveur à jour ; reste la décision sur les prix
-     locaux. Puis
-     compiler et envoyer la 1.1.0 (anglais, allemand, espagnol) sur l'autre machine (tâche 20).
+     et es-ES enregistrées (non envoyées), serveur à jour, prix locaux en Amérique latine
+     appliqués (ADR-037). Reste à compiler et envoyer la 1.1.0 (anglais, allemand, espagnol)
+     sur l'autre machine (tâche 20).
 
   Une étape à la fois, suivie dans `docs/manual-tasks.md` ; Android d'abord, iOS après la mise
   en ligne (ADR-028) ; versions des stores compilées uniquement sur l'autre machine. Chemin
@@ -304,6 +304,8 @@ Options par défaut validées en bloc par l'utilisateur le 2026-11-18 (« Oui, l
   espagnol (ADR-036) ajoutés le 2026-11-23 à la demande de l'utilisateur.
 - [x] **Q5** Nom : « Flirt Coach », puis « Flirt Coach Pro » le 2026-11-19 (ADR-029).
 - [x] **Q6** Prix : 6,99 €/sem · 12,99 €/mois · 49,99 €/an ; packs 2,99 / 5,99 / 9,99 €.
+  Amérique latine hispanophone : environ la moitié du prix américain depuis le 2026-11-23
+  (ADR-037).
 - [x] **Q7** Coach de profil : hors V1.
 - [x] **Q8** Style « Drôle » : Premium ; seul « Classique » est gratuit.
 
@@ -325,6 +327,14 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-23 — Prix locaux en Amérique latine, à la demande de l'utilisateur (ADR-037) :
+  environ 50 % du prix américain, saisi en USD dans la Play Console et converti par Google.
+  Abonnements (hebdo 2,99 $, mensuel 5,99 $, annuel 22,99 $) dans 11 pays ; packs (1,29 $,
+  2,69 $, 4,49 $) dans 17. Chaque produit vérifié après rechargement, autres pays inchangés.
+  Incident évité : une case « Croazia » cochée par erreur pendant la sélection de l'annuel a été
+  repérée et décochée avant l'application du prix. Changements de prix en vigueur sans revue ;
+  les 3 fiches (de-DE, es-419, es-ES) attendent toujours l'envoi.
 
 - 2026-11-23 — Serveur : `deploy-cloud.ps1` lancé dans le terminal à la demande de
   l'utilisateur, migration confirmée par lui. Vérifié en lecture seule : migration

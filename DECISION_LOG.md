@@ -5,6 +5,51 @@
 
 ---
 
+## ADR-037 — Prix locaux en Amérique latine hispanophone : environ la moitié du prix américain
+
+- **Date** : 2026-11-23
+- **Statut** : Accepté
+- **Décideur** : l'utilisateur (« choisis et configure ces prix, en diminuant pour adapter
+  localement ») ; choix de la grille et saisie dans la Play Console : Claude (rôle : publication)
+- **Contexte** : la Play Console convertissait les prix en euros (ADR-033) dans chaque monnaie :
+  le mensuel valait 265 MXN au Mexique, 14 300 CLP au Chili, 11,99 USD en Équateur, comme aux
+  États-Unis, des niveaux élevés pour le pouvoir d'achat local. L'app est maintenant en
+  espagnol (ADR-036).
+- **Décision** : dans les pays hispanophones d'Amérique latine, prix fixé à **environ 50 % du
+  prix américain**, saisi en USD et converti par Google (TVA locale incluse, arrondis locaux) :
+
+  | Produit | États-Unis | Amérique latine (base) | Exemples après conversion |
+  |---|---|---|---|
+  | Hebdomadaire | 6,49 $ | 2,99 $ | 65 MXN · 3 600 CLP · 10 500 COP · 9,99 PEN |
+  | Mensuel | 11,99 $ | 5,99 $ | 135 MXN · 7 300 CLP · 21 000 COP · 20,99 PEN |
+  | Annuel | 45,99 $ | 22,99 $ | 509 MXN · 28 000 CLP · 81 000 COP · 78,99 PEN |
+  | Pack 20 crédits | 2,69 $ | 1,29 $ | 29 MXN · 1 600 CLP · 4 500 COP · 4,49 PEN |
+  | Pack 50 crédits | 5,49 $ | 2,69 $ | 59 MXN · 3 300 CLP · 9 500 COP · 9,49 PEN |
+  | Pack 100 crédits | 8,99 $ | 4,49 $ | 99 MXN · 5 500 CLP · 15 500 COP · 15,99 PEN |
+
+  - Abonnements : 11 pays (Mexique, Colombie, Chili, Pérou, Argentine, Bolivie, Costa Rica,
+    Paraguay, Équateur, Salvador, Panama).
+  - Packs : ces 11 pays plus Guatemala, Honduras, Nicaragua, République dominicaine, Uruguay et
+    Venezuela (17).
+  - Inchangés : Espagne (zone euro), Brésil (app non traduite en portugais), et tous les autres
+    pays.
+- **Alternatives écartées** :
+  - Grille par pays fondée sur un indice de pouvoir d'achat : plus fine, mais 6 produits × 17
+    prix à tenir à jour à la main ; la règle unique se recalcule en une saisie par produit.
+  - Baisser aussi les 6 pays du groupe « Altri paesi (USD) » pour les abonnements : ce groupe
+    partagé couvre d'autres pays du monde, qui auraient baissé aussi.
+- **Conséquences** :
+  - Pour les abonnements, Guatemala, Honduras, Nicaragua, République dominicaine, Uruguay et
+    Venezuela restent au prix américain (groupe partagé de la console) ; leurs packs sont
+    baissés.
+  - Les prix ne s'appliquent qu'aux nouveaux abonnés (aucun abonné dans ces pays à ce jour) ;
+    les changements de prix ne passent pas par la revue Google.
+  - Argentine : prix fixés en pesos, à réviser tous les trois mois environ (inflation).
+  - À réévaluer avec les premières données de conversion par pays (Play Console → Statistiche).
+- **Impact** : financier (revenu par achat plus faible, volume attendu plus élevé), réversible.
+
+---
+
 ## ADR-036 — Espagnol neutre, quatrième langue
 
 - **Date** : 2026-11-23

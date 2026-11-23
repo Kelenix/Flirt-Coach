@@ -502,9 +502,9 @@ l'app en espagnol (accroches proposées : Gana confianza · Encuentra las palabr
 7 situaciones, 7 estilos · Responde desde una captura · Coquetea con respeto · Sabe en qué
 punto están · Ideas, incluso sin conexión).
 
-Prix : la Play Console convertit les prix en euros dans chaque monnaie, ce qui donne des prix
-élevés pour l'Amérique latine. Des prix locaux plus bas (Mexique, Colombie, Argentine…) sont
-une décision à prendre (tâche 20).
+Prix : en Amérique latine hispanophone, environ la moitié du prix américain depuis le
+2026-11-23 (ADR-037, grille complète dans le journal de décisions) ; l'Espagne garde les prix
+en euros.
 
 Réponses aux avis en espagnol (mêmes règles qu'en section 8, « tú ») :
 
