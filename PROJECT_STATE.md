@@ -26,8 +26,9 @@
      Allemand (ADR-035) : serveur à jour, pages légales en ligne, fiche enregistrée dans la
      Play Console (non envoyée). Espagnol (ADR-036) : pages légales en ligne, fiches es-419
      et es-ES enregistrées (non envoyées), serveur à jour, prix locaux en Amérique latine
-     appliqués (ADR-037). Portugais (ADR-038) : pages légales en ligne ; restent déploiement
-     de la banque, fiches pt-BR / pt-PT et décision sur le prix au Brésil. Puis
+     appliqués (ADR-037). Portugais (ADR-038) : pages légales en ligne, fiches pt-BR et
+     pt-PT enregistrées (non envoyées) ; restent déploiement de la banque et décision sur le
+     prix au Brésil. Puis
      compiler et envoyer la 1.1.0 (anglais, allemand, espagnol, portugais) sur l'autre machine
      (tâche 20).
 
@@ -329,6 +330,11 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-23 — Fiches Play Store portugaises (pt-BR et pt-PT) saisies dans la Play Console avec
+  l'accord de l'utilisateur, mêmes textes (section 13 de la fiche du store) : enregistrées,
+  non envoyées. La Panoramica della pubblicazione compte 5 modifications en attente
+  (de-DE, es-419, es-ES, pt-BR, pt-PT), toutes complètes selon la console.
 
 - 2026-11-23 — Pages légales portugaises publiées à la demande de l'utilisateur (`gh-pages`,
   commit `2534000`) : privacidade.html et termos.html en ligne (HTTP 200, éditeur et contact

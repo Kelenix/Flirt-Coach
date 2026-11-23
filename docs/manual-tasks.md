@@ -81,7 +81,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 17 | Protection contre la création de comptes en série | publication | **Décision attendue** |
 | 18 | Mesure de fluidité sur ton téléphone | qualité | Plus tard |
 | 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Envoyé en revue le 2026-11-20 (version 1.0.0 (1), liste « Flirt Coach Pro » avec 1 adresse) ; après l'approbation : 12 testeurs inscrits et 14 jours |
-| 20 | Mise en ligne de l'anglais, de l'allemand, de l'espagnol et du portugais (version 1.1.0) | testeurs et pays anglophones, germanophones, hispanophones, lusophones | Anglais et allemand : serveur, pages légales et fiches faits (fiche allemande non envoyée). Espagnol : serveur à jour (banque fr/en/de/es), pages légales en ligne, fiches es-419 et es-ES enregistrées non envoyées, prix locaux en Amérique latine appliqués (2026-11-23). Portugais : pages légales en ligne (2026-11-23) ; restent déploiement de la banque, fiches, prix au Brésil. Puis la 1.1.0, au plus vite |
+| 20 | Mise en ligne de l'anglais, de l'allemand, de l'espagnol et du portugais (version 1.1.0) | testeurs et pays anglophones, germanophones, hispanophones, lusophones | Anglais et allemand : serveur, pages légales et fiches faits (fiche allemande non envoyée). Espagnol : serveur à jour (banque fr/en/de/es), pages légales en ligne, fiches es-419 et es-ES enregistrées non envoyées, prix locaux en Amérique latine appliqués (2026-11-23). Portugais : pages légales en ligne, fiches pt-BR et pt-PT enregistrées non envoyées (2026-11-23) ; restent déploiement de la banque et prix au Brésil. Puis la 1.1.0, au plus vite |
 
 ---
 
@@ -503,9 +503,12 @@ avec la clé de débogage.
     https://kelenix.github.io/Flirt-Coach/privacidade.html et
     https://kelenix.github.io/Flirt-Coach/termos.html, avec éditeur et contact ; les autres
     pages gardent leur texte, leur menu propose les cinq langues.
-  - [ ] Portugais, Play Console : traductions « Portoghese (Brasile) – pt-BR » et
-    « Portoghese (Portogallo) – pt-PT », mêmes textes (section 13 de la fiche du store) ; les
-    pages légales portugaises vers lesquelles elles renvoient sont en ligne.
+  - [x] Portugais, Play Console : traductions « Portoghese (Brasile) – pt-BR » et
+    « Portoghese (Portogallo) – pt-PT » ajoutées le 2026-11-23, avec ton accord, mêmes textes
+    (section 13 de la fiche du store) : nom, description courte (71/80) et longue (2260/4000) ;
+    visuels repris de la fiche française ; déclaration des visuels IA inchangée.
+    **Enregistrées, pas envoyées** : avec les fiches allemande et espagnoles, « 5 modifiche »
+    attendent dans la Panoramica della pubblicazione, à envoyer avec la 1.1.0.
   - [ ] **Décision (financière)** : prix local au Brésil (la Play Console y convertit les prix
     en euros), par exemple la règle de l'Amérique latine hispanophone (environ la moitié du
     prix américain, ADR-037). Le Portugal garde les prix en euros.
