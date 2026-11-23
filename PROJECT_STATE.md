@@ -26,8 +26,8 @@
      Allemand (ADR-035) : serveur à jour, pages légales en ligne, fiche enregistrée dans la
      Play Console (non envoyée). Espagnol (ADR-036) : pages légales en ligne, fiches es-419
      et es-ES enregistrées (non envoyées), serveur à jour, prix locaux en Amérique latine
-     appliqués (ADR-037). Portugais (ADR-038) : prêt dans le code ; restent déploiement de la
-     banque, pages légales, fiches pt-BR / pt-PT et décision sur le prix au Brésil. Puis
+     appliqués (ADR-037). Portugais (ADR-038) : pages légales en ligne ; restent déploiement
+     de la banque, fiches pt-BR / pt-PT et décision sur le prix au Brésil. Puis
      compiler et envoyer la 1.1.0 (anglais, allemand, espagnol, portugais) sur l'autre machine
      (tâche 20).
 
@@ -329,6 +329,11 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-23 — Pages légales portugaises publiées à la demande de l'utilisateur (`gh-pages`,
+  commit `2534000`) : privacidade.html et termos.html en ligne (HTTP 200, éditeur et contact
+  renseignés) ; menus des autres pages en cinq langues, textes inchangés. Portugais : CI
+  GitHub verte sur le commit `94de0de` (10 jobs).
 
 - 2026-11-23 — Portugais ajouté à la demande de l'utilisateur (ADR-038), en portugais du
   Brésil compris au Portugal (« você », sans accord de genre visant l'utilisateur) :
