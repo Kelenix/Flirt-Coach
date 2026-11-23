@@ -5,6 +5,37 @@
 
 ---
 
+## ADR-035 — Allemand, troisième langue
+
+- **Date** : 2026-11-23
+- **Statut** : Accepté
+- **Décideur** : l'utilisateur (choix de la langue, sur recommandation de Claude) ; mise en
+  œuvre : Claude (rôles : flutter-engineer, backend)
+- **Contexte** : après l'anglais (ADR-034), choix de la langue suivante. Indications de marché
+  (sources publiques, chiffres détaillés payants) : pour l'assistant IA de séduction de
+  référence, les premiers pays sont les États-Unis, le Royaume-Uni puis l'Allemagne (Sensor
+  Tower) ; les États-Unis et le Royaume-Uni pèsent environ la moitié des revenus des apps de
+  rencontre. L'espagnol et le portugais du Brésil apportent surtout du volume, avec des prix
+  locaux à baisser.
+- **Décision** : ajouter l'allemand (Allemagne, Autriche, Suisse alémanique), marché solvable
+  adapté aux abonnements. Tutoiement (« du »), comme en français. Même structure que l'anglais :
+  `app_de.arb`, aide et textes légaux `*_de.txt`, déclarations Android et iOS, 40 messages de
+  banque (migration `20261123010000`), pages légales `datenschutz.html` et
+  `nutzungsbedingungen.html`, fiche store (section 11). Rien à changer côté serveur. L'anglais
+  reste la langue de repli.
+- **Alternatives écartées** : espagnol (plus de volume, moins de revenus par utilisateur,
+  prévu ensuite), portugais du Brésil (même raison).
+- **Conséquences** :
+  - Un test parcourt les écrans du menu en allemand (textes les plus longs) et échoue en cas
+    de débordement.
+  - Marché allemand : un juriste doit confirmer si une mention d'éditeur (« Impressum ») est
+    exigée en plus des informations affichées par les stores (tâche 10).
+  - Une fois la migration déployée, la 1.0.0 affichera la banque dans les trois langues
+    jusqu'à la 1.1.0.
+- **Impact** : métier (ouverture des pays germanophones), technique faible.
+
+---
+
 ## ADR-034 — Interface en français et en anglais, anglais en repli
 
 - **Date** : 2026-11-23

@@ -7,9 +7,9 @@ versions : [SemVer](https://semver.org/lang/fr/).
 
 ### Ajouté
 
-- **Anglais** : toute l'app est disponible en anglais (écrans, messages d'erreur, aide, textes
-  légaux, demandes d'autorisation iOS, banque de messages). Elle suit la langue du téléphone ;
-  pour une autre langue que le français ou l'anglais, elle s'affiche en anglais. Sur Android 13
+- **Anglais et allemand** : toute l'app est disponible en anglais et en allemand (écrans,
+  messages d'erreur, aide, textes légaux, demandes d'autorisation iOS, banque de messages).
+  Elle suit la langue du téléphone ; pour une autre langue, elle s'affiche en anglais. Sur Android 13
   et plus comme sur iPhone, la langue peut aussi se choisir pour cette app seule, dans les
   réglages du téléphone.
 - **Coach dans la langue de l'app** : raisons de refus, explications du Mode Respect et analyse

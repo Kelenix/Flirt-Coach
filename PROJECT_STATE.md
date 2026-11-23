@@ -22,9 +22,10 @@
   3. Sur l'autre machine : sauvegarde de la clé d'envoi (mot de passe dans le gestionnaire,
      copie chiffrée du `.jks` ailleurs).
   4. Décision de l'utilisateur à prendre : protection contre les comptes en série (tâche 17).
-  5. Anglais (ADR-034) : serveur déployé, pages légales en ligne, fiche anglaise en revue ;
-     reste à compiler et envoyer la version 1.1.0 sur l'autre machine (tâche 20), au plus
-     vite car la 1.0.0 affiche maintenant la banque dans les deux langues.
+  5. Anglais (ADR-034) : serveur déployé, pages légales en ligne, fiche anglaise en revue.
+     Allemand (ADR-035) : prêt dans le code ; restent déploiement de la banque, pages légales
+     et fiche. Puis compiler et envoyer la 1.1.0 (anglais + allemand) sur l'autre machine
+     (tâche 20), au plus vite car la 1.0.0 affiche la banque dans plusieurs langues.
 
   Une étape à la fois, suivie dans `docs/manual-tasks.md` ; Android d'abord, iOS après la mise
   en ligne (ADR-028) ; versions des stores compilées uniquement sur l'autre machine. Chemin
@@ -297,8 +298,8 @@ Options par défaut validées en bloc par l'utilisateur le 2026-11-18 (« Oui, l
 - [x] **Q1** Fournisseur IA : API Claude via Edge Function.
 - [x] **Q2** Achats intégrés : RevenueCat.
 - [x] **Q3** Premium : niveau unique, « illimité » plafonné à 100 générations/jour.
-- [x] **Q4** Android + iOS, français seul ; anglais ajouté le 2026-11-23 à la demande de
-  l'utilisateur (ADR-034).
+- [x] **Q4** Android + iOS, français seul ; anglais (ADR-034) puis allemand (ADR-035)
+  ajoutés le 2026-11-23 à la demande de l'utilisateur.
 - [x] **Q5** Nom : « Flirt Coach », puis « Flirt Coach Pro » le 2026-11-19 (ADR-029).
 - [x] **Q6** Prix : 6,99 €/sem · 12,99 €/mois · 49,99 €/an ; packs 2,99 / 5,99 / 9,99 €.
 - [x] **Q7** Coach de profil : hors V1.
@@ -322,6 +323,19 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-23 — Allemand ajouté, choisi par l'utilisateur après une recherche de marché
+  (ADR-035).
+  - App : `app_de.arb` complet (tutoiement), aide et textes légaux allemands, Android
+    (`locales_config.xml`) et iOS (`CFBundleLocalizations`, `de.lproj/InfoPlist.strings` ajouté
+    au projet Xcode).
+  - Banque : 40 messages allemands (migration `20261123010000`). Pages légales web
+    `datenschutz.html` et `nutzungsbedingungen.html` générées (pas encore publiées). Fiche
+    store allemande (section 11) et notes de version 1.1 en trois langues.
+  - Tests : accueil en allemand, Allemagne / Autriche / Suisse, et parcours des 6 écrans du
+    menu en allemand sans débordement. Vérifié : `flutter analyze` sans problème, 147 tests
+    Flutter verts, 126 tests SQL verts après réinitialisation de la base locale. Rien de
+    déployé ni de publié pour l'allemand.
 
 - 2026-11-23 — Serveur : l'utilisateur a lancé `deploy-cloud.ps1` vers 09:02 UTC, puis envoyé
   la fiche anglaise seule en revue. Vérifié en lecture seule : migration `20261123000000`

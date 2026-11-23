@@ -117,18 +117,22 @@ Toute modification de ces consignes est testée (tests Deno) puis redéployée
 
 ## 8. Ajouter ou modifier un texte de l'app
 
-L'app est en **français** (langue source) et en **anglais**. La langue suit celle du téléphone ;
-une autre langue que celles-ci affiche l'anglais (ADR-034).
+L'app est en **français** (langue source), en **anglais** et en **allemand**. La langue suit
+celle du téléphone ; une autre langue que celles-ci affiche l'anglais (ADR-034, ADR-035).
 
 1. Ajouter la clé dans `lib/l10n/app_fr.arb`, nommée *écran + élément* en camelCase
    (`historyDeleteTitle`), avec ses `placeholders` s'il y a des variables.
-2. Ajouter **la même clé** traduite dans `lib/l10n/app_en.arb` (sans les métadonnées `@clé`).
-   En anglais : ton direct et chaleureux, « you », phrases courtes, majuscule au premier mot
-   seulement (sauf noms propres : Premium, Respect Mode).
+2. Ajouter **la même clé** traduite dans chaque autre langue, `lib/l10n/app_en.arb` et
+   `lib/l10n/app_de.arb` (sans les métadonnées `@clé`).
+   - Anglais : ton direct et chaleureux, « you », phrases courtes, majuscule au premier mot
+     seulement (sauf noms propres : Premium, Respect Mode).
+   - Allemand : tutoiement (« du »), phrases courtes, « Credits » pour les crédits, « … »
+     précédés d'une espace quand ils remplacent des mots.
 3. Lancer `flutter gen-l10n` (ou simplement `flutter run` / `flutter test`).
 4. L'utiliser via `AppLocalizations.of(context)` : **aucun texte en dur dans un widget**.
 5. Relire avec cette charte, à voix haute, puis vérifier l'écran avec la police agrandie, dans
-   les deux langues (l'anglais est souvent plus court, l'allemand le serait plus).
+   chaque langue (l'allemand est la plus longue : `test/l10n/app_language_test.dart` parcourt
+   les écrans du menu en allemand et échoue en cas de débordement).
 
 Les textes de l'aide (`assets/help/faq_<langue>.txt`) et les textes légaux
 (`assets/legal/*_<langue>.txt`) existent dans chaque langue et suivent les mêmes règles ; les

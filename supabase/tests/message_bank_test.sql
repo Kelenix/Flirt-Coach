@@ -13,8 +13,8 @@ select ok(
 
 select results_eq(
   $$ select distinct language from public.message_bank order by 1 $$,
-  $$ values ('en'), ('fr') $$,
-  'la banque existe en anglais et en français'
+  $$ values ('de'), ('en'), ('fr') $$,
+  'la banque existe en allemand, en anglais et en français'
 );
 
 select is(
@@ -60,7 +60,7 @@ select is((select count(*)::int from public.message_bank), 0, 'un visiteur anony
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000b1","role":"authenticated"}', true);
 
-select is((select count(*)::int from public.message_bank), 80, 'un utilisateur connecté lit toute la banque');
+select is((select count(*)::int from public.message_bank), 120, 'un utilisateur connecté lit toute la banque');
 
 select throws_ok(
   $$ insert into public.message_bank (language, category, body, sort_order)

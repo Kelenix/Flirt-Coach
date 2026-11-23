@@ -51,7 +51,7 @@ lib/
 │                          client Supabase (garde, délais), état (GuardedAction), stockage
 ├── routing/               go_router + garde d'accès
 ├── shared/widgets/        composants du kit de marque (boutons, cartes, fond, logo…)
-├── l10n/                  textes de l'interface : app_fr.arb (source), app_en.arb ;
+├── l10n/                  textes de l'interface : app_fr.arb (source), app_en.arb, app_de.arb ;
 │                          langue choisie par core/l10n/app_language.dart (ADR-034)
 └── features/<feature>/
     ├── presentation/      écrans et widgets (aucune logique métier)

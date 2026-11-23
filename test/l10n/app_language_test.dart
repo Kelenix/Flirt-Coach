@@ -15,15 +15,21 @@ void main() {
       expect(resolveAppLocale(const [Locale('en', 'GB')]).languageCode, 'en');
     });
 
+    test('allemand : retenu en Allemagne, en Autriche et en Suisse', () {
+      for (final country in ['DE', 'AT', 'CH']) {
+        expect(resolveAppLocale([Locale('de', country)]).languageCode, 'de');
+      }
+    });
+
     test('première langue préférée que l\'app propose', () {
       expect(
-        resolveAppLocale(const [Locale('de'), Locale('fr')]).languageCode,
+        resolveAppLocale(const [Locale('it'), Locale('fr')]).languageCode,
         'fr',
       );
     });
 
     test('langue non proposée : anglais', () {
-      expect(resolveAppLocale(const [Locale('de', 'DE')]).languageCode, 'en');
+      expect(resolveAppLocale(const [Locale('it', 'IT')]).languageCode, 'en');
       expect(resolveAppLocale(const []).languageCode, 'en');
     });
   });
@@ -55,12 +61,50 @@ void main() {
   testWidgets('appareil dans une langue non proposée : anglais', (
     tester,
   ) async {
-    useDevice(tester, const [Locale('de', 'DE')]);
+    useDevice(tester, const [Locale('it', 'IT')]);
     await tester.pumpWidget(await buildTestApp(FakeAuthRepository()));
     await tester.pumpAndSettle();
 
     expect(find.text('I am 18 or older'), findsOneWidget);
   });
+
+  testWidgets('appareil en allemand : accueil en allemand', (tester) async {
+    useDevice(tester, const [Locale('de', 'DE')]);
+    await tester.pumpWidget(await buildTestApp(FakeAuthRepository()));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Ich bin 18 Jahre oder älter'), findsOneWidget);
+    await tester.tap(find.text('Ich bin 18 Jahre oder älter'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text("Los geht's"));
+    await tester.pumpAndSettle();
+    expect(find.byType(GenerateScreen), findsOneWidget);
+    expect(find.text('3 Antworten erstellen'), findsOneWidget);
+  });
+
+  // Les textes allemands sont les plus longs : chaque écran du menu doit
+  // s'afficher sans débordement (un débordement fait échouer le test).
+  for (final entry in [
+    'Respekt-Modus',
+    'Analyse',
+    'Sammlung',
+    'Verlauf',
+    'Premium',
+    'Einstellungen',
+  ]) {
+    testWidgets('allemand : menu → $entry sans débordement', (tester) async {
+      useDevice(tester, const [Locale('de', 'DE')]);
+      await tester.pumpWidget(await buildSignedInApp(FakeBackend()));
+      await tester.pumpAndSettle();
+
+      await openFromMenu(tester, entry, menuTooltip: 'Menü');
+
+      expect(find.byType(GenerateScreen), findsNothing);
+      await tester.tap(find.byTooltip('Zurück'));
+      await tester.pumpAndSettle();
+      expect(find.byType(GenerateScreen), findsOneWidget);
+    });
+  }
 
   testWidgets('textes légaux affichés dans la langue de l\'interface', (
     tester,

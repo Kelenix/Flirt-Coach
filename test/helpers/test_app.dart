@@ -457,9 +457,14 @@ Future<void> openRespectFromMenu(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-/// Ouvre une entrée du menu de l'écran Générer.
-Future<void> openFromMenu(WidgetTester tester, String label) async {
-  await tester.tap(find.byTooltip('Menu'));
+/// Ouvre une entrée du menu de l'écran Générer ([menuTooltip] : libellé du
+/// bouton de menu dans la langue de l'appareil simulé).
+Future<void> openFromMenu(
+  WidgetTester tester,
+  String label, {
+  String menuTooltip = 'Menu',
+}) async {
+  await tester.tap(find.byTooltip(menuTooltip));
   await tester.pumpAndSettle();
   await tester.tap(find.text(label));
   await tester.pumpAndSettle();

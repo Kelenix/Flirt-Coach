@@ -1,13 +1,13 @@
 # Fiche store — Google Play et App Store
 
 Textes prêts à copier dans la Play Console et App Store Connect : français (sections 1 à 9,
-fiche par défaut) et anglais (section 10). Les longueurs indiquées sont les limites des stores ;
+fiche par défaut), anglais (section 10) et allemand (section 11). Les longueurs indiquées sont les limites des stores ;
 chaque texte les respecte.
 
 > Textes légaux en ligne (tâche manuelle 10) :
 > https://kelenix.github.io/Flirt-Coach/confidentialite.html et
 > https://kelenix.github.io/Flirt-Coach/conditions.html (en anglais : `privacy.html` et
-> `terms.html`). `{{EMAIL_SUPPORT}}` : la valeur de
+> `terms.html` ; en allemand : `datenschutz.html` et `nutzungsbedingungen.html`). `{{EMAIL_SUPPORT}}` : la valeur de
 > `SUPPORT_EMAIL` dans `config/prod.json` (tâche manuelle 12). Nom confirmé : « Flirt Coach
 > Pro » (tâche manuelle 3).
 
@@ -225,7 +225,8 @@ Avis en anglais : réponses types en section 10.
       accesso » (Google, ADR-031) ; pour Apple, le préciser dans les notes de revue.
 - [ ] Captures au bon format, sans donnée personnelle réelle.
 - [ ] Achat et restauration testés en sandbox sur les deux plateformes.
-- [ ] Fiche anglaise (section 10) à jour, notes de version dans les deux langues.
+- [ ] Fiches anglaise (section 10) et allemande (section 11) à jour, notes de version dans
+      les trois langues.
 
 ## 10. Fiche en anglais (en-US)
 
@@ -297,17 +298,23 @@ Notes de version 1.1, par langue :
 
 ```text
 <fr-FR>
-Flirt Coach Pro parle maintenant anglais !
-• L'app s'affiche en anglais sur les téléphones en anglais
+Flirt Coach Pro parle maintenant anglais et allemand !
+• L'app s'affiche dans la langue du téléphone : français, anglais ou allemand
 • Conseils et explications du coach dans la langue de l'app
-• Banque de messages en anglais
+• Banque de messages en anglais et en allemand
 </fr-FR>
 <en-US>
-Flirt Coach Pro now speaks English!
-• The app is shown in English on phones set to English
+Flirt Coach Pro now speaks English and German!
+• The app follows your phone's language: English, French or German
 • The coach's advice and explanations in the app's language
-• Message library in English
+• Message library in English and German
 </en-US>
+<de-DE>
+Flirt Coach Pro spricht jetzt Deutsch und Englisch!
+• Die App folgt der Sprache deines Handys: Deutsch, Englisch oder Französisch
+• Ratschläge und Erklärungen des Coachs in der Sprache der App
+• Nachrichtensammlung auf Deutsch und Englisch
+</de-DE>
 ```
 
 Captures : les visuels actuels montrent l'app en français. Pour la fiche anglaise, refaire les
@@ -326,3 +333,85 @@ Réponses aux avis en anglais (mêmes règles qu'en section 8, « you » chaleur
 | « Réponses pas naturelles » | Thanks, your feedback helps us. Add some context (where things stand, what you know about them): replies become much more personal. Try another style too. |
 | « Le coach refuse ma demande » | Flirt Coach Pro helps you flirt with respect: it refuses explicit, pushy or manipulative messages, without using any credits. Respect Mode can help you rephrase. |
 | « Réponses dans une autre langue » | The coach replies in the language of the conversation. Paste a message in English and write the context in English. |
+
+## 11. Fiche en allemand (de-DE)
+
+Textes de la fiche allemande (Play Console → Schede dello Store → Scheda predefinita →
+Gestisci lingue → « Tedesco – de-DE » ; App Store : localisation « German »). Mêmes règles
+et mêmes limites que la fiche française ; tutoiement (« du »), comme dans l'app.
+
+| Champ | Store | Limite | Texte |
+|-------|-------|--------|-------|
+| Nom de l'app | les deux | 30 | Flirt Coach Pro |
+| Sous-titre | App Store | 30 | Dein Coach für Flirts & Chats |
+| Description courte | Google Play | 80 | Finde die richtigen Worte, um respektvoll zu flirten: 3 Antworten im Nu. |
+| Texte promotionnel | App Store | 170 | Füge eine Nachricht ein oder importiere einen Screenshot: Dein Coach schlägt dir 3 natürliche Antworten in deinem Stil vor. Jeden Tag 5 Credits gratis. |
+
+Description longue :
+
+```text
+Du weißt nicht, was du antworten sollst? Flirt Coach Pro findet in Sekunden die richtigen Worte für dich.
+
+Füge die letzte erhaltene Nachricht ein, wähle die Situation und den Stil: Dein Coach schlägt dir 3 natürliche Antworten zum Kopieren vor. Du kannst sie vor dem Senden frei anpassen.
+
+FÜR JEDEN MOMENT DES GESPRÄCHS
+• Auf eine Nachricht antworten
+• Nach einem Match ein Gespräch beginnen
+• Flirten oder ein einschlafendes Gespräch wiederbeleben
+• Ein Date vorbereiten
+• Sich entschuldigen oder sanft Schluss machen
+
+7 STILE, DIE ZU DIR PASSEN
+Klassisch, Witzig, Romantisch, Geheimnisvoll, Direkt, Elegant, Frech.
+
+ANTWORTEN AUS EINEM SCREENSHOT
+Importiere einen Screenshot des Gesprächs: Der Coach liest ihn und schlägt eine passende Antwort vor. Dein Screenshot wird nie gespeichert.
+
+RESPEKT-MODUS
+Prüfe vor dem Senden, ob deine Nachricht nicht zu aufdringlich, zu sexuell oder manipulativ ist. Der Coach erklärt dir, warum, und schlägt eine respektvollere Version vor.
+
+GESPRÄCHSANALYSE
+Finde heraus, ob sich euer Gespräch entwickelt, stockt oder abkühlt, welcher Schritt als Nächstes kommt und wann der richtige Moment für ein Date ist.
+
+UND AUSSERDEM
+• Eine kostenlose Nachrichtensammlung, auch offline verfügbar
+• Der Verlauf deiner erstellten Nachrichten
+• Antworten in der Sprache deines Gesprächs
+
+OHNE ANMELDUNG
+Kein Name, keine E-Mail-Adresse. Du kannst dein Konto und alle deine Daten jederzeit in den Einstellungen löschen.
+
+KOSTENLOS ODER PREMIUM
+• Kostenlos: jeden Tag 5 Credits, die Nachrichtensammlung und zusätzliche Credits für ein kurzes Video.
+• Credit-Pakete, ohne Abo und ohne Ablaufdatum.
+• Premium: alle 7 Stile, Screenshots, Respekt-Modus und Analyse inklusive, Verlauf, keine Werbung, bis zu 100 Nachrichten pro Tag.
+
+Wöchentliche, monatliche oder jährliche Premium-Abos verlängern sich automatisch zum in der App angegebenen Preis, sofern sie nicht spätestens 24 Stunden vor Ende des laufenden Zeitraums in den Einstellungen deines Google-Play- oder App-Store-Kontos gekündigt werden. Die Zahlung wird bei Bestätigung des Kaufs von deinem Konto abgebucht.
+
+Flirt Coach Pro ist für Personen ab 18 Jahren. Die Antworten sind von künstlicher Intelligenz erstellte Vorschläge: Es gibt keine Erfolgsgarantie.
+
+Datenschutzerklärung: https://kelenix.github.io/Flirt-Coach/datenschutz.html
+Nutzungsbedingungen: https://kelenix.github.io/Flirt-Coach/nutzungsbedingungen.html
+```
+
+Mots-clés App Store (100 caractères au plus) :
+
+```text
+flirten,dating,chat,anmachsprüche,nachricht,antwort,date,KI,match,verlieben,romantik,gespräch
+```
+
+Captures : comme pour l'anglais, la fiche allemande reprend les captures françaises en
+attendant des captures de l'app en allemand (accroches proposées : Gewinne Selbstvertrauen ·
+Finde die richtigen Worte · 7 Situationen, 7 Stile · Antworten aus einem Screenshot · Flirte
+mit Respekt · Wisse, wo ihr steht · Ideen, auch offline).
+
+Réponses aux avis en allemand (mêmes règles qu'en section 8, « du ») :
+
+| Avis | Réponse type |
+|------|--------------|
+| Positif | Vielen Dank! Wir freuen uns, dass dir der Coach hilft, die richtigen Worte zu finden. |
+| « Trop cher » | Danke für dein Feedback. Du bekommst jeden Tag 5 kostenlose Credits und kannst weitere mit einem kurzen Video verdienen. Credit-Pakete verfallen nie, ganz ohne Abo. |
+| « Achat non reçu » | Das tut uns leid! Öffne den Premium-Bildschirm und tippe auf „Käufe wiederherstellen“. Wenn sich nichts ändert, schreib uns an {{EMAIL_SUPPORT}}, dann klären wir das gemeinsam. |
+| « Réponses pas naturelles » | Danke, dein Feedback hilft uns. Gib etwas Kontext an (wo ihr steht, was du über die Person weißt): Die Antworten werden dann viel persönlicher. Probier auch einen anderen Stil aus. |
+| « Le coach refuse ma demande » | Flirt Coach Pro hilft dir, mit Respekt zu flirten: Er lehnt explizite, aufdringliche oder manipulative Nachrichten ab, ohne Credits zu verbrauchen. Der Respekt-Modus kann dir beim Umformulieren helfen. |
+| « Réponses dans une autre langue » | Der Coach antwortet in der Sprache des Gesprächs. Füge eine Nachricht auf Deutsch ein und schreib den Kontext auf Deutsch. |

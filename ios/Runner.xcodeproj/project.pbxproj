@@ -60,6 +60,7 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F17C0A012A00000000000003 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F17C0A012A00000000000004 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F17C0A012A00000000000005 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +196,7 @@
 			knownRegions = (
 				en,
 				fr,
+				de,
 				Base,
 			);
 			mainGroup = 97C146E51CF9000F007C117D;
@@ -315,6 +317,7 @@
 			children = (
 				F17C0A012A00000000000003 /* en */,
 				F17C0A012A00000000000004 /* fr */,
+				F17C0A012A00000000000005 /* de */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
