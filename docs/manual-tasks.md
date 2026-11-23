@@ -81,7 +81,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 17 | Protection contre la création de comptes en série | publication | **Décision attendue** |
 | 18 | Mesure de fluidité sur ton téléphone | qualité | Plus tard |
 | 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Envoyé en revue le 2026-11-20 (version 1.0.0 (1), liste « Flirt Coach Pro » avec 1 adresse) ; après l'approbation : 12 testeurs inscrits et 14 jours |
-| 20 | Mise en ligne de l'anglais et de l'allemand (version 1.1.0) | testeurs et pays anglophones et germanophones | Anglais : serveur, pages légales et fiche faits. Allemand : prêt dans le code (2026-11-23) ; restent déploiement de la banque, pages légales, fiche. Puis la 1.1.0 |
+| 20 | Mise en ligne de l'anglais et de l'allemand (version 1.1.0) | testeurs et pays anglophones et germanophones | Anglais : serveur, pages légales et fiche faits. Fiche anglaise publiée. Allemand : pages légales en ligne, fiche enregistrée non envoyée (2026-11-23) ; reste le déploiement de la banque. Puis la 1.1.0 |
 
 ---
 
@@ -297,8 +297,9 @@ doit être unique : à vérifier avec la tâche 5.
   - [x] Textes publiés sur GitHub Pages (branche `gh-pages`), générés depuis l'app par
     `scripts/legal_pages.py` (2026-11-19, étape 8) :
     https://kelenix.github.io/Flirt-Coach/confidentialite.html et
-    https://kelenix.github.io/Flirt-Coach/conditions.html ; en anglais depuis le 2026-11-23 :
-    `privacy.html` et `terms.html` (tâche 20). Mise à jour : voir
+    https://kelenix.github.io/Flirt-Coach/conditions.html ; depuis le 2026-11-23, en anglais :
+    `privacy.html` et `terms.html`, en allemand : `datenschutz.html` et
+    `nutzungsbedingungen.html` (tâche 20). Mise à jour : voir
     [Exploitation](operations.md#mettre-à-jour-les-textes-légaux-en-ligne).
   - [ ] Renseigner l'URL dans la fiche Google Play (App Store avec la tâche 5).
 - **Coût** : honoraires du juriste ; hébergement souvent gratuit.
@@ -492,10 +493,16 @@ avec la clé de débogage.
     `20261123010000` ; les fonctions n'ont pas changé). Comme pour l'anglais, la 1.0.0
     affichera alors la banque dans les trois langues jusqu'à la 1.1.0 : le faire juste avant
     l'envoi de la 1.1.0, qui a besoin de cette migration pour la banque allemande.
-  - [ ] Allemand, pages légales : `python scripts/legal_pages.py`, puis publication sur
-    `gh-pages` ; vérifier `datenschutz.html` et `nutzungsbedingungen.html`.
-  - [ ] Allemand, Play Console : traduction « Tedesco – de-DE » de la fiche (section 11 de la
-    fiche du store), après la mise en ligne des pages légales allemandes.
+  - [x] Allemand, pages légales en ligne (2026-11-23, commit `b86dc56` sur `gh-pages`) :
+    https://kelenix.github.io/Flirt-Coach/datenschutz.html et
+    https://kelenix.github.io/Flirt-Coach/nutzungsbedingungen.html, avec éditeur et contact ;
+    les autres pages gardent leur texte, leur menu propose les trois langues.
+  - [x] Allemand, Play Console : traduction « Tedesco – de-DE » ajoutée le 2026-11-23, avec ton
+    accord : nom, description courte (72/80) et longue (2399/4000) de la section 11 de la fiche
+    du store ; visuels repris de la fiche française ; déclaration des visuels IA inchangée.
+    **Enregistrée, pas envoyée** : « 1 modifica » attend dans la Panoramica della
+    pubblicazione (Google y fait seulement ses contrôles rapides automatiques). À envoyer avec
+    la 1.1.0 ; les pages légales allemandes vers lesquelles elle renvoie sont en ligne.
   - [ ] Juriste : relire `privacy_de.txt` et `terms_de.txt`, et dire si le marché allemand
     exige une mention d'éditeur (« Impressum ») en plus des informations des stores
     (tâche 10).
@@ -516,9 +523,9 @@ avec la clé de débogage.
     2026-11-23, avec ton accord (Schede dello Store → Scheda predefinita → Gestisci lingue) :
     nom, description courte (68/80) et longue (2119/4000) de la section 10 de la fiche du
     store ; visuels repris de la fiche française ; déclaration des visuels IA inchangée.
-    **Envoyée en revue par toi le 2026-11-23, seule** (sans nouvelle version) : sans
-    conséquence, les liens de la description sont en ligne et la fiche ne promet rien que la
-    1.0.0 ne fasse ; elle sera simplement en avance sur l'app. Captures anglaises : plus tard
+    **Envoyée en revue par toi le 2026-11-23, seule** (sans nouvelle version), puis approuvée
+    et publiée le jour même : sans conséquence, les liens de la description sont en ligne et la
+    fiche ne promet rien que la 1.0.0 ne fasse ; elle est simplement en avance sur l'app. Captures anglaises : plus tard
     (même section).
   - [ ] Juriste : relire aussi `privacy_en.txt` et `terms_en.txt` (tâche 10).
 - **Coût** : aucun (relecture éventuelle).

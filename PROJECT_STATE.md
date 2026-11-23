@@ -23,8 +23,8 @@
      copie chiffrée du `.jks` ailleurs).
   4. Décision de l'utilisateur à prendre : protection contre les comptes en série (tâche 17).
   5. Anglais (ADR-034) : serveur déployé, pages légales en ligne, fiche anglaise en revue.
-     Allemand (ADR-035) : prêt dans le code ; restent déploiement de la banque, pages légales
-     et fiche. Puis compiler et envoyer la 1.1.0 (anglais + allemand) sur l'autre machine
+     Allemand (ADR-035) : prêt dans le code, pages légales en ligne, fiche enregistrée dans
+     la Play Console (non envoyée) ; reste le déploiement de la banque. Puis compiler et envoyer la 1.1.0 (anglais + allemand) sur l'autre machine
      (tâche 20), au plus vite car la 1.0.0 affiche la banque dans plusieurs langues.
 
   Une étape à la fois, suivie dans `docs/manual-tasks.md` ; Android d'abord, iOS après la mise
@@ -323,6 +323,17 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-23 — Fiche Play Store allemande (de-DE) saisie dans la Play Console avec l'accord de
+  l'utilisateur (section 11 de la fiche du store) : enregistrée, non envoyée en revue. Une
+  case « Serbo » cochée par erreur dans la liste des langues a été décochée avant validation :
+  seules fr-FR, en-US et de-DE sont présentes. Constaté : la fiche anglaise est approuvée et
+  publiée (dernière publication le 2026-11-23).
+
+- 2026-11-23 — Allemand : CI GitHub verte sur le commit `48aec1b` (10 jobs). Pages légales
+  allemandes publiées à la demande de l'utilisateur (`gh-pages`, commit `b86dc56`) :
+  datenschutz.html et nutzungsbedingungen.html en ligne (HTTP 200, éditeur et contact
+  renseignés), menus des autres pages en trois langues, textes inchangés.
 
 - 2026-11-23 — Allemand ajouté, choisi par l'utilisateur après une recherche de marché
   (ADR-035).
