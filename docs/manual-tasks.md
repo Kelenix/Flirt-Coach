@@ -81,7 +81,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 17 | Protection contre la création de comptes en série | publication | **Décision attendue** |
 | 18 | Mesure de fluidité sur ton téléphone | qualité | Plus tard |
 | 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Envoyé en revue le 2026-11-20 (version 1.0.0 (1), liste « Flirt Coach Pro » avec 1 adresse) ; après l'approbation : 12 testeurs inscrits et 14 jours |
-| 20 | Mise en ligne de l'anglais, de l'allemand et de l'espagnol (version 1.1.0) | testeurs et pays anglophones, germanophones, hispanophones | Anglais et allemand : serveur, pages légales et fiches faits (fiche allemande non envoyée). Espagnol : prêt dans le code (2026-11-23) ; restent déploiement de la banque, pages légales, fiches, prix locaux. Puis la 1.1.0 |
+| 20 | Mise en ligne de l'anglais, de l'allemand et de l'espagnol (version 1.1.0) | testeurs et pays anglophones, germanophones, hispanophones | Anglais et allemand : serveur, pages légales et fiches faits (fiche allemande non envoyée). Espagnol : pages légales en ligne, fiches es-419 et es-ES enregistrées non envoyées (2026-11-23) ; restent déploiement de la banque et prix locaux. Puis la 1.1.0 |
 
 ---
 
@@ -299,7 +299,7 @@ doit être unique : à vérifier avec la tâche 5.
     https://kelenix.github.io/Flirt-Coach/confidentialite.html et
     https://kelenix.github.io/Flirt-Coach/conditions.html ; depuis le 2026-11-23, en anglais :
     `privacy.html` et `terms.html`, en allemand : `datenschutz.html` et
-    `nutzungsbedingungen.html` (tâche 20). Mise à jour : voir
+    `nutzungsbedingungen.html`, en espagnol : `privacidad.html` et `terminos.html` (tâche 20). Mise à jour : voir
     [Exploitation](operations.md#mettre-à-jour-les-textes-légaux-en-ligne).
   - [ ] Renseigner l'URL dans la fiche Google Play (App Store avec la tâche 5).
 - **Coût** : honoraires du juriste ; hébergement souvent gratuit.
@@ -495,11 +495,18 @@ avec la clé de débogage.
   - [ ] Espagnol, serveur : relancer `scripts/deploy-cloud.ps1` (migration `20261123020000`)
     juste avant l'envoi de la 1.1.0 ; la 1.0.0 affichera alors la banque dans les quatre
     langues jusqu'à sa mise à jour.
-  - [ ] Espagnol, pages légales : `python scripts/legal_pages.py`, puis publication sur
-    `gh-pages` ; vérifier `privacidad.html` et `terminos.html`.
-  - [ ] Espagnol, Play Console : traductions « Spagnolo (America Latina) – es-419 » et
-    « Spagnolo (Spagna) – es-ES », mêmes textes (section 12 de la fiche du store), après la
-    mise en ligne des pages légales espagnoles.
+  - [x] Espagnol, pages légales en ligne (2026-11-23, commit `35642cf` sur `gh-pages`) :
+    https://kelenix.github.io/Flirt-Coach/privacidad.html et
+    https://kelenix.github.io/Flirt-Coach/terminos.html, avec éditeur et contact ; les autres
+    pages gardent leur texte, leur menu propose les quatre langues.
+  - [x] Espagnol, Play Console : traductions « Spagnolo (America Latina) – es-419 » et
+    « Spagnolo (Spagna) – es-ES » ajoutées le 2026-11-23, avec ton accord, mêmes textes
+    (section 12 de la fiche du store) : nom, description courte (73/80) et longue (2334/4000) ;
+    visuels repris de la fiche française ; déclaration des visuels IA inchangée.
+    **Enregistrées, pas envoyées** : avec la fiche allemande, « 3 modifiche » attendent dans
+    la Panoramica della pubblicazione, à envoyer avec la 1.1.0. « Spagnolo (Stati Uniti) –
+    es-US » existe aussi, non ajoutée : à ajouter avec les mêmes textes si l'on vise les
+    hispanophones des États-Unis.
   - [ ] **Décision (financière)** : prix locaux pour l'Amérique latine (Mexique, Colombie,
     Argentine…), sinon la Play Console y convertit les prix en euros, trop élevés.
   - [x] Allemand, serveur : `scripts/deploy-cloud.ps1` lancé le 2026-11-23, confirmé par toi ;

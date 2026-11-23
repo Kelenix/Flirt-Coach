@@ -24,8 +24,9 @@
   4. Décision de l'utilisateur à prendre : protection contre les comptes en série (tâche 17).
   5. Anglais (ADR-034) : serveur déployé, pages légales en ligne, fiche anglaise en revue.
      Allemand (ADR-035) : serveur à jour, pages légales en ligne, fiche enregistrée dans la
-     Play Console (non envoyée). Espagnol (ADR-036) : prêt dans le code ; restent déploiement de
-     la banque, pages légales, fiches es-419 / es-ES et décision sur les prix locaux. Puis
+     Play Console (non envoyée). Espagnol (ADR-036) : pages légales en ligne, fiches es-419
+     et es-ES enregistrées (non envoyées) ; restent déploiement de la banque et décision sur
+     les prix locaux. Puis
      compiler et envoyer la 1.1.0 (anglais, allemand, espagnol) sur l'autre machine (tâche 20).
 
   Une étape à la fois, suivie dans `docs/manual-tasks.md` ; Android d'abord, iOS après la mise
@@ -324,6 +325,17 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-23 — Fiches Play Store espagnoles (es-419 et es-ES) saisies dans la Play Console avec
+  l'accord de l'utilisateur, mêmes textes (section 12 de la fiche du store) : enregistrées,
+  non envoyées. La Panoramica della pubblicazione compte 3 modifications en attente
+  (de-DE, es-419, es-ES), toutes complètes selon la console. Aucune autre langue ajoutée.
+
+- 2026-11-23 — Espagnol : CI GitHub verte sur le commit `d6593b0` (10 jobs).
+
+- 2026-11-23 — Pages légales espagnoles publiées à la demande de l'utilisateur (`gh-pages`,
+  commit `35642cf`) : privacidad.html et terminos.html en ligne (HTTP 200, éditeur et contact
+  renseignés) ; menus des autres pages en quatre langues, textes inchangés.
 
 - 2026-11-23 — Espagnol ajouté à la demande de l'utilisateur (ADR-036), en espagnol neutre
   pour l'Espagne et l'Amérique latine.
