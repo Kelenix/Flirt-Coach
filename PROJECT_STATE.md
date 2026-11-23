@@ -322,6 +322,10 @@ Reste ouvert :
 
 ## Journal de session (résumé court, le plus récent en haut)
 
+- 2026-11-23 — Pages légales anglaises publiées sur GitHub Pages à la demande de
+  l'utilisateur (`gh-pages`, commit `32e8f2d`) : privacy.html et terms.html en ligne (HTTP 200,
+  éditeur et contact renseignés) ; pages françaises au même texte, menus bilingues.
+
 - 2026-11-23 — Fiche Play Store anglaise (en-US) saisie dans la Play Console avec l'accord de
   l'utilisateur : nom, descriptions courte et longue (section 10 de la fiche du store).
   Enregistrée, non envoyée en revue (1 modification en attente), à envoyer avec la 1.1.0 une
