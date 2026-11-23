@@ -322,6 +322,12 @@ Reste ouvert :
 
 ## Journal de session (résumé court, le plus récent en haut)
 
+- 2026-11-23 — Fiche Play Store anglaise (en-US) saisie dans la Play Console avec l'accord de
+  l'utilisateur : nom, descriptions courte et longue (section 10 de la fiche du store).
+  Enregistrée, non envoyée en revue (1 modification en attente), à envoyer avec la 1.1.0 une
+  fois les pages légales anglaises en ligne. Constaté au passage : le test fermé 1.0.0 (1) est
+  publié (1 testeur inscrit sur les 12 requis).
+
 - 2026-11-23 — Anglais ajouté à la demande de l'utilisateur (testeurs anglophones, publication
   dans plusieurs pays), ADR-034.
   - App : `app_en.arb` complet (192 textes), langue du téléphone sinon anglais, règle unique
