@@ -25,8 +25,8 @@
   5. Anglais (ADR-034) : serveur déployé, pages légales en ligne, fiche anglaise en revue.
      Allemand (ADR-035) : serveur à jour, pages légales en ligne, fiche enregistrée dans la
      Play Console (non envoyée). Espagnol (ADR-036) : pages légales en ligne, fiches es-419
-     et es-ES enregistrées (non envoyées) ; restent déploiement de la banque et décision sur
-     les prix locaux. Puis
+     et es-ES enregistrées (non envoyées), serveur à jour ; reste la décision sur les prix
+     locaux. Puis
      compiler et envoyer la 1.1.0 (anglais, allemand, espagnol) sur l'autre machine (tâche 20).
 
   Une étape à la fois, suivie dans `docs/manual-tasks.md` ; Android d'abord, iOS après la mise
@@ -325,6 +325,11 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-23 — Serveur : `deploy-cloud.ps1` lancé dans le terminal à la demande de
+  l'utilisateur, migration confirmée par lui. Vérifié en lecture seule : migration
+  `20261123020000` appliquée, banque cloud à 40 messages par langue (`fr`, `en`, `de`, `es`),
+  8 fonctions actives redéployées à 10:07 UTC. Serveur prêt pour la 1.1.0.
 
 - 2026-11-23 — Fiches Play Store espagnoles (es-419 et es-ES) saisies dans la Play Console avec
   l'accord de l'utilisateur, mêmes textes (section 12 de la fiche du store) : enregistrées,
