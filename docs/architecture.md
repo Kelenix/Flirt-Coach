@@ -175,3 +175,5 @@ caméra, micro, contacts, localisation ni notification.
 
 Pas de *flavors* natifs : un seul identifiant d'application (ADR-011). Détail des variables :
 [`configuration.md`](configuration.md).
+
+
