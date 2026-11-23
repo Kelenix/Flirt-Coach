@@ -27,8 +27,8 @@
      Play Console (non envoyée). Espagnol (ADR-036) : pages légales en ligne, fiches es-419
      et es-ES enregistrées (non envoyées), serveur à jour, prix locaux en Amérique latine
      appliqués (ADR-037). Portugais (ADR-038) : pages légales en ligne, fiches pt-BR et
-     pt-PT enregistrées (non envoyées) ; restent déploiement de la banque et décision sur le
-     prix au Brésil. Puis
+     pt-PT enregistrées (non envoyées), serveur à jour ; reste la décision sur le prix au
+     Brésil. Puis
      compiler et envoyer la 1.1.0 (anglais, allemand, espagnol, portugais) sur l'autre machine
      (tâche 20).
 
@@ -330,6 +330,11 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-23 — Serveur : `deploy-cloud.ps1` lancé dans le terminal à la demande de
+  l'utilisateur, migration confirmée par lui. Vérifié en lecture seule : migration
+  `20261123030000` appliquée, banque cloud à 40 messages par langue (`de`, `en`, `es`, `fr`,
+  `pt`), 8 fonctions actives redéployées à 13:16 UTC. Serveur prêt pour la 1.1.0.
 
 - 2026-11-23 — Fiches Play Store portugaises (pt-BR et pt-PT) saisies dans la Play Console avec
   l'accord de l'utilisateur, mêmes textes (section 13 de la fiche du store) : enregistrées,

@@ -81,7 +81,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 17 | Protection contre la création de comptes en série | publication | **Décision attendue** |
 | 18 | Mesure de fluidité sur ton téléphone | qualité | Plus tard |
 | 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Envoyé en revue le 2026-11-20 (version 1.0.0 (1), liste « Flirt Coach Pro » avec 1 adresse) ; après l'approbation : 12 testeurs inscrits et 14 jours |
-| 20 | Mise en ligne de l'anglais, de l'allemand, de l'espagnol et du portugais (version 1.1.0) | testeurs et pays anglophones, germanophones, hispanophones, lusophones | Anglais et allemand : serveur, pages légales et fiches faits (fiche allemande non envoyée). Espagnol : serveur à jour (banque fr/en/de/es), pages légales en ligne, fiches es-419 et es-ES enregistrées non envoyées, prix locaux en Amérique latine appliqués (2026-11-23). Portugais : pages légales en ligne, fiches pt-BR et pt-PT enregistrées non envoyées (2026-11-23) ; restent déploiement de la banque et prix au Brésil. Puis la 1.1.0, au plus vite |
+| 20 | Mise en ligne de l'anglais, de l'allemand, de l'espagnol et du portugais (version 1.1.0) | testeurs et pays anglophones, germanophones, hispanophones, lusophones | Anglais et allemand : serveur, pages légales et fiches faits (fiche allemande non envoyée). Espagnol : serveur à jour (banque fr/en/de/es), pages légales en ligne, fiches es-419 et es-ES enregistrées non envoyées, prix locaux en Amérique latine appliqués (2026-11-23). Portugais : serveur à jour (banque fr/en/de/es/pt), pages légales en ligne, fiches pt-BR et pt-PT enregistrées non envoyées (2026-11-23) ; reste la décision sur le prix au Brésil. Puis la 1.1.0, au plus vite |
 
 ---
 
@@ -496,9 +496,10 @@ avec la clé de débogage.
   - [ ] (Conseillé) Faire relire les textes portugais par un lusophone, idéalement un Brésilien
     et un Portugais : `lib/l10n/app_pt.arb`, `assets/help/faq_pt.txt` et la banque
     (`supabase/migrations/20261123030000_message_bank_portuguese.sql`).
-  - [ ] Portugais, serveur : relancer `scripts/deploy-cloud.ps1` (migration `20261123030000`)
-    juste avant l'envoi de la 1.1.0 ; la 1.0.0 affichera alors la banque dans les cinq
-    langues jusqu'à sa mise à jour.
+  - [x] Portugais, serveur : `scripts/deploy-cloud.ps1` lancé le 2026-11-23, confirmé par toi ;
+    migration `20261123030000` appliquée (banque cloud : 40 messages `fr`, `en`, `de`, `es` et
+    `pt`, 5 catégories chacune), 8 fonctions redéployées sans changement à 13:16 UTC. Jusqu'à
+    la 1.1.0, la 1.0.0 affiche la banque dans les cinq langues (40 messages par catégorie).
   - [x] Portugais, pages légales en ligne (2026-11-23, commit `2534000` sur `gh-pages`) :
     https://kelenix.github.io/Flirt-Coach/privacidade.html et
     https://kelenix.github.io/Flirt-Coach/termos.html, avec éditeur et contact ; les autres
