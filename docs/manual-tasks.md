@@ -81,7 +81,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 17 | Protection contre la création de comptes en série | publication | **Décision attendue** |
 | 18 | Mesure de fluidité sur ton téléphone | qualité | Plus tard |
 | 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Envoyé en revue le 2026-11-20 (version 1.0.0 (1), liste « Flirt Coach Pro » avec 1 adresse) ; après l'approbation : 12 testeurs inscrits et 14 jours |
-| 20 | Mise en ligne de l'anglais et de l'allemand (version 1.1.0) | testeurs et pays anglophones et germanophones | Anglais : serveur, pages légales et fiche faits. Fiche anglaise publiée. Allemand : pages légales en ligne, fiche enregistrée non envoyée (2026-11-23) ; reste le déploiement de la banque. Puis la 1.1.0 |
+| 20 | Mise en ligne de l'anglais et de l'allemand (version 1.1.0) | testeurs et pays anglophones et germanophones | Anglais : serveur, pages légales et fiche faits. Serveur à jour (banque fr/en/de), pages légales en ligne, fiche anglaise publiée, fiche allemande enregistrée non envoyée (2026-11-23). Reste la version 1.1.0, à envoyer au plus vite |
 
 ---
 
@@ -489,10 +489,10 @@ avec la clé de débogage.
     `assets/help/faq_en.txt` et la banque (`supabase/migrations/20261123000000_message_bank_languages.sql`).
   - [ ] (Conseillé) Faire relire les textes allemands par un germanophone : `lib/l10n/app_de.arb`,
     `assets/help/faq_de.txt` et la banque (`supabase/migrations/20261123010000_message_bank_german.sql`).
-  - [ ] Allemand, serveur : relancer `scripts/deploy-cloud.ps1` (applique la migration
-    `20261123010000` ; les fonctions n'ont pas changé). Comme pour l'anglais, la 1.0.0
-    affichera alors la banque dans les trois langues jusqu'à la 1.1.0 : le faire juste avant
-    l'envoi de la 1.1.0, qui a besoin de cette migration pour la banque allemande.
+  - [x] Allemand, serveur : `scripts/deploy-cloud.ps1` lancé le 2026-11-23, confirmé par toi ;
+    migration `20261123010000` appliquée (banque cloud : 40 messages `fr`, `en` et `de`,
+    5 catégories chacune), 8 fonctions redéployées sans changement. Jusqu'à la 1.1.0, la 1.0.0
+    affiche la banque dans les trois langues (24 messages par catégorie).
   - [x] Allemand, pages légales en ligne (2026-11-23, commit `b86dc56` sur `gh-pages`) :
     https://kelenix.github.io/Flirt-Coach/datenschutz.html et
     https://kelenix.github.io/Flirt-Coach/nutzungsbedingungen.html, avec éditeur et contact ;
