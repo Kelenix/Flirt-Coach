@@ -5,6 +5,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@supabase/supabase-js";
 
 import { InvalidModelOutput, InvalidRequest, type ModelOutcome, UnusableInput } from "./errors.ts";
+import { parseLanguage } from "./language.ts";
 
 /** Contenu du message utilisateur : texte, ou blocs (image + texte). */
 export type UserContent =
@@ -35,7 +36,8 @@ export interface AiEndpoint<Request, Output> {
   /** Coût en crédits pour un utilisateur gratuit. */
   cost(request: Request): number;
   systemPrompt: string;
-  userPrompt(request: Request): UserContent;
+  /** Demande au modèle ; `language` : code ISO 639 de la langue de l'app (« fr », « en »). */
+  userPrompt(request: Request, language: string): UserContent;
   outputSchema: Record<string, unknown>;
   /**
    * Interprète la sortie JSON du modèle ; lève `InvalidModelOutput`, ou
@@ -139,8 +141,11 @@ export function serveAiEndpoint<Req, Output>(endpoint: AiEndpoint<Req, Output>):
     if (!userId) return fail("unauthorized");
 
     let request: Req;
+    let language: string;
     try {
-      request = endpoint.parse(await httpRequest.json());
+      const body = await httpRequest.json();
+      request = endpoint.parse(body);
+      language = parseLanguage(body);
     } catch (error) {
       if (error instanceof InvalidRequest || error instanceof SyntaxError) {
         return fail("invalid_request");
@@ -186,7 +191,7 @@ export function serveAiEndpoint<Req, Output>(endpoint: AiEndpoint<Req, Output>):
     try {
       outcome = await callModel(
         endpoint as AiEndpoint<unknown, Output>,
-        endpoint.userPrompt(request),
+        endpoint.userPrompt(request, language),
       );
     } catch (error) {
       await refund();

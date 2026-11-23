@@ -5,6 +5,60 @@
 
 ---
 
+## ADR-034 — Interface en français et en anglais, anglais en repli
+
+- **Date** : 2026-11-23
+- **Statut** : Accepté
+- **Décideur** : Claude (rôles : mobile-architect, flutter-engineer, backend), à la demande de
+  l'utilisateur (« ajoute l'anglais, tout doit être traduit »)
+- **Contexte** : l'app, en test fermé, était en français seul (Q4). Les testeurs parlent anglais
+  et l'app sera publiée dans plusieurs pays. Exigences : tout traduire, ne rien casser, garder
+  une structure qui accueille d'autres langues.
+- **Décision** :
+  - **Langue de l'interface** = celle du téléphone si l'app la propose (`fr`, `en`), sinon
+    l'anglais (`preferred-supported-locales: [en]`). Une seule règle, `resolveAppLocale`
+    (`lib/core/l10n/app_language.dart`), sert l'interface et les appels serveur. Pas de
+    sélecteur dans l'app : Android 13+ (`res/xml/locales_config.xml`) et iOS
+    (`CFBundleLocalizations`) proposent déjà le choix de langue par app dans les réglages du
+    téléphone.
+  - **Textes** : le français reste la langue source (`app_fr.arb`, modèle) ; `app_en.arb` est
+    complet. Aide et textes légaux embarqués par langue (`<base>_<code>.txt`), pages légales
+    web en français et en anglais. Textes d'autorisation iOS traduits (`InfoPlist.strings`).
+    `test/l10n/translations_test.dart` vérifie que chaque langue est complète (clés, variables,
+    fichiers embarqués, déclarations Android et iOS).
+  - **IA** : chaque requête porte `locale` (code ISO 639). Les textes destinés à l'utilisateur
+    (refus, explications du Mode Respect, analyse) sont écrits dans cette langue ; les messages à
+    envoyer restent dans la langue de la conversation, la langue de l'app ne servant qu'en
+    dernier recours. Les consignes système restent identiques pour toutes les langues (cache de
+    prompt préservé) ; la langue est une ligne de la demande. Sans `locale` (versions 1.0.0) :
+    français, comportement inchangé. Tout code ISO 639 est accepté : une nouvelle langue de
+    l'app ne demande aucun changement côté serveur.
+  - **Banque de messages** : colonne `language` (obligatoire, code ISO 639) et 40 messages
+    anglais ; l'app lit la langue de son interface et garde une copie hors ligne par langue.
+- **Alternatives écartées** :
+  - Sélecteur de langue dans l'app : écran, préférence et code en plus pour un doublon des
+    réglages du téléphone ; à ajouter si les utilisateurs le demandent.
+  - Repli en français pour les autres langues : moins utile pour une publication
+    internationale.
+  - Une consigne système traduite par langue : autant de textes à maintenir et un cache de
+    prompt divisé, alors que le modèle suit très bien une consigne de langue.
+  - Banque traduite à la volée par l'IA : coût, délai, et plus de consultation hors ligne.
+  - Une table par langue (ou une nouvelle table) pour la banque : protège les versions 1.0.0
+    mais doublonne les données et laisse une table à supprimer plus tard.
+- **Conséquences** :
+  - Les versions 1.0.0 déjà installées lisent la banque sans filtre de langue : une fois la
+    migration appliquée, elles afficheraient les messages français **et** anglais (16 par
+    catégorie) jusqu'à leur mise à jour. La migration est donc appliquée au moment de publier la
+    1.1.0 (tâche manuelle 20) ; la nouvelle version, elle, a besoin de la migration. Le reste
+    (interface, IA, achats) ne change pas pour les versions 1.0.0.
+  - Textes légaux anglais : traduction fidèle des français, à faire relire avec eux (tâche 10).
+  - iOS : `InfoPlist.strings` ajouté au projet Xcode à la main (poste Windows) ; à vérifier à la
+    première compilation iOS.
+- **Impact** : technique (moyen, réversible) ; métier (ouverture aux pays anglophones et aux
+  autres langues en repli anglais).
+
+---
+
 ## ADR-033 — Produits Google Play : prix TTC en France
 
 - **Date** : 2026-11-20

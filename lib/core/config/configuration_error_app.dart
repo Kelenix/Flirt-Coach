@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/app_localizations.dart';
+import '../l10n/app_language.dart';
 import '../theme/app_theme.dart';
 import '../theme/app_tokens.dart';
 import '../../shared/widgets/gradient_background.dart';
@@ -15,8 +17,12 @@ class ConfigurationErrorApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.dark,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localeListResolutionCallback: (locales, _) => resolveAppLocale(locales),
       home: Builder(
         builder: (context) {
+          final l10n = AppLocalizations.of(context);
           final textTheme = Theme.of(context).textTheme;
           return Scaffold(
             body: GradientBackground(
@@ -26,15 +32,13 @@ class ConfigurationErrorApp extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Configuration manquante',
+                      l10n.configurationMissingTitle,
                       style: textTheme.headlineSmall,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: AppSpacing.md),
                     Text(
-                      "Cette version a été compilée sans l'adresse du serveur. "
-                      'Recompile-la avec --dart-define-from-file=config/prod.json '
-                      '(ou dev.json, phone.json) : voir le README.',
+                      l10n.configurationMissingBody,
                       style: textTheme.bodyLarge,
                       textAlign: TextAlign.center,
                     ),

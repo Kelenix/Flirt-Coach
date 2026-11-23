@@ -17,6 +17,9 @@ void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('accueil 18+ → Générer → Résultats → Banque', (tester) async {
+    // Parcours écrit sur les textes français, quelle que soit la langue du téléphone.
+    tester.platformDispatcher.localesTestValue = const [Locale('fr', 'FR')];
+    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
     await tester.pumpWidget(await buildTestApp(FakeAuthRepository()));
     await tester.pumpAndSettle();
 

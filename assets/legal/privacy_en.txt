@@ -1,0 +1,53 @@
+# Privacy Policy
+
+Last updated: November 18, 2026
+
+## Who we are
+
+Flirt Coach Pro is published by {{EDITEUR}}. For any question about your data: {{CONTACT}}.
+
+## The data we process
+
+- An anonymous account identifier, created automatically: no name, no email address, no phone number.
+- Your age declaration (18 or older) and its date.
+- The texts you enter (message received, context, conversation) and the generated replies. They are used for your history (Premium) and to calculate usage limits. You can delete them at any time.
+- The screenshots you import: they are sent to the AI service to be read, and are never stored.
+- Your credits, purchases and subscriptions. Payment is processed by the App Store or Google Play: we never receive your banking details.
+- For the free version, advertising data processed by Google AdMob, according to your consent choices.
+- The reports you send: the reported text and the reason you chose.
+
+## Why we process it
+
+- To provide the service: generate replies, manage your credits, your subscription and your history (performance of the contract).
+- To ensure security and prevent abuse: usage limits, review of reports (legitimate interest).
+- To show personalized ads, only with your consent, which you can change in Settings > Ad preferences.
+
+## Our service providers
+
+- Supabase: hosting of the database and server, in the European Union.
+- Anthropic: generation of replies by artificial intelligence. Texts and screenshots are sent to it for processing, in accordance with its commercial terms of service.
+- RevenueCat: management of purchases and subscriptions.
+- Google (AdMob, Google Play) and Apple (App Store).
+
+Some providers are located outside the European Union, notably in the United States. These transfers are covered by appropriate safeguards (standard contractual clauses of the European Commission or the EU–US Data Privacy Framework).
+
+## How long we keep it
+
+- Your account, your history and your reports: until you delete them or delete your account.
+- Your screenshots: they are not stored.
+
+## Your rights
+
+You can access your data, correct it, erase it, object to its processing or request its portability by writing to {{CONTACT}}.
+
+You can delete your account immediately from Settings > Delete my account: all your data is then permanently erased. An active subscription is cancelled separately, in the App Store or Google Play.
+
+You can also lodge a complaint with the data protection authority of your country (in France, the CNIL).
+
+## Minors
+
+Flirt Coach Pro is reserved for people aged 18 or older.
+
+## Changes
+
+We may update this policy. The date at the top of the page shows the latest version.

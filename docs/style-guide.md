@@ -106,8 +106,8 @@ Les consignes du modèle (`generate/prompt.ts`, `screenshot-reply/screenshot.ts`
 `respect-check/respect.ts`, `conversation-analysis/analysis.ts` dans `supabase/functions/`)
 appliquent la même charte aux réponses générées :
 
-- réponses dans **la langue de la conversation** ; explications du Mode Respect et de l'analyse
-  en français ;
+- réponses dans **la langue de la conversation** ; raisons de refus, explications du Mode
+  Respect et de l'analyse dans **la langue de l'app** (champ `locale` de chaque requête) ;
 - jamais de contenu sexuel explicite, haineux, insistant après un refus ou manipulateur ;
 - messages courts, naturels, prêts à envoyer ; émojis permis avec parcimonie (ils sont destinés
   à la conversation, pas à l'interface).
@@ -117,12 +117,35 @@ Toute modification de ces consignes est testée (tests Deno) puis redéployée
 
 ## 8. Ajouter ou modifier un texte de l'app
 
+L'app est en **français** (langue source) et en **anglais**. La langue suit celle du téléphone ;
+une autre langue que celles-ci affiche l'anglais (ADR-034).
+
 1. Ajouter la clé dans `lib/l10n/app_fr.arb`, nommée *écran + élément* en camelCase
    (`historyDeleteTitle`), avec ses `placeholders` s'il y a des variables.
-2. Lancer `flutter gen-l10n` (ou simplement `flutter run` / `flutter test`).
-3. L'utiliser via `AppLocalizations.of(context)` : **aucun texte en dur dans un widget**.
-4. Relire avec cette charte, à voix haute, puis vérifier l'écran avec la police agrandie.
+2. Ajouter **la même clé** traduite dans `lib/l10n/app_en.arb` (sans les métadonnées `@clé`).
+   En anglais : ton direct et chaleureux, « you », phrases courtes, majuscule au premier mot
+   seulement (sauf noms propres : Premium, Respect Mode).
+3. Lancer `flutter gen-l10n` (ou simplement `flutter run` / `flutter test`).
+4. L'utiliser via `AppLocalizations.of(context)` : **aucun texte en dur dans un widget**.
+5. Relire avec cette charte, à voix haute, puis vérifier l'écran avec la police agrandie, dans
+   les deux langues (l'anglais est souvent plus court, l'allemand le serait plus).
 
-Les textes de l'aide (`assets/help/faq_fr.txt`) et les textes légaux (`assets/legal/`) suivent les
-mêmes règles ; les textes légaux sont relus par un juriste avant publication
+Les textes de l'aide (`assets/help/faq_<langue>.txt`) et les textes légaux
+(`assets/legal/*_<langue>.txt`) existent dans chaque langue et suivent les mêmes règles ; les
+textes légaux sont relus par un juriste avant publication
 ([tâche manuelle 10](manual-tasks.md#10-textes-légaux-relus-et-hébergés)).
+`test/l10n/translations_test.dart` échoue si une clé, un texte embarqué ou une déclaration
+Android / iOS manque dans une langue.
+
+### Ajouter une langue
+
+1. `lib/l10n/app_<code>.arb` : toutes les clés traduites.
+2. `assets/help/faq_<code>.txt`, `assets/legal/privacy_<code>.txt`, `assets/legal/terms_<code>.txt`.
+3. `android/app/src/main/res/xml/locales_config.xml` et `ios/Runner/Info.plist`
+   (`CFBundleLocalizations`), plus `ios/Runner/<code>.lproj/InfoPlist.strings`, à ajouter au
+   projet Xcode comme `en` et `fr`.
+4. Banque de messages : une migration qui insère 40 messages avec `language = '<code>'`.
+5. Pages légales en ligne : une entrée par document dans `scripts/legal_pages.py`.
+6. Fiche des stores dans cette langue ([fiche du store](store/fiche-store.md)).
+
+Le serveur n'a rien à changer : il accepte tout code de langue ISO 639.

@@ -1,8 +1,9 @@
 """Génère les pages web des textes légaux à partir des textes de l'app.
 
-Source unique : assets/legal/*.txt (format de l'app : `# ` titre, `## ` section, `- ` puce,
-sinon paragraphe). L'éditeur et le contact viennent de config/prod.json, comme dans l'app.
-Sortie : build/legal-pages/, publiée sur GitHub Pages (branche gh-pages).
+Source unique : assets/legal/*_<langue>.txt (format de l'app : `# ` titre, `## ` section,
+`- ` puce, sinon paragraphe), une page par langue de l'app. L'éditeur et le contact viennent
+de config/prod.json, comme dans l'app. Sortie : build/legal-pages/, publiée sur GitHub Pages
+(branche gh-pages).
 
 Usage : python scripts/legal_pages.py
 """
@@ -14,9 +15,17 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "build" / "legal-pages"
 APP = "Flirt Coach Pro"
+# Page -> (source, titre, langue). Les adresses françaises sont celles déclarées aux stores.
 PAGES = {
-    "confidentialite.html": ("assets/legal/privacy_fr.txt", "Politique de confidentialité"),
-    "conditions.html": ("assets/legal/terms_fr.txt", "Conditions d'utilisation"),
+    "confidentialite.html": ("assets/legal/privacy_fr.txt", "Politique de confidentialité", "fr"),
+    "conditions.html": ("assets/legal/terms_fr.txt", "Conditions d'utilisation", "fr"),
+    "privacy.html": ("assets/legal/privacy_en.txt", "Privacy Policy", "en"),
+    "terms.html": ("assets/legal/terms_en.txt", "Terms of Use", "en"),
+}
+# Textes propres à chaque langue : mention de mise à jour et pied de page.
+LANGUAGES = {
+    "fr": {"updated": "Dernière mise à jour", "footer": "coach de drague et messages, réservé aux adultes."},
+    "en": {"updated": "Last updated", "footer": "flirting and texting coach, for adults only."},
 }
 
 STYLE = """
@@ -51,7 +60,7 @@ def config() -> dict:
     return data
 
 
-def body(text: str, publisher: str, contact: str) -> str:
+def body(text: str, publisher: str, contact: str, language: str) -> str:
     mail = f'<a href="mailto:{html.escape(contact)}">{html.escape(contact)}</a>'
     out, bullets = [], []
 
@@ -73,7 +82,7 @@ def body(text: str, publisher: str, contact: str) -> str:
             out.append(f"<h2>{inline(line[3:])}</h2>")
         elif line.startswith("# "):
             out.append(f"<h1>{inline(line[2:])}</h1>")
-        elif line.startswith("Dernière mise à jour"):
+        elif line.startswith(LANGUAGES[language]["updated"]):
             out.append(f'<p class="updated">{inline(line)}</p>')
         elif line.strip():
             out.append(f"<p>{inline(line)}</p>")
@@ -81,13 +90,14 @@ def body(text: str, publisher: str, contact: str) -> str:
     return "\n".join(out)
 
 
-def page(title: str, content: str, current: str) -> str:
+def page(title: str, content: str, current: str, language: str) -> str:
     links = "".join(
-        f'<a href="{name}"{" aria-current=\"page\"" if name == current else ""}>{label}</a>'
-        for name, (_, label) in PAGES.items()
+        f'<a href="{name}" hreflang="{lang}"{" aria-current=\"page\"" if name == current else ""}>'
+        f"{label}</a>"
+        for name, (_, label, lang) in PAGES.items()
     )
     return f"""<!doctype html>
-<html lang="fr">
+<html lang="{language}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,7 +109,7 @@ def page(title: str, content: str, current: str) -> str:
 <main>
 {content}
 </main>
-<footer>{APP} — coach de drague et messages, réservé aux adultes.</footer>
+<footer>{APP} — {LANGUAGES[language]["footer"]}</footer>
 </body>
 </html>
 """
@@ -108,13 +118,19 @@ def page(title: str, content: str, current: str) -> str:
 def main() -> None:
     data = config()
     OUT.mkdir(parents=True, exist_ok=True)
-    for name, (source, title) in PAGES.items():
+    for name, (source, title, language) in PAGES.items():
         text = (ROOT / source).read_text(encoding="utf-8")
-        content = body(text, data["LEGAL_PUBLISHER"], data["SUPPORT_EMAIL"])
-        (OUT / name).write_text(page(title, content, name), encoding="utf-8")
-    items = "".join(f'<li><a href="{name}">{label}</a></li>' for name, (_, label) in PAGES.items())
-    index = f"<h1>{APP}</h1>\n<p>Textes légaux de l'application.</p>\n<ul>{items}</ul>"
-    (OUT / "index.html").write_text(page("Textes légaux", index, ""), encoding="utf-8")
+        content = body(text, data["LEGAL_PUBLISHER"], data["SUPPORT_EMAIL"], language)
+        (OUT / name).write_text(page(title, content, name, language), encoding="utf-8")
+    items = "".join(
+        f'<li><a href="{name}" hreflang="{lang}">{label}</a></li>'
+        for name, (_, label, lang) in PAGES.items()
+    )
+    index = (
+        f"<h1>{APP}</h1>\n<p>Textes légaux de l'application · Legal texts of the app.</p>\n"
+        f"<ul>{items}</ul>"
+    )
+    (OUT / "index.html").write_text(page("Textes légaux · Legal texts", index, "", "fr"), encoding="utf-8")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     print(f"{len(PAGES) + 1} pages écrites dans {OUT.relative_to(ROOT)}")
 

@@ -81,6 +81,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 17 | Protection contre la création de comptes en série | publication | **Décision attendue** |
 | 18 | Mesure de fluidité sur ton téléphone | qualité | Plus tard |
 | 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Envoyé en revue le 2026-11-20 (version 1.0.0 (1), liste « Flirt Coach Pro » avec 1 adresse) ; après l'approbation : 12 testeurs inscrits et 14 jours |
+| 20 | Mise en ligne de l'anglais (version 1.1.0) | testeurs anglophones, pays anglophones | Prêt dans le code (2026-11-23) ; serveur, version et fiche à publier |
 
 ---
 
@@ -471,3 +472,32 @@ avec la clé de débogage.
   - [ ] Demander l'accès à la production depuis le tableau de bord (questions sur le test).
 - **Coût** : aucun.
 - **Vérification** : le tableau de bord de l'app permet de demander l'accès à la production.
+
+## 20. Mise en ligne de l'anglais
+
+- **Pourquoi** : l'app est prête en anglais dans le code (ADR-034) ; il faut publier le serveur,
+  une nouvelle version et la fiche anglaise pour que les testeurs anglophones en profitent.
+- **Quand** : avec la prochaine version envoyée au test fermé (1.1.0). La base est mise à jour
+  **juste avant** l'envoi en revue : avant, les versions 1.0.0 installées afficheraient la
+  banque de messages en français et en anglais mélangés ; la 1.1.0, elle, a besoin de la base à
+  jour.
+- **Étapes** :
+  - [ ] (Conseillé) Faire relire les textes anglais par un anglophone : `lib/l10n/app_en.arb`,
+    `assets/help/faq_en.txt` et la banque (`supabase/migrations/20261123000000_message_bank_languages.sql`).
+  - [ ] Sur l'autre machine : version `1.1.0+2` dans `pubspec.yaml`, section `[Non publié]` du
+    `CHANGELOG.md` renommée en `[1.1.0]`, compilation et signature de l'AAB, dépôt dans
+    « Test chiusi - Alpha » avec les notes de version en français et en anglais
+    ([fiche du store](store/fiche-store.md), section 10).
+  - [ ] Sur ce poste, juste avant l'envoi en revue : `scripts/deploy-cloud.ps1` (migration de la
+    banque et fonctions IA ; la CLI demande confirmation avant la migration).
+  - [ ] Pages légales anglaises en ligne : `python scripts/legal_pages.py`, puis publication sur
+    `gh-pages` ([Exploitation](operations.md#mettre-à-jour-les-textes-légaux-en-ligne)) ;
+    vérifier https://kelenix.github.io/Flirt-Coach/privacy.html et `terms.html`.
+  - [ ] Play Console : ajouter la traduction « English (United States) » de la fiche
+    (section 10 de la fiche du store). Captures anglaises : plus tard (même section).
+  - [ ] Juriste : relire aussi `privacy_en.txt` et `terms_en.txt` (tâche 10).
+- **Coût** : aucun (relecture éventuelle).
+- **Vérification** : sur un téléphone en anglais, l'app s'affiche en anglais (accueil, menu,
+  aide, textes légaux, banque) ; un refus ou une explication du Mode Respect arrive en
+  anglais ; sur un téléphone en français, rien ne change.
+

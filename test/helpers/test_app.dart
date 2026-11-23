@@ -147,6 +147,9 @@ class FakeBackend
   /// Banque de messages : une erreur à lever, sinon 2 messages par catégorie.
   Object? bankError;
 
+  /// Langues demandées à la banque de messages.
+  final bankLanguages = <String>[];
+
   final analysisRequests =
       <({String? conversation, Uint8List? screenshot, String? context})>[];
 
@@ -221,7 +224,8 @@ class FakeBackend
   }
 
   @override
-  Future<List<BankMessage>> fetchAll() async {
+  Future<List<BankMessage>> fetchAll(String languageCode) async {
+    bankLanguages.add(languageCode);
     if (bankError case final error?) throw error;
     return [
       for (final category in BankCategory.values)

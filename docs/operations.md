@@ -137,9 +137,12 @@ indique qu'il faut renforcer les consignes du modèle (`generate/prompt.ts`,
 
 La politique de confidentialité et les conditions sont publiées sur GitHub Pages
 (https://kelenix.github.io/Flirt-Coach/), depuis la branche `gh-pages`. La source reste
-`assets/legal/*.txt`, pour que l'app et le site affichent le même texte.
+`assets/legal/*_<langue>.txt`, pour que l'app et le site affichent le même texte : une page
+par langue (`confidentialite.html` et `conditions.html` en français, `privacy.html` et
+`terms.html` en anglais).
 
-1. Modifier le texte dans `assets/legal/` (et la date « Dernière mise à jour »).
+1. Modifier le texte dans `assets/legal/`, **dans chaque langue** (et la date « Dernière mise à
+   jour » / « Last updated »).
 2. Générer les pages (lit l'éditeur et le contact dans `config/prod.json`) :
 
    ```powershell

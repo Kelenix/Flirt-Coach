@@ -1,4 +1,8 @@
 arb-dir: lib/l10n
+# Langue source : le français (textes rédigés et relus en premier).
 template-arb-file: app_fr.arb
 output-localization-file: app_localizations.dart
 nullable-getter: false
+# Premier de la liste = langue de repli quand l'appareil est dans une langue que l'app ne
+# propose pas encore (ADR-034).
+preferred-supported-locales: [en]

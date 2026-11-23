@@ -9,6 +9,12 @@ API interne : elle n'est pas destinée à des tiers et peut évoluer avec l'app.
 Les fonctions appelées par l'app exigent `Authorization: Bearer <jeton de session>` (session
 anonyme Supabase) ; le SDK Supabase l'ajoute automatiquement.
 
+**Langue (`locale`).** L'app ajoute à chaque corps le code ISO 639 de la langue de son interface
+(`"fr"`, `"en"`). Les fonctions IA écrivent dans cette langue les textes destinés à
+l'utilisateur (raisons de refus, explications du Mode Respect, analyse) ; les messages à envoyer
+restent dans la langue de la conversation. Absent (versions de l'app antérieures à l'anglais) :
+`"fr"`. Autre chose qu'un code de 2 ou 3 lettres minuscules : `400 invalid_request` (ADR-034).
+
 ## Parcours commun des fonctions IA
 
 1. Méthode `POST` et jeton vérifiés → sinon `400 invalid_request` (autre méthode) ou
@@ -89,7 +95,8 @@ Coût : 1 crédit (inclus en Premium).
 ```
 
 `category` : `insistent`, `sexualized`, `manipulative`. `alternative` vaut `null` si le message
-est respectueux. Les explications sont en français ; l'alternative est dans la langue du message.
+est respectueux. Les explications sont dans la langue de l'app ; l'alternative est dans la
+langue du message.
 
 ## `conversation-analysis` — analyse (Premium)
 
@@ -110,7 +117,8 @@ Exactement un de `conversation` ou `image`. Inclus dans Premium (compte dans le 
 ```
 
 `momentum` : `progressing`, `stalling`, `declining`. `date_suggestion` vaut `null` si le contexte
-ne s'y prête pas, et toujours `null` quand la conversation recule.
+ne s'y prête pas, et toujours `null` quand la conversation recule. `summary` et `next_step` sont
+dans la langue de l'app ; `suggested_message` et `date_suggestion`, dans celle de la conversation.
 
 ## `delete-account` — suppression du compte
 

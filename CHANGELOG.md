@@ -7,6 +7,15 @@ versions : [SemVer](https://semver.org/lang/fr/).
 
 ### Ajouté
 
+- **Anglais** : toute l'app est disponible en anglais (écrans, messages d'erreur, aide, textes
+  légaux, demandes d'autorisation iOS, banque de messages). Elle suit la langue du téléphone ;
+  pour une autre langue que le français ou l'anglais, elle s'affiche en anglais. Sur Android 13
+  et plus comme sur iPhone, la langue peut aussi se choisir pour cette app seule, dans les
+  réglages du téléphone.
+- **Coach dans la langue de l'app** : raisons de refus, explications du Mode Respect et analyse
+  de conversation sont écrites dans la langue de l'app ; les messages proposés restent dans la
+  langue de la conversation.
+
 - **Code d'accès** (Réglages → « J'ai un code ») : active Premium 30 jours avec un code fourni
   par l'éditeur, par exemple aux testeurs des stores qui n'ont pas le droit d'acheter. Le code est
   vérifié par le serveur ; essais et activations sont limités.

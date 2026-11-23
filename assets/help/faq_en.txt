@@ -1,0 +1,60 @@
+# Help and FAQ
+
+## How does Flirt Coach Pro work?
+
+Paste the last message you received (or import a screenshot of the conversation), choose a situation and a style, then tap “Generate 3 replies”. The coach suggests three ready-to-copy messages. You're free to edit them before sending.
+
+## How much does it cost?
+
+- Every day, you get 5 free credits (they don't accumulate). A generation costs 1 credit, reading a screenshot 2 credits.
+- To earn 2 credits, you can watch a short video (up to 5 times a day).
+- Purchased credit packs don't expire.
+- Premium unlocks all styles, conversation analysis and history, includes screenshot reading, with no ads, up to 100 generations a day.
+
+## When do my free credits come back?
+
+They reset to 5 every day at midnight UTC (Coordinated Universal Time). Depending on where you live, that can be in the evening or in the early morning. If the app was open, they update when you come back to it.
+
+## Why does the coach refuse my request?
+
+Flirt Coach Pro helps you flirt with respect. It refuses messages that are sexually explicit, hateful, manipulative or pushy after a refusal. In that case, no credits are used.
+
+## My screenshot can't be read
+
+Use a sharp screenshot of the conversation, without zoom, showing both people's message bubbles. If the conversation can't be read, no credits are used. Your screenshot is never stored.
+
+## The replies are in another language
+
+The coach replies in the language of the conversation: a message received in Spanish gets replies in Spanish. To get English, write the context in English and paste a message in English. Advice and explanations are always written in the language of the app.
+
+## I paid, but nothing changed
+
+The app store's confirmation can take a few seconds. Go back to the main screen, then reopen the app. If Premium still doesn't appear, tap “Restore purchases” on the Premium screen.
+
+## How do I cancel my subscription?
+
+Your subscription is managed in the app store: app Settings → “Manage my subscription”, or directly in Google Play / the App Store. You must cancel at least 24 hours before renewal.
+
+## I'm changing phones
+
+On the new phone, open the Premium screen and tap “Restore purchases”, with the same Google Play or Apple account: your subscription moves to the new installation within a few seconds. Purchased credits and history stay linked to the old installation: they are not transferred.
+
+## Can I use the app offline?
+
+The message library stays available offline once you've opened it. Generation, analysis and Respect Mode need an Internet connection.
+
+## A reply seems inappropriate
+
+Tap the flag icon on the reply, then choose a reason. Your report helps us improve the coach.
+
+## My data and my account
+
+Flirt Coach Pro doesn't ask for your name or email address. You can delete your account at any time: Settings → “Delete my account”. All your data is then erased. Details are in the Privacy Policy.
+
+## Why are there ads?
+
+They fund the free version. You can change your choices in Settings → “Ad preferences”. Premium contains no ads.
+
+## How do I change the app's language?
+
+The app follows your phone's language (English or French). On Android 13 and later, you can choose another language for this app only: phone Settings → Apps → Flirt Coach Pro → Language. On iPhone: Settings → Flirt Coach Pro → Language.

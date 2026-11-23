@@ -6,6 +6,11 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>fr</string>
+	</array>
 	<key>CFBundleDisplayName</key>
 	<string>Flirt Coach Pro</string>
 	<key>CFBundleExecutable</key>
@@ -67,12 +72,12 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Pour choisir une capture d'écran de conversation. Elle sert uniquement à proposer des réponses et n'est jamais conservée.</string>
+	<string>To choose a screenshot of a conversation. It is only used to suggest replies and is never stored.</string>
 	<key>GADApplicationIdentifier</key>
 	<!-- Identifiant de test public de Google : à remplacer par l'identifiant AdMob réel. -->
 	<string>ca-app-pub-3940256099942544~1458002511</string>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>Ton accord permet d'afficher des publicités plus pertinentes aux utilisateurs gratuits. Tu peux refuser : l'app fonctionne de la même façon.</string>
+	<string>Your consent lets us show more relevant ads to free users. You can decline: the app works the same way.</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

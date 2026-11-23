@@ -28,6 +28,7 @@ final class BankMessage {
 
 /// Banque de messages, statique et sans crédit. Les erreurs sont des `Failure`.
 abstract interface class MessageBankRepository {
-  /// Toute la banque, triée ; la dernière copie locale si le réseau manque.
-  Future<List<BankMessage>> fetchAll();
+  /// Toute la banque dans la langue [languageCode] (« fr », « en »), triée ;
+  /// la dernière copie locale de cette langue si le réseau manque.
+  Future<List<BankMessage>> fetchAll(String languageCode);
 }

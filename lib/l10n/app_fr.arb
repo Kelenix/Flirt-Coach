@@ -255,5 +255,7 @@
   "errorRateLimited": "Tu vas un peu vite : patiente une minute avant de recommencer.",
   "historyInput": "« {text} »",
   "@historyInput": {"placeholders": {"text": {"type": "String"}}},
-  "helpFaq": "Aide et questions fréquentes"
+  "helpFaq": "Aide et questions fréquentes",
+  "configurationMissingTitle": "Configuration manquante",
+  "configurationMissingBody": "Cette version a été compilée sans l'adresse du serveur. Recompile-la avec --dart-define-from-file=config/prod.json (ou dev.json, phone.json) : voir le README."
 }

@@ -58,7 +58,7 @@ reformuler un message avant de l'envoyer.
 | En bref | |
 |---|---|
 | **Plateformes** | Android 7 et plus · iOS 13 et plus |
-| **Langue** | interface en français ; réponses dans la langue de la conversation |
+| **Langues** | interface en français et en anglais, selon le téléphone (anglais pour les autres langues) ; réponses dans la langue de la conversation |
 | **Compte** | anonyme, créé au premier lancement : ni nom, ni e-mail, ni mot de passe |
 | **Version** | 1.0.0 terminée, en préparation de publication ([journal des modifications](CHANGELOG.md)) |
 
@@ -256,8 +256,8 @@ lib/
 ├── features/               une fonctionnalité par dossier : presentation · application · domain · data
 │   ├── generation/  respect/  analysis/  message_bank/  history/
 │   └── purchases/  ads/  credits/  report/  settings/  legal/  …
-└── l10n/app_fr.arb         tous les textes de l'interface
-assets/                     logos, polices, textes légaux, aide intégrée
+└── l10n/app_fr.arb         tous les textes de l'interface (français, source) ; app_en.arb : anglais
+assets/                     logos, polices, textes légaux et aide intégrée (un fichier par langue)
 supabase/
 ├── migrations/             schéma, RLS et fonctions SQL, rejouables depuis zéro
 ├── functions/              Edge Functions Deno : IA, webhooks, suppression de compte
@@ -312,7 +312,7 @@ Menaces étudiées et protections : [sécurité](docs/security.md).
 | Exploitation | [Exploitation](docs/operations.md) | déploiement, secrets, surveillance, incidents |
 | | [Tâches manuelles](docs/manual-tasks.md) | comptes, contrats, signatures, décisions |
 | | [Fiche store](docs/store/fiche-store.md) | textes Google Play et App Store ; visuels Google Play dans `docs/store/visuels/` |
-| Légal | [Politique de confidentialité](https://kelenix.github.io/Flirt-Coach/confidentialite.html) · [Conditions d'utilisation](https://kelenix.github.io/Flirt-Coach/conditions.html) | versions en ligne des textes de l'app |
+| Légal | [Politique de confidentialité](https://kelenix.github.io/Flirt-Coach/confidentialite.html) · [Conditions d'utilisation](https://kelenix.github.io/Flirt-Coach/conditions.html) · en anglais : [Privacy Policy](https://kelenix.github.io/Flirt-Coach/privacy.html) · [Terms of Use](https://kelenix.github.io/Flirt-Coach/terms.html) | versions en ligne des textes de l'app |
 | Suivi | [Journal des modifications](CHANGELOG.md) · [Décisions](DECISION_LOG.md) · [État du projet](PROJECT_STATE.md) | versions, choix techniques, avancement |
 
 ## Licence

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Langues de l'app, proposées dans les paramètres Android 13+ (langue par application).
+     À tenir aligné sur lib/l10n/app_*.arb (vérifié par test/l10n/translations_test.dart). -->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en"/>
+    <locale android:name="fr"/>
+</locale-config>

@@ -6,7 +6,7 @@
 ## Snapshot
 
 - **Phase courante** : 6 — Publication Android : test fermé envoyé en revue le 2026-11-20 (produits et RevenueCat prêts)
-- **Dernière mise à jour** : 2026-11-20
+- **Dernière mise à jour** : 2026-11-23
 - **Santé** : 🟢 OK
 - **Mode** : PLAN_PUIS_VALIDATION (plan validé le 2026-11-18, options par défaut retenues)
 - **Prochaine action** :
@@ -22,6 +22,8 @@
   3. Sur l'autre machine : sauvegarde de la clé d'envoi (mot de passe dans le gestionnaire,
      copie chiffrée du `.jks` ailleurs).
   4. Décision de l'utilisateur à prendre : protection contre les comptes en série (tâche 17).
+  5. Anglais (ADR-034), prêt dans le code : à mettre en ligne avec la version 1.1.0
+     (tâche 20 : serveur au moment de l'envoi, AAB sur l'autre machine, fiche anglaise).
 
   Une étape à la fois, suivie dans `docs/manual-tasks.md` ; Android d'abord, iOS après la mise
   en ligne (ADR-028) ; versions des stores compilées uniquement sur l'autre machine. Chemin
@@ -294,7 +296,8 @@ Options par défaut validées en bloc par l'utilisateur le 2026-11-18 (« Oui, l
 - [x] **Q1** Fournisseur IA : API Claude via Edge Function.
 - [x] **Q2** Achats intégrés : RevenueCat.
 - [x] **Q3** Premium : niveau unique, « illimité » plafonné à 100 générations/jour.
-- [x] **Q4** Android + iOS, français seul.
+- [x] **Q4** Android + iOS, français seul ; anglais ajouté le 2026-11-23 à la demande de
+  l'utilisateur (ADR-034).
 - [x] **Q5** Nom : « Flirt Coach », puis « Flirt Coach Pro » le 2026-11-19 (ADR-029).
 - [x] **Q6** Prix : 6,99 €/sem · 12,99 €/mois · 49,99 €/an ; packs 2,99 / 5,99 / 9,99 €.
 - [x] **Q7** Coach de profil : hors V1.
@@ -318,6 +321,23 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-23 — Anglais ajouté à la demande de l'utilisateur (testeurs anglophones, publication
+  dans plusieurs pays), ADR-034.
+  - App : `app_en.arb` complet (192 textes), langue du téléphone sinon anglais, règle unique
+    `resolveAppLocale` ; aide et textes légaux anglais ; écran « configuration manquante »
+    traduit ; Android 13+ et iOS : langue par app dans les réglages du téléphone ; textes
+    d'autorisation iOS traduits.
+  - Serveur : champ `locale` dans chaque requête IA ; refus, explications et analyse dans la
+    langue de l'app ; sans `locale`, français (versions 1.0.0 inchangées). Banque de messages :
+    colonne `language` et 40 messages anglais (migration `20261123000000`).
+  - Pages légales web en anglais (`privacy.html`, `terms.html`) générées par
+    `scripts/legal_pages.py` ; fiche store anglaise (section 10 de la fiche).
+  - Vérifié : `flutter analyze` sans problème, 137 tests Flutter verts (dont 23 nouveaux sur les
+    langues, les tests existants tournant sur un appareil simulé en français) ; 126 tests SQL
+    verts en local (migration rejouée depuis zéro). Non vérifiés : format, lint et tests Deno des
+    fonctions (Deno absent de ce poste), à faire passer par la CI ou en local. Rien de déployé
+    ni de publié.
 
 - 2026-11-20 — États d'Inc-6 et Inc-10 remis à jour à la demande de l'utilisateur.
   - Consentement RGPD et blocages AdMob : faits le 2026-11-19 (étapes 7 et 9), lignes corrigées.

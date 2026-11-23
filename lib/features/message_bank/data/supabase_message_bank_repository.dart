@@ -16,12 +16,13 @@ final messageBankRepositoryProvider = Provider<MessageBankRepository>(
   ),
 );
 
-/// Lit la banque sur le serveur et en garde une copie locale (contenu public,
-/// non sensible) pour la consultation hors-ligne.
+/// Lit la banque sur le serveur et en garde une copie locale par langue (contenu
+/// public, non sensible) pour la consultation hors-ligne.
 class SupabaseMessageBankRepository implements MessageBankRepository {
   const SupabaseMessageBankRepository(this._client, this._preferences);
 
-  static const _cacheKey = 'message_bank_cache';
+  static String _cacheKey(String languageCode) =>
+      'message_bank_cache_$languageCode';
 
   /// Sans réseau, une requête peut rester en attente : au-delà, la copie locale sert.
   static const _timeout = Duration(seconds: 6);
@@ -30,20 +31,21 @@ class SupabaseMessageBankRepository implements MessageBankRepository {
   final SharedPreferences _preferences;
 
   @override
-  Future<List<BankMessage>> fetchAll() async {
+  Future<List<BankMessage>> fetchAll(String languageCode) async {
     try {
       final rows = await guardSupabase(
         () => _client
             .from('message_bank')
             .select('category, body')
+            .eq('language', languageCode)
             .order('category', ascending: true)
             .order('sort_order', ascending: true)
             .timeout(_timeout),
       );
-      await _preferences.setString(_cacheKey, jsonEncode(rows));
+      await _preferences.setString(_cacheKey(languageCode), jsonEncode(rows));
       return _parse(rows);
     } on Failure {
-      final cached = _preferences.getString(_cacheKey);
+      final cached = _preferences.getString(_cacheKey(languageCode));
       if (cached == null) rethrow;
       return _parse(jsonDecode(cached) as List<dynamic>);
     }

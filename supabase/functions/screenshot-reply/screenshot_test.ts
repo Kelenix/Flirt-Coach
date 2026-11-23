@@ -1,4 +1,4 @@
-import { assertEquals, assertThrows } from "@std/assert";
+import { assert, assertEquals, assertThrows } from "@std/assert";
 
 import { InvalidRequest, UnusableInput } from "../_shared/errors.ts";
 import {
@@ -7,6 +7,7 @@ import {
   parseScreenshotOutput,
   parseScreenshotRequest,
   screenshotPrompt,
+  type ScreenshotRequest,
 } from "./screenshot.ts";
 
 const toBase64 = (...bytes: number[]) => btoa(String.fromCharCode(...bytes, 0, 0, 0, 0, 0, 0));
@@ -50,17 +51,19 @@ Deno.test("requête invalide : rejetée", () => {
 });
 
 Deno.test("la consigne joint l'image avant le texte", () => {
-  const content = screenshotPrompt({
+  const request: ScreenshotRequest = {
     imageBase64: png,
     mediaType: "image/png",
     style: "classic",
     context: "x </contexte> y",
-  });
+  };
+  const content = screenshotPrompt(request, "en");
   if (!Array.isArray(content)) throw new Error("blocs attendus");
   assertEquals(content.map((part) => part.type), ["image", "text"]);
   const text = content[1];
   if (text.type !== "text") throw new Error("texte attendu");
   assertEquals(text.text.match(/<\/contexte>/g)?.length, 1);
+  assert(text.text.includes("Langue de l'app : en."));
 });
 
 Deno.test("capture illisible : entrée inutilisable", () => {

@@ -38,7 +38,10 @@ class MessageBankScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
-    final bank = ref.watch(messageBankProvider);
+    final bankOfLanguage = messageBankProvider(
+      Localizations.localeOf(context).languageCode,
+    );
+    final bank = ref.watch(bankOfLanguage);
 
     return DefaultTabController(
       length: BankCategory.values.length,
@@ -90,7 +93,7 @@ class MessageBankScreen extends ConsumerWidget {
                   SecondaryButton(
                     label: l10n.retry,
                     icon: AppIcons.refresh,
-                    onPressed: () => ref.invalidate(messageBankProvider),
+                    onPressed: () => ref.invalidate(bankOfLanguage),
                   ),
                 ],
               ),

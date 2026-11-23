@@ -9,16 +9,20 @@ import '../../../routing/app_routes.dart';
 import '../../../shared/widgets/gradient_background.dart';
 
 /// Textes embarqués : documents légaux (US-06), consultables avant et après
-/// l'accueil 18+, et aide de l'app (questions fréquentes).
+/// l'accueil 18+, et aide de l'app (questions fréquentes). Un fichier par
+/// langue de l'interface : `<base>_<code langue>.txt`.
 enum LegalDocument {
-  privacy('assets/legal/privacy_fr.txt', AppRoutes.privacy),
-  terms('assets/legal/terms_fr.txt', AppRoutes.terms),
-  help('assets/help/faq_fr.txt', AppRoutes.help);
+  privacy('assets/legal/privacy', AppRoutes.privacy),
+  terms('assets/legal/terms', AppRoutes.terms),
+  help('assets/help/faq', AppRoutes.help);
 
-  const LegalDocument(this.asset, this.route);
+  const LegalDocument(this._basePath, this.route);
 
-  final String asset;
+  final String _basePath;
   final String route;
+
+  /// Fichier du document dans la langue [languageCode] (« fr », « en »).
+  String asset(String languageCode) => '${_basePath}_$languageCode.txt';
 
   String title(AppLocalizations l10n) => switch (this) {
     LegalDocument.privacy => l10n.legalPrivacy,
@@ -49,10 +53,18 @@ class LegalScreen extends StatefulWidget {
 }
 
 class _LegalScreenState extends State<LegalScreen> {
-  // Chargé une seule fois, pas à chaque reconstruction de l'écran.
-  late final Future<String> _text = rootBundle.loadString(
-    widget.document.asset,
-  );
+  // Chargé une fois par langue, pas à chaque reconstruction de l'écran.
+  late Future<String> _text;
+  String? _languageCode;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final languageCode = Localizations.localeOf(context).languageCode;
+    if (languageCode == _languageCode) return;
+    _languageCode = languageCode;
+    _text = rootBundle.loadString(widget.document.asset(languageCode));
+  }
 
   @override
   Widget build(BuildContext context) {

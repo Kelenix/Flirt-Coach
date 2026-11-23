@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/l10n/app_language.dart';
 import 'core/theme/app_theme.dart';
 import 'features/credits/application/wallet_controller.dart';
 import 'features/onboarding/application/onboarding_controller.dart';
@@ -43,6 +44,7 @@ class _FlirtCoachAppState extends ConsumerState<FlirtCoachApp> {
       theme: AppTheme.dark,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      localeListResolutionCallback: (locales, _) => resolveAppLocale(locales),
       routerConfig: ref.watch(appRouterProvider),
     );
   }
