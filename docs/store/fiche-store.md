@@ -601,8 +601,8 @@ l'app en portugais (accroches proposées : Ganhe confiança · Encontre as palav
 7 situações, 7 estilos · Responda a partir de uma captura · Flerte com respeito · Saiba em que
 ponto vocês estão · Ideias, até sem conexão).
 
-Prix : au Brésil, prix en euros convertis par la Play Console, un prix local reste à décider
-(tâche 20) ; le Portugal garde les prix en euros.
+Prix : au Brésil, environ la moitié du prix américain depuis le 2026-11-23 (ADR-039, grille
+dans le journal de décisions) ; le Portugal garde les prix en euros.
 
 Réponses aux avis en portugais (mêmes règles qu'en section 8, « você ») :
 

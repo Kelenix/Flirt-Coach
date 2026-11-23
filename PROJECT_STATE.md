@@ -27,8 +27,8 @@
      Play Console (non envoyée). Espagnol (ADR-036) : pages légales en ligne, fiches es-419
      et es-ES enregistrées (non envoyées), serveur à jour, prix locaux en Amérique latine
      appliqués (ADR-037). Portugais (ADR-038) : pages légales en ligne, fiches pt-BR et
-     pt-PT enregistrées (non envoyées), serveur à jour ; reste la décision sur le prix au
-     Brésil. Puis
+     pt-PT enregistrées (non envoyées), serveur à jour, prix locaux au Brésil appliqués
+     (ADR-039). Puis
      compiler et envoyer la 1.1.0 (anglais, allemand, espagnol, portugais) sur l'autre machine
      (tâche 20).
 
@@ -307,8 +307,8 @@ Options par défaut validées en bloc par l'utilisateur le 2026-11-18 (« Oui, l
   (ADR-036) et portugais (ADR-038) ajoutés le 2026-11-23 à la demande de l'utilisateur.
 - [x] **Q5** Nom : « Flirt Coach », puis « Flirt Coach Pro » le 2026-11-19 (ADR-029).
 - [x] **Q6** Prix : 6,99 €/sem · 12,99 €/mois · 49,99 €/an ; packs 2,99 / 5,99 / 9,99 €.
-  Amérique latine hispanophone : environ la moitié du prix américain depuis le 2026-11-23
-  (ADR-037).
+  Amérique latine hispanophone et Brésil : environ la moitié du prix américain depuis le
+  2026-11-23 (ADR-037, ADR-039).
 - [x] **Q7** Coach de profil : hors V1.
 - [x] **Q8** Style « Drôle » : Premium ; seul « Classique » est gratuit.
 
@@ -330,6 +330,12 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-23 — Prix locaux au Brésil, à la demande de l'utilisateur (ADR-039) : même règle que
+  l'ADR-037, saisie en USD et convertie par Google. Hebdo 17,99 BRL, mensuel 35,99 BRL,
+  annuel 139,99 BRL ; packs 7,49 / 15,99 / 26,99 BRL (avant : 37,99 / 70,99 / 269,99 et
+  15,99 / 32,99 / 53,99). Chaque produit vérifié après rechargement, autres pays inchangés ;
+  les 5 fiches (de-DE, es-419, es-ES, pt-BR, pt-PT) attendent toujours l'envoi.
 
 - 2026-11-23 — Serveur : `deploy-cloud.ps1` lancé dans le terminal à la demande de
   l'utilisateur, migration confirmée par lui. Vérifié en lecture seule : migration

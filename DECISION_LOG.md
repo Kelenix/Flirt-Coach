@@ -5,6 +5,41 @@
 
 ---
 
+## ADR-039 — Prix locaux au Brésil : même règle que l'Amérique latine hispanophone
+
+- **Date** : 2026-11-23
+- **Statut** : Accepté
+- **Décideur** : l'utilisateur (« configure le prix au Brésil », après la proposition d'appliquer
+  la règle de l'ADR-037) ; saisie dans la Play Console : Claude (rôle : publication)
+- **Contexte** : l'app est en portugais du Brésil (ADR-038), mais le Brésil gardait les prix
+  en euros convertis par la Play Console (ADR-033), élevés pour le pouvoir d'achat local : le
+  mensuel valait 70,99 BRL.
+- **Décision** : au Brésil, **environ 50 % du prix américain**, comme en Amérique latine
+  hispanophone (ADR-037), saisi en USD et converti par Google (taxes et arrondis locaux) :
+
+  | Produit | États-Unis | Brésil avant | Brésil après (base) |
+  |---|---|---|---|
+  | Hebdomadaire | 6,49 $ | 37,99 BRL | 17,99 BRL (2,99 $) |
+  | Mensuel | 11,99 $ | 70,99 BRL | 35,99 BRL (5,99 $) |
+  | Annuel | 45,99 $ | 269,99 BRL | 139,99 BRL (22,99 $) |
+  | Pack 20 crédits | 2,69 $ | 15,99 BRL | 7,49 BRL (1,29 $) |
+  | Pack 50 crédits | 5,49 $ | 32,99 BRL | 15,99 BRL (2,69 $) |
+  | Pack 100 crédits | 8,99 $ | 53,99 BRL | 26,99 BRL (4,49 $) |
+
+  - Le Brésil a sa propre ligne de prix dans la console (réal brésilien) : seul ce pays change.
+  - Le Portugal garde les prix en euros, comme l'Espagne.
+- **Alternatives écartées** : prix ronds saisis directement en réais (14,90 / 29,90…) : plus
+  « locaux », mais une deuxième règle à tenir à jour ; la règle unique se recalcule en une
+  saisie par produit.
+- **Conséquences** :
+  - Les prix ne s'appliquent qu'aux nouveaux abonnés (aucun abonné au Brésil à ce jour) ; les
+    changements de prix ne passent pas par la revue Google.
+  - À réévaluer avec les premières données de conversion par pays (Play Console → Statistiche),
+    avec la grille de l'ADR-037.
+- **Impact** : financier (revenu par achat plus faible, volume attendu plus élevé), réversible.
+
+---
+
 ## ADR-038 — Portugais du Brésil, cinquième langue
 
 - **Date** : 2026-11-23

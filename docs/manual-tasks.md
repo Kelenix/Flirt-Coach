@@ -81,7 +81,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 17 | Protection contre la création de comptes en série | publication | **Décision attendue** |
 | 18 | Mesure de fluidité sur ton téléphone | qualité | Plus tard |
 | 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Envoyé en revue le 2026-11-20 (version 1.0.0 (1), liste « Flirt Coach Pro » avec 1 adresse) ; après l'approbation : 12 testeurs inscrits et 14 jours |
-| 20 | Mise en ligne de l'anglais, de l'allemand, de l'espagnol et du portugais (version 1.1.0) | testeurs et pays anglophones, germanophones, hispanophones, lusophones | Anglais et allemand : serveur, pages légales et fiches faits (fiche allemande non envoyée). Espagnol : serveur à jour (banque fr/en/de/es), pages légales en ligne, fiches es-419 et es-ES enregistrées non envoyées, prix locaux en Amérique latine appliqués (2026-11-23). Portugais : serveur à jour (banque fr/en/de/es/pt), pages légales en ligne, fiches pt-BR et pt-PT enregistrées non envoyées (2026-11-23) ; reste la décision sur le prix au Brésil. Puis la 1.1.0, au plus vite |
+| 20 | Mise en ligne de l'anglais, de l'allemand, de l'espagnol et du portugais (version 1.1.0) | testeurs et pays anglophones, germanophones, hispanophones, lusophones | Anglais et allemand : serveur, pages légales et fiches faits (fiche allemande non envoyée). Espagnol : serveur à jour (banque fr/en/de/es), pages légales en ligne, fiches es-419 et es-ES enregistrées non envoyées, prix locaux en Amérique latine appliqués (2026-11-23). Portugais : serveur à jour (banque fr/en/de/es/pt), pages légales en ligne, fiches pt-BR et pt-PT enregistrées non envoyées, prix locaux au Brésil appliqués (2026-11-23). Reste la 1.1.0, au plus vite |
 
 ---
 
@@ -510,9 +510,11 @@ avec la clé de débogage.
     visuels repris de la fiche française ; déclaration des visuels IA inchangée.
     **Enregistrées, pas envoyées** : avec les fiches allemande et espagnoles, « 5 modifiche »
     attendent dans la Panoramica della pubblicazione, à envoyer avec la 1.1.0.
-  - [ ] **Décision (financière)** : prix local au Brésil (la Play Console y convertit les prix
-    en euros), par exemple la règle de l'Amérique latine hispanophone (environ la moitié du
-    prix américain, ADR-037). Le Portugal garde les prix en euros.
+  - [x] Prix locaux au Brésil (ta demande du 2026-11-23, ADR-039) : même règle qu'en Amérique
+    latine hispanophone, environ 50 % du prix américain, saisi en USD et converti par Google,
+    sur les 6 produits (mensuel 35,99 BRL au lieu de 70,99). Vérifié après rechargement ;
+    Portugal, États-Unis, France, Mexique, Argentine et autres pays inchangés. En vigueur tout
+    de suite (pas de revue Google).
   - [x] Espagnol, serveur : `scripts/deploy-cloud.ps1` lancé le 2026-11-23, confirmé par toi ;
     migration `20261123020000` appliquée (banque cloud : 40 messages `fr`, `en`, `de` et `es`,
     5 catégories chacune), 8 fonctions redéployées sans changement à 10:07 UTC. Jusqu'à la
