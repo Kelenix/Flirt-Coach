@@ -81,7 +81,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 17 | Protection contre la création de comptes en série | publication | **Décision attendue** |
 | 18 | Mesure de fluidité sur ton téléphone | qualité | Plus tard |
 | 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Envoyé en revue le 2026-11-20 (version 1.0.0 (1), liste « Flirt Coach Pro » avec 1 adresse) ; après l'approbation : 12 testeurs inscrits et 14 jours |
-| 20 | Mise en ligne de l'anglais, de l'allemand et de l'espagnol (version 1.1.0) | testeurs et pays anglophones, germanophones, hispanophones | Anglais et allemand : serveur, pages légales et fiches faits (fiche allemande non envoyée). Espagnol : serveur à jour (banque fr/en/de/es), pages légales en ligne, fiches es-419 et es-ES enregistrées non envoyées, prix locaux en Amérique latine appliqués (2026-11-23). Reste la 1.1.0, au plus vite |
+| 20 | Mise en ligne de l'anglais, de l'allemand, de l'espagnol et du portugais (version 1.1.0) | testeurs et pays anglophones, germanophones, hispanophones, lusophones | Anglais et allemand : serveur, pages légales et fiches faits (fiche allemande non envoyée). Espagnol : serveur à jour (banque fr/en/de/es), pages légales en ligne, fiches es-419 et es-ES enregistrées non envoyées, prix locaux en Amérique latine appliqués (2026-11-23). Portugais : prêt dans le code (2026-11-23) ; restent déploiement de la banque, pages légales, fiches, prix au Brésil. Puis la 1.1.0, au plus vite |
 
 ---
 
@@ -475,10 +475,10 @@ avec la clé de débogage.
 - **Coût** : aucun.
 - **Vérification** : le tableau de bord de l'app permet de demander l'accès à la production.
 
-## 20. Mise en ligne de l'anglais, de l'allemand et de l'espagnol
+## 20. Mise en ligne de l'anglais, de l'allemand, de l'espagnol et du portugais
 
-- **Pourquoi** : l'app est prête en anglais (ADR-034), en allemand (ADR-035) et en espagnol
-  (ADR-036) dans le code ; il faut publier le serveur, une nouvelle version et les fiches pour
+- **Pourquoi** : l'app est prête en anglais (ADR-034), en allemand (ADR-035), en espagnol
+  (ADR-036) et en portugais (ADR-038) dans le code ; il faut publier le serveur, une nouvelle version et les fiches pour
   que les testeurs en profitent.
 - **Quand** : avec la prochaine version envoyée au test fermé (1.1.0). La base est mise à jour
   **juste avant** l'envoi en revue : avant, les versions 1.0.0 installées afficheraient la
@@ -492,6 +492,20 @@ avec la clé de débogage.
   - [ ] (Conseillé) Faire relire les textes espagnols par un hispanophone, idéalement un
     d'Espagne et un d'Amérique latine : `lib/l10n/app_es.arb`, `assets/help/faq_es.txt` et la
     banque (`supabase/migrations/20261123020000_message_bank_spanish.sql`).
+  - [ ] (Conseillé) Faire relire les textes portugais par un lusophone, idéalement un Brésilien
+    et un Portugais : `lib/l10n/app_pt.arb`, `assets/help/faq_pt.txt` et la banque
+    (`supabase/migrations/20261123030000_message_bank_portuguese.sql`).
+  - [ ] Portugais, serveur : relancer `scripts/deploy-cloud.ps1` (migration `20261123030000`)
+    juste avant l'envoi de la 1.1.0 ; la 1.0.0 affichera alors la banque dans les cinq
+    langues jusqu'à sa mise à jour.
+  - [ ] Portugais, pages légales : `python scripts/legal_pages.py`, puis publication sur
+    `gh-pages` ; vérifier `privacidade.html` et `termos.html`.
+  - [ ] Portugais, Play Console : traductions « Portoghese (Brasile) – pt-BR » et
+    « Portoghese (Portogallo) – pt-PT », mêmes textes (section 13 de la fiche du store), après
+    la mise en ligne des pages légales portugaises.
+  - [ ] **Décision (financière)** : prix local au Brésil (la Play Console y convertit les prix
+    en euros), par exemple la règle de l'Amérique latine hispanophone (environ la moitié du
+    prix américain, ADR-037). Le Portugal garde les prix en euros.
   - [x] Espagnol, serveur : `scripts/deploy-cloud.ps1` lancé le 2026-11-23, confirmé par toi ;
     migration `20261123020000` appliquée (banque cloud : 40 messages `fr`, `en`, `de` et `es`,
     5 catégories chacune), 8 fonctions redéployées sans changement à 10:07 UTC. Jusqu'à la
@@ -529,11 +543,14 @@ avec la clé de débogage.
     la 1.1.0 ; les pages légales allemandes vers lesquelles elle renvoie sont en ligne.
   - [ ] Juriste : relire `privacy_de.txt` et `terms_de.txt`, et dire si le marché allemand
     exige une mention d'éditeur (« Impressum ») en plus des informations des stores
-    (tâche 10) ; relire aussi `privacy_es.txt` et `terms_es.txt`.
+    (tâche 10) ; relire aussi `privacy_es.txt` et `terms_es.txt`, ainsi que `privacy_pt.txt` et
+    `terms_pt.txt` en disant si la loi brésilienne (LGPD) demande des mentions en plus
+    (autorité ANPD, « encarregado »).
   - [ ] Sur l'autre machine : version `1.1.0+2` dans `pubspec.yaml`, section `[Non publié]` du
     `CHANGELOG.md` renommée en `[1.1.0]`, compilation et signature de l'AAB, dépôt dans
     « Test chiusi - Alpha » avec les notes de version de chaque langue de fiche (fr-FR,
-    en-US, de-DE, es-419, es-ES : [fiche du store](store/fiche-store.md), section 10).
+    en-US, de-DE, es-419, es-ES, pt-BR, pt-PT : [fiche du store](store/fiche-store.md),
+    section 10).
   - [x] Serveur déployé par toi le 2026-11-23 vers 09:02 UTC (`scripts/deploy-cloud.ps1`) :
     migration `20261123000000` appliquée (banque cloud : 40 messages `fr` et 40 `en`), 8
     fonctions redéployées après le commit de l'anglais. Conséquence attendue jusqu'à la
@@ -553,7 +570,8 @@ avec la clé de débogage.
     (même section).
   - [ ] Juriste : relire aussi `privacy_en.txt` et `terms_en.txt` (tâche 10).
 - **Coût** : aucun (relecture éventuelle).
-- **Vérification** : sur un téléphone en anglais (puis en allemand, en espagnol), l'app s'affiche dans
+- **Vérification** : sur un téléphone en anglais (puis en allemand, en espagnol, en portugais),
+  l'app s'affiche dans
   cette langue (accueil, menu, aide, textes légaux, banque) ; un refus ou une explication du
   Mode Respect arrive dans cette langue ; sur un téléphone en français, rien ne change.
 

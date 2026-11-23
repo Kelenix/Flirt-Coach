@@ -62,6 +62,7 @@
 		F17C0A012A00000000000004 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F17C0A012A00000000000005 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F17C0A012A00000000000006 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F17C0A012A00000000000007 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +200,7 @@
 				fr,
 				de,
 				es,
+				pt,
 				Base,
 			);
 			mainGroup = 97C146E51CF9000F007C117D;
@@ -321,6 +323,7 @@
 				F17C0A012A00000000000004 /* fr */,
 				F17C0A012A00000000000005 /* de */,
 				F17C0A012A00000000000006 /* es */,
+				F17C0A012A00000000000007 /* pt */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

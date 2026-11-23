@@ -57,4 +57,4 @@ Financian la versión gratuita. Puedes cambiar tus elecciones en Configuración 
 
 ## ¿Cómo cambio el idioma de la aplicación?
 
-La aplicación sigue el idioma de tu teléfono (español, inglés, francés o alemán). En Android 13 y versiones posteriores, puedes elegir otro idioma solo para esta aplicación: Configuración del teléfono → Aplicaciones → Flirt Coach Pro → Idioma. En iPhone: Configuración → Flirt Coach Pro → Idioma.
+La aplicación sigue el idioma de tu teléfono (español, inglés, francés, alemán o portugués). En Android 13 y versiones posteriores, puedes elegir otro idioma solo para esta aplicación: Configuración del teléfono → Aplicaciones → Flirt Coach Pro → Idioma. En iPhone: Configuración → Flirt Coach Pro → Idioma.

@@ -299,35 +299,47 @@ Notes de version 1.1, par langue :
 
 ```text
 <fr-FR>
-Flirt Coach Pro parle maintenant anglais, allemand et espagnol !
-• L'app s'affiche dans la langue du téléphone : français, anglais, allemand ou espagnol
+Flirt Coach Pro parle maintenant anglais, allemand, espagnol et portugais !
+• L'app s'affiche dans la langue du téléphone : français, anglais, allemand, espagnol ou portugais
 • Conseils et explications du coach dans la langue de l'app
-• Banque de messages dans les quatre langues
+• Banque de messages dans les cinq langues
 </fr-FR>
 <en-US>
-Flirt Coach Pro now speaks English, German and Spanish!
-• The app follows your phone's language: English, French, German or Spanish
+Flirt Coach Pro now speaks English, German, Spanish and Portuguese!
+• The app follows your phone's language: English, French, German, Spanish or Portuguese
 • The coach's advice and explanations in the app's language
-• Message library in all four languages
+• Message library in all five languages
 </en-US>
 <de-DE>
-Flirt Coach Pro spricht jetzt Deutsch, Englisch und Spanisch!
-• Die App folgt der Sprache deines Handys: Deutsch, Englisch, Französisch oder Spanisch
+Flirt Coach Pro spricht jetzt Deutsch, Englisch, Spanisch und Portugiesisch!
+• Die App folgt der Sprache deines Handys: Deutsch, Englisch, Französisch, Spanisch oder Portugiesisch
 • Ratschläge und Erklärungen des Coachs in der Sprache der App
-• Nachrichtensammlung in allen vier Sprachen
+• Nachrichtensammlung in allen fünf Sprachen
 </de-DE>
 <es-419>
-¡Flirt Coach Pro ahora habla español, inglés y alemán!
-• La aplicación sigue el idioma de tu teléfono: español, inglés, francés o alemán
+¡Flirt Coach Pro ahora habla español, inglés, alemán y portugués!
+• La aplicación sigue el idioma de tu teléfono: español, inglés, francés, alemán o portugués
 • Consejos y explicaciones del coach en el idioma de la aplicación
-• Biblioteca de mensajes en los cuatro idiomas
+• Biblioteca de mensajes en los cinco idiomas
 </es-419>
 <es-ES>
-¡Flirt Coach Pro ahora habla español, inglés y alemán!
-• La aplicación sigue el idioma de tu teléfono: español, inglés, francés o alemán
+¡Flirt Coach Pro ahora habla español, inglés, alemán y portugués!
+• La aplicación sigue el idioma de tu teléfono: español, inglés, francés, alemán o portugués
 • Consejos y explicaciones del coach en el idioma de la aplicación
-• Biblioteca de mensajes en los cuatro idiomas
+• Biblioteca de mensajes en los cinco idiomas
 </es-ES>
+<pt-BR>
+O Flirt Coach Pro agora fala português, inglês, alemão e espanhol!
+• O app segue o idioma do seu telefone: português, inglês, francês, alemão ou espanhol
+• Conselhos e explicações do coach no idioma do app
+• Biblioteca de mensagens nos cinco idiomas
+</pt-BR>
+<pt-PT>
+O Flirt Coach Pro agora fala português, inglês, alemão e espanhol!
+• O app segue o idioma do seu telefone: português, inglês, francês, alemão ou espanhol
+• Conselhos e explicações do coach no idioma do app
+• Biblioteca de mensagens nos cinco idiomas
+</pt-PT>
 ```
 
 Captures : les visuels actuels montrent l'app en français. Pour la fiche anglaise, refaire les
@@ -516,3 +528,89 @@ Réponses aux avis en espagnol (mêmes règles qu'en section 8, « tú ») :
 | « Réponses pas naturelles » | Gracias, tu opinión nos ayuda. Agrega contexto (en qué punto están, lo que sabes de la persona): las respuestas serán mucho más personales. Prueba también otro estilo. |
 | « Le coach refuse ma demande » | Flirt Coach Pro te ayuda a coquetear con respeto: rechaza los mensajes explícitos, insistentes o manipuladores, sin gastar créditos. El Modo Respeto puede ayudarte a reformularlos. |
 | « Réponses dans une autre langue » | El coach responde en el idioma de la conversación. Pega un mensaje en español y escribe el contexto en español. |
+
+## 13. Fiche en portugais (pt-BR et pt-PT)
+
+Textes en portugais du Brésil, à saisir **deux fois** dans la Play Console (Schede dello Store →
+Scheda predefinita → Gestisci lingue) : « Portoghese (Brasile) – pt-BR » et « Portoghese
+(Portogallo) – pt-PT », avec les mêmes textes ; App Store : localisations « Portuguese
+(Brazil) » et « Portuguese (Portugal) ». « você », comme dans l'app (ADR-038).
+
+| Champ | Store | Limite | Texte |
+|-------|-------|--------|-------|
+| Nom de l'app | les deux | 30 | Flirt Coach Pro |
+| Sous-titre | App Store | 30 | Coach de flerte e mensagens |
+| Description courte | Google Play | 80 | As palavras certas para flertar com respeito: 3 respostas num instante. |
+| Texte promotionnel | App Store | 170 | Cole uma mensagem ou importe uma captura: seu coach sugere 3 respostas naturais, no seu estilo. 5 créditos grátis todo dia. |
+
+Description longue :
+
+```text
+Não sabe o que responder? O Flirt Coach Pro encontra as palavras certas para você, em segundos.
+
+Cole a última mensagem que você recebeu, escolha a situação e o estilo: seu coach sugere 3 respostas naturais, prontas para copiar. Você pode editá-las antes de enviar.
+
+PARA CADA MOMENTO DA CONVERSA
+• Responder a uma mensagem
+• Iniciar uma conversa depois de um match
+• Flertar ou reanimar uma conversa que está esfriando
+• Se preparar para um encontro
+• Pedir desculpas ou terminar com delicadeza
+
+7 ESTILOS COM A SUA CARA
+Clássico, Divertido, Romântico, Misterioso, Direto, Elegante, Ousado.
+
+RESPONDER A PARTIR DE UMA CAPTURA DE TELA
+Importe uma captura da conversa: o coach lê e sugere uma resposta adequada. Sua captura nunca é salva.
+
+MODO RESPEITO
+Antes de enviar, verifique se sua mensagem não é insistente demais, sexual demais ou manipuladora. O coach explica o porquê e sugere uma versão mais respeitosa.
+
+ANÁLISE DE CONVERSA
+Descubra se a conversa está avançando, parada ou esfriando, qual é o próximo passo e o melhor momento para propor um encontro.
+
+E TAMBÉM
+• Uma biblioteca de mensagens grátis, disponível até sem conexão
+• O histórico das suas mensagens geradas
+• Respostas no idioma da sua conversa
+
+SEM CADASTRO
+Sem nome, sem e-mail. Você pode excluir sua conta e todos os seus dados a qualquer momento, nas configurações.
+
+GRÁTIS OU PREMIUM
+• Grátis: 5 créditos todo dia, a biblioteca de mensagens e créditos extras ao assistir a um vídeo curto.
+• Pacotes de créditos, sem assinatura e sem data de validade.
+• Premium: os 7 estilos, capturas, Modo Respeito e análise incluídos, histórico, sem anúncios, até 100 mensagens por dia.
+
+As assinaturas Premium semanal, mensal ou anual são renovadas automaticamente pelo preço indicado no app, a menos que sejam canceladas pelo menos 24 horas antes do fim do período em curso, nas configurações da sua conta do Google Play ou da App Store. O pagamento é cobrado na sua conta ao confirmar a compra.
+
+O Flirt Coach Pro é destinado a pessoas de 18 anos ou mais. As respostas são sugestões geradas por inteligência artificial: nenhum resultado é garantido.
+
+Política de Privacidade: https://kelenix.github.io/Flirt-Coach/privacidade.html
+Termos de Uso: https://kelenix.github.io/Flirt-Coach/termos.html
+```
+
+Mots-clés App Store (100 caractères au plus) :
+
+```text
+paquera,flerte,namoro,encontro,chat,mensagem,resposta,cantada,IA,match,romance,conversa
+```
+
+Captures : la fiche portugaise reprend les captures françaises en attendant des captures de
+l'app en portugais (accroches proposées : Ganhe confiança · Encontre as palavras certas ·
+7 situações, 7 estilos · Responda a partir de uma captura · Flerte com respeito · Saiba em que
+ponto vocês estão · Ideias, até sem conexão).
+
+Prix : au Brésil, prix en euros convertis par la Play Console, un prix local reste à décider
+(tâche 20) ; le Portugal garde les prix en euros.
+
+Réponses aux avis en portugais (mêmes règles qu'en section 8, « você ») :
+
+| Avis | Réponse type |
+|------|--------------|
+| Positif | Muito obrigado! Ficamos felizes que o coach ajude você a encontrar as palavras certas. |
+| « Trop cher » | Obrigado pelo seu comentário. Você recebe 5 créditos grátis todo dia e pode ganhar mais assistindo a um vídeo curto. Os pacotes de créditos nunca expiram, sem assinatura. |
+| « Achat non reçu » | Sentimos muito pelo problema! Abra a tela Premium e toque em “Restaurar compras”. Se nada mudar, escreva para {{EMAIL_SUPPORT}} e resolvemos juntos. |
+| « Réponses pas naturelles » | Obrigado, sua opinião nos ajuda. Adicione contexto (em que ponto vocês estão, o que você sabe sobre a pessoa): as respostas ficam muito mais pessoais. Experimente também outro estilo. |
+| « Le coach refuse ma demande » | O Flirt Coach Pro ajuda você a flertar com respeito: ele recusa mensagens explícitas, insistentes ou manipuladoras, sem gastar créditos. O Modo Respeito pode ajudar a reformular. |
+| « Réponses dans une autre langue » | O coach responde no idioma da conversa. Cole uma mensagem em português e escreva o contexto em português. |

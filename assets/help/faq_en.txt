@@ -57,4 +57,4 @@ They fund the free version. You can change your choices in Settings → “Ad pr
 
 ## How do I change the app's language?
 
-The app follows your phone's language (English, French, German or Spanish). On Android 13 and later, you can choose another language for this app only: phone Settings → Apps → Flirt Coach Pro → Language. On iPhone: Settings → Flirt Coach Pro → Language.
+The app follows your phone's language (English, French, German, Spanish or Portuguese). On Android 13 and later, you can choose another language for this app only: phone Settings → Apps → Flirt Coach Pro → Language. On iPhone: Settings → Flirt Coach Pro → Language.

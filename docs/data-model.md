@@ -31,7 +31,7 @@ supprimer le compte efface tout.
 | `entitlements` | `user_id`, `is_premium`, `product_id`, `expires_at`, `updated_at` | droits Premium, écrits uniquement par le webhook RevenueCat |
 | `generations` | `id`, `user_id`, `kind`, `style`, `input_text` (≤ 4000), `context_text` (≤ 1000), `output` (jsonb), `created_at`, `deleted_at` | historique ; `input_text` vide pour une capture (jamais stockée) ; une entrée supprimée est vidée et marquée `deleted_at` |
 | `ai_usage` | `id`, `user_id`, `reference`, `created_at` | chaque tentative d'appel IA, pour les quotas (10/min, 100/jour) |
-| `message_bank` | `id`, `language` (code ISO 639), `category`, `body` (≤ 400), `sort_order` | banque de messages (contenu statique, 40 lignes par langue : `fr`, `en`, `de`, `es`) |
+| `message_bank` | `id`, `language` (code ISO 639), `category`, `body` (≤ 400), `sort_order` | banque de messages (contenu statique, 40 lignes par langue : `fr`, `en`, `de`, `es`, `pt`) |
 | `reports` | `id`, `user_id`, `generation_id`, `reported_text`, `reason`, `created_at` | signalements ; texte copié, unique par couple (génération, texte), donc au plus 3 par génération |
 
 ### Types énumérés

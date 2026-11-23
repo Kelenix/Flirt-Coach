@@ -5,6 +5,47 @@
 
 ---
 
+## ADR-038 — Portugais du Brésil, cinquième langue
+
+- **Date** : 2026-11-23
+- **Statut** : Accepté
+- **Décideur** : l'utilisateur (« ajoute le portugais ») ; choix de la variante et mise en
+  œuvre : Claude (rôles : flutter-engineer, backend)
+- **Contexte** : le Brésil est l'un des plus gros marchés des applications de rencontre en
+  téléchargements, et réunit la grande majorité des lusophones ; le portugais ouvre aussi le
+  Portugal, l'Angola et le Mozambique.
+- **Décision** :
+  - Un seul portugais, **celui du Brésil** (code `pt`, toutes régions) : « você », vocabulaire
+    compris des deux côtés de l'Atlantique (« telefone » plutôt que « celular » ou
+    « telemóvel », « captura de tela », « Configurações », « Denunciar »). Formulations sans
+    accord de genre quand elles visent l'utilisateur ou la personne en face (« Boas-vindas ao
+    Premium », « Cole a última mensagem da pessoa »), et dans la banque pour celui ou celle qui
+    écrit (« Agradeço » plutôt que « Obrigado » / « Obrigada »).
+  - Même structure que les langues précédentes : `app_pt.arb`, aide et textes légaux
+    `*_pt.txt`, déclarations Android et iOS (`pt.lproj`), 40 messages de banque (migration
+    `20261123030000`), pages légales `privacidade.html` et `termos.html`. Serveur inchangé.
+  - Fiche store : mêmes textes pour « pt-BR » (Brésil) et « pt-PT » (Portugal), section 13 de
+    la fiche du store.
+- **Alternatives écartées** :
+  - Portugais du Portugal comme base : marché bien plus petit ; il sonnerait étranger au
+    Brésil, alors que les contenus brésiliens sont courants au Portugal.
+  - Deux variantes dès maintenant : double relecture pour des écarts surtout de vocabulaire.
+    Possible plus tard sans rien casser : un fichier `app_pt_PT.arb` qui ne contient que les
+    écarts, si les avis portugais le demandent.
+- **Conséquences** :
+  - Le parcours des écrans du menu sans débordement couvre aussi le portugais.
+  - Le Brésil garde les prix en euros convertis par la Play Console (ADR-037 l'avait laissé de
+    côté faute de traduction) : un prix local est une décision financière de l'utilisateur
+    (tâche 20).
+  - Textes légaux traduits fidèlement ; le juriste dira si la loi brésilienne sur les données
+    (LGPD) demande des mentions en plus (autorité ANPD, « encarregado »).
+  - Après déploiement de la migration, la 1.0.0 affichera la banque dans les cinq langues
+    jusqu'à la 1.1.0.
+- **Impact** : métier (Brésil, Portugal), financier (prix au Brésil à décider), technique
+  faible.
+
+---
+
 ## ADR-037 — Prix locaux en Amérique latine hispanophone : environ la moitié du prix américain
 
 - **Date** : 2026-11-23

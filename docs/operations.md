@@ -140,10 +140,12 @@ La politique de confidentialité et les conditions sont publiées sur GitHub Pag
 `assets/legal/*_<langue>.txt`, pour que l'app et le site affichent le même texte : une page
 par langue (`confidentialite.html` et `conditions.html` en français, `privacy.html` et
 `terms.html` en anglais, `datenschutz.html` et `nutzungsbedingungen.html` en allemand,
-`privacidad.html` et `terminos.html` en espagnol).
+`privacidad.html` et `terminos.html` en espagnol, `privacidade.html` et `termos.html` en
+portugais).
 
 1. Modifier le texte dans `assets/legal/`, **dans chaque langue** (et la date « Dernière mise à
-   jour » / « Last updated » / « Zuletzt aktualisiert » / « Última actualización »).
+   jour » / « Last updated » / « Zuletzt aktualisiert » / « Última actualización » /
+   « Última atualização »).
 2. Générer les pages (lit l'éditeur et le contact dans `config/prod.json`) :
 
    ```powershell

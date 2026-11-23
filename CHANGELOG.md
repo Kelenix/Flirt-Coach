@@ -7,9 +7,9 @@ versions : [SemVer](https://semver.org/lang/fr/).
 
 ### Ajouté
 
-- **Anglais, allemand et espagnol** : toute l'app est disponible en anglais, en allemand et
-  en espagnol (écrans, messages d'erreur, aide, textes légaux, demandes d'autorisation iOS,
-  banque de messages).
+- **Anglais, allemand, espagnol et portugais** : toute l'app est disponible en anglais, en
+  allemand, en espagnol et en portugais du Brésil (écrans, messages d'erreur, aide, textes
+  légaux, demandes d'autorisation iOS, banque de messages).
   Elle suit la langue du téléphone ; pour une autre langue, elle s'affiche en anglais. Sur Android 13
   et plus comme sur iPhone, la langue peut aussi se choisir pour cette app seule, dans les
   réglages du téléphone.

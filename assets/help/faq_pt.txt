@@ -1,0 +1,60 @@
+# Ajuda e perguntas frequentes
+
+## Como funciona o Flirt Coach Pro?
+
+Cole a última mensagem que você recebeu (ou importe uma captura de tela da conversa), escolha uma situação e um estilo e toque em “Gerar 3 respostas”. O coach sugere três mensagens prontas para copiar. Você pode editá-las antes de enviar.
+
+## Quanto custa?
+
+- Todo dia você recebe 5 créditos grátis (eles não se acumulam). Uma geração custa 1 crédito; ler uma captura, 2 créditos.
+- Para ganhar 2 créditos, você pode assistir a um vídeo curto (até 5 vezes por dia).
+- Os pacotes de créditos comprados não expiram.
+- O Premium desbloqueia todos os estilos, a análise de conversa e o histórico, inclui a leitura de capturas, sem anúncios, até 100 gerações por dia.
+
+## Quando meus créditos grátis voltam?
+
+Eles voltam a 5 todo dia à meia-noite UTC (Tempo Universal Coordenado). Dependendo de onde você mora, pode ser à tarde, à noite ou de madrugada. Se o app estava aberto, eles são atualizados quando você volta a ele.
+
+## Por que o coach recusa meu pedido?
+
+O Flirt Coach Pro ajuda você a flertar com respeito. Ele recusa mensagens sexualmente explícitas, de ódio, manipuladoras ou insistentes depois de uma recusa. Nesse caso, nenhum crédito é usado.
+
+## Minha captura não pode ser lida
+
+Use uma captura nítida da conversa, sem zoom, em que apareçam as mensagens das duas pessoas. Se a conversa não puder ser lida, nenhum crédito é usado. Sua captura nunca é salva.
+
+## As respostas estão em outro idioma
+
+O coach responde no idioma da conversa: uma mensagem recebida em inglês gera respostas em inglês. Para recebê-las em português, escreva o contexto em português e cole uma mensagem em português. Os conselhos e as explicações estão sempre no idioma do app.
+
+## Paguei, mas nada mudou
+
+A confirmação da loja de apps pode levar alguns segundos. Volte à tela principal e abra o app de novo. Se o Premium ainda não aparecer, toque em “Restaurar compras” na tela Premium.
+
+## Como cancelo minha assinatura?
+
+A assinatura é gerenciada na loja de apps: Configurações do app → “Gerenciar minha assinatura”, ou diretamente no Google Play / na App Store. Cancele pelo menos 24 horas antes da renovação.
+
+## Troca de telefone
+
+No novo telefone, abra a tela Premium e toque em “Restaurar compras”, com a mesma conta do Google Play ou da Apple: sua assinatura passa para a nova instalação em alguns segundos. Os créditos comprados e o histórico continuam vinculados à instalação anterior: eles não são transferidos.
+
+## Posso usar o app sem conexão?
+
+A biblioteca de mensagens pode ser consultada sem conexão depois de ser aberta uma primeira vez. A geração, a análise e o Modo Respeito precisam de internet.
+
+## Uma resposta me parece inadequada
+
+Toque no ícone de bandeira na resposta e escolha um motivo. Sua denúncia nos ajuda a melhorar o coach.
+
+## Meus dados e minha conta
+
+O Flirt Coach Pro não pede seu nome nem seu e-mail. Você pode excluir sua conta a qualquer momento: Configurações → “Excluir minha conta”. Todos os seus dados são apagados. Os detalhes estão na Política de Privacidade.
+
+## Por que há anúncios?
+
+Eles financiam a versão gratuita. Você pode mudar suas escolhas em Configurações → “Preferências de anúncios”. O Premium não tem anúncios.
+
+## Como mudo o idioma do app?
+
+O app segue o idioma do seu telefone (português, inglês, francês, alemão ou espanhol). No Android 13 e versões mais recentes, você pode escolher outro idioma só para este app: Configurações do telefone → Apps → Flirt Coach Pro → Idioma. No iPhone: Ajustes → Flirt Coach Pro → Idioma.

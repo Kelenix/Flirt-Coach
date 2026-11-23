@@ -26,8 +26,10 @@
      Allemand (ADR-035) : serveur à jour, pages légales en ligne, fiche enregistrée dans la
      Play Console (non envoyée). Espagnol (ADR-036) : pages légales en ligne, fiches es-419
      et es-ES enregistrées (non envoyées), serveur à jour, prix locaux en Amérique latine
-     appliqués (ADR-037). Reste à compiler et envoyer la 1.1.0 (anglais, allemand, espagnol)
-     sur l'autre machine (tâche 20).
+     appliqués (ADR-037). Portugais (ADR-038) : prêt dans le code ; restent déploiement de la
+     banque, pages légales, fiches pt-BR / pt-PT et décision sur le prix au Brésil. Puis
+     compiler et envoyer la 1.1.0 (anglais, allemand, espagnol, portugais) sur l'autre machine
+     (tâche 20).
 
   Une étape à la fois, suivie dans `docs/manual-tasks.md` ; Android d'abord, iOS après la mise
   en ligne (ADR-028) ; versions des stores compilées uniquement sur l'autre machine. Chemin
@@ -300,8 +302,8 @@ Options par défaut validées en bloc par l'utilisateur le 2026-11-18 (« Oui, l
 - [x] **Q1** Fournisseur IA : API Claude via Edge Function.
 - [x] **Q2** Achats intégrés : RevenueCat.
 - [x] **Q3** Premium : niveau unique, « illimité » plafonné à 100 générations/jour.
-- [x] **Q4** Android + iOS, français seul ; anglais (ADR-034), allemand (ADR-035) et
-  espagnol (ADR-036) ajoutés le 2026-11-23 à la demande de l'utilisateur.
+- [x] **Q4** Android + iOS, français seul ; anglais (ADR-034), allemand (ADR-035), espagnol
+  (ADR-036) et portugais (ADR-038) ajoutés le 2026-11-23 à la demande de l'utilisateur.
 - [x] **Q5** Nom : « Flirt Coach », puis « Flirt Coach Pro » le 2026-11-19 (ADR-029).
 - [x] **Q6** Prix : 6,99 €/sem · 12,99 €/mois · 49,99 €/an ; packs 2,99 / 5,99 / 9,99 €.
   Amérique latine hispanophone : environ la moitié du prix américain depuis le 2026-11-23
@@ -327,6 +329,18 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-23 — Portugais ajouté à la demande de l'utilisateur (ADR-038), en portugais du
+  Brésil compris au Portugal (« você », sans accord de genre visant l'utilisateur) :
+  - Interface : `app_pt.arb` complet ; aide et textes légaux portugais ; Android et iOS
+    (`pt.lproj` ajouté au projet Xcode) ; question « langue » des quatre autres FAQ mise à jour.
+  - Banque : 40 messages portugais (migration `20261123030000`). Pages légales web
+    `privacidade.html` et `termos.html` générables (pas encore publiées). Fiche store
+    portugaise (section 13, pour pt-BR et pt-PT) et notes de version 1.1 en sept variantes.
+  - Tests : portugais au Brésil, au Portugal, en Angola et au Mozambique, accueil en
+    portugais, parcours des 6 écrans du menu en portugais sans débordement. Vérifié :
+    `flutter analyze` sans erreur, 167 tests Flutter verts, tests SQL de la banque à 200
+    messages. Rien de déployé ni de publié pour le portugais.
 
 - 2026-11-23 — Prix locaux en Amérique latine, à la demande de l'utilisateur (ADR-037) :
   environ 50 % du prix américain, saisi en USD dans la Play Console et converti par Google.

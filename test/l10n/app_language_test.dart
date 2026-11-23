@@ -30,6 +30,12 @@ void main() {
       },
     );
 
+    test('portugais : retenu au Brésil, au Portugal et en Afrique', () {
+      for (final country in ['BR', 'PT', 'AO', 'MZ']) {
+        expect(resolveAppLocale([Locale('pt', country)]).languageCode, 'pt');
+      }
+    });
+
     test('première langue préférée que l\'app propose', () {
       expect(
         resolveAppLocale(const [Locale('it'), Locale('fr')]).languageCode,
@@ -105,8 +111,23 @@ void main() {
     expect(find.text('Generar 3 respuestas'), findsOneWidget);
   });
 
-  // Les textes allemands et espagnols sont les plus longs : chaque écran du
-  // menu doit s'afficher sans débordement (un débordement fait échouer le test).
+  testWidgets('appareil en portugais : accueil en portugais', (tester) async {
+    useDevice(tester, const [Locale('pt', 'BR')]);
+    await tester.pumpWidget(await buildTestApp(FakeAuthRepository()));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Tenho 18 anos ou mais'), findsOneWidget);
+    await tester.tap(find.text('Tenho 18 anos ou mais'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Começar'));
+    await tester.pumpAndSettle();
+    expect(find.byType(GenerateScreen), findsOneWidget);
+    expect(find.text('Gerar 3 respostas'), findsOneWidget);
+  });
+
+  // Les textes allemands, espagnols et portugais sont les plus longs : chaque
+  // écran du menu doit s'afficher sans débordement (un débordement fait échouer
+  // le test).
   const longLanguages = [
     (
       locale: Locale('de', 'DE'),
@@ -132,6 +153,19 @@ void main() {
         'Historial',
         'Premium',
         'Configuración',
+      ],
+    ),
+    (
+      locale: Locale('pt', 'BR'),
+      menu: 'Menu',
+      back: 'Voltar',
+      entries: [
+        'Modo Respeito',
+        'Análise',
+        'Biblioteca',
+        'Histórico',
+        'Premium',
+        'Configurações',
       ],
     ),
   ];

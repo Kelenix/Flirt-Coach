@@ -58,7 +58,7 @@ reformuler un message avant de l'envoyer.
 | En bref | |
 |---|---|
 | **Plateformes** | Android 7 et plus · iOS 13 et plus |
-| **Langues** | interface en français, anglais, allemand et espagnol, selon le téléphone (anglais pour les autres langues) ; réponses dans la langue de la conversation |
+| **Langues** | interface en français, anglais, allemand, espagnol et portugais, selon le téléphone (anglais pour les autres langues) ; réponses dans la langue de la conversation |
 | **Compte** | anonyme, créé au premier lancement : ni nom, ni e-mail, ni mot de passe |
 | **Version** | 1.0.0 terminée, en préparation de publication ([journal des modifications](CHANGELOG.md)) |
 
@@ -256,7 +256,7 @@ lib/
 ├── features/               une fonctionnalité par dossier : presentation · application · domain · data
 │   ├── generation/  respect/  analysis/  message_bank/  history/
 │   └── purchases/  ads/  credits/  report/  settings/  legal/  …
-└── l10n/app_fr.arb         tous les textes de l'interface (français, source) ; app_en, app_de, app_es
+└── l10n/app_fr.arb         tous les textes de l'interface (français, source) ; app_en, app_de, app_es, app_pt
 assets/                     logos, polices, textes légaux et aide intégrée (un fichier par langue)
 supabase/
 ├── migrations/             schéma, RLS et fonctions SQL, rejouables depuis zéro
