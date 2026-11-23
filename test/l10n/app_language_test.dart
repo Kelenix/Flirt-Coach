@@ -21,6 +21,15 @@ void main() {
       }
     });
 
+    test(
+      'espagnol : retenu en Espagne, en Amérique latine et aux États-Unis',
+      () {
+        for (final country in ['ES', 'MX', 'AR', 'CO', 'US']) {
+          expect(resolveAppLocale([Locale('es', country)]).languageCode, 'es');
+        }
+      },
+    );
+
     test('première langue préférée que l\'app propose', () {
       expect(
         resolveAppLocale(const [Locale('it'), Locale('fr')]).languageCode,
@@ -82,28 +91,68 @@ void main() {
     expect(find.text('3 Antworten erstellen'), findsOneWidget);
   });
 
-  // Les textes allemands sont les plus longs : chaque écran du menu doit
-  // s'afficher sans débordement (un débordement fait échouer le test).
-  for (final entry in [
-    'Respekt-Modus',
-    'Analyse',
-    'Sammlung',
-    'Verlauf',
-    'Premium',
-    'Einstellungen',
-  ]) {
-    testWidgets('allemand : menu → $entry sans débordement', (tester) async {
-      useDevice(tester, const [Locale('de', 'DE')]);
-      await tester.pumpWidget(await buildSignedInApp(FakeBackend()));
-      await tester.pumpAndSettle();
+  testWidgets('appareil en espagnol : accueil en espagnol', (tester) async {
+    useDevice(tester, const [Locale('es', 'MX')]);
+    await tester.pumpWidget(await buildTestApp(FakeAuthRepository()));
+    await tester.pumpAndSettle();
 
-      await openFromMenu(tester, entry, menuTooltip: 'Menü');
+    expect(find.text('Tengo 18 años o más'), findsOneWidget);
+    await tester.tap(find.text('Tengo 18 años o más'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Comenzar'));
+    await tester.pumpAndSettle();
+    expect(find.byType(GenerateScreen), findsOneWidget);
+    expect(find.text('Generar 3 respuestas'), findsOneWidget);
+  });
 
-      expect(find.byType(GenerateScreen), findsNothing);
-      await tester.tap(find.byTooltip('Zurück'));
-      await tester.pumpAndSettle();
-      expect(find.byType(GenerateScreen), findsOneWidget);
-    });
+  // Les textes allemands et espagnols sont les plus longs : chaque écran du
+  // menu doit s'afficher sans débordement (un débordement fait échouer le test).
+  const longLanguages = [
+    (
+      locale: Locale('de', 'DE'),
+      menu: 'Menü',
+      back: 'Zurück',
+      entries: [
+        'Respekt-Modus',
+        'Analyse',
+        'Sammlung',
+        'Verlauf',
+        'Premium',
+        'Einstellungen',
+      ],
+    ),
+    (
+      locale: Locale('es', 'ES'),
+      menu: 'Menú',
+      back: 'Atrás',
+      entries: [
+        'Modo Respeto',
+        'Análisis',
+        'Biblioteca',
+        'Historial',
+        'Premium',
+        'Configuración',
+      ],
+    ),
+  ];
+  for (final language in longLanguages) {
+    for (final entry in language.entries) {
+      testWidgets(
+        '${language.locale.languageCode} : menu → $entry sans débordement',
+        (tester) async {
+          useDevice(tester, [language.locale]);
+          await tester.pumpWidget(await buildSignedInApp(FakeBackend()));
+          await tester.pumpAndSettle();
+
+          await openFromMenu(tester, entry, menuTooltip: language.menu);
+
+          expect(find.byType(GenerateScreen), findsNothing);
+          await tester.tap(find.byTooltip(language.back));
+          await tester.pumpAndSettle();
+          expect(find.byType(GenerateScreen), findsOneWidget);
+        },
+      );
+    }
   }
 
   testWidgets('textes légaux affichés dans la langue de l\'interface', (

@@ -23,12 +23,15 @@ PAGES = {
     "terms.html": ("assets/legal/terms_en.txt", "Terms of Use", "en"),
     "datenschutz.html": ("assets/legal/privacy_de.txt", "Datenschutzerklärung", "de"),
     "nutzungsbedingungen.html": ("assets/legal/terms_de.txt", "Nutzungsbedingungen", "de"),
+    "privacidad.html": ("assets/legal/privacy_es.txt", "Política de privacidad", "es"),
+    "terminos.html": ("assets/legal/terms_es.txt", "Términos de uso", "es"),
 }
 # Textes propres à chaque langue : mention de mise à jour et pied de page.
 LANGUAGES = {
     "fr": {"updated": "Dernière mise à jour", "footer": "coach de drague et messages, réservé aux adultes."},
     "en": {"updated": "Last updated", "footer": "flirting and texting coach, for adults only."},
     "de": {"updated": "Zuletzt aktualisiert", "footer": "Coach für Flirts und Nachrichten, nur für Erwachsene."},
+    "es": {"updated": "Última actualización", "footer": "coach de coqueteo y mensajes, solo para adultos."},
 }
 
 STYLE = """
@@ -131,9 +134,9 @@ def main() -> None:
     )
     index = (
         f"<h1>{APP}</h1>\n<p>Textes légaux de l'application · Legal texts of the app · "
-        f"Rechtstexte der App.</p>\n<ul>{items}</ul>"
+        f"Rechtstexte der App · Textos legales de la aplicación.</p>\n<ul>{items}</ul>"
     )
-    title = "Textes légaux · Legal texts · Rechtstexte"
+    title = "Textes légaux · Legal texts · Rechtstexte · Textos legales"
     (OUT / "index.html").write_text(page(title, index, "", "fr"), encoding="utf-8")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     print(f"{len(PAGES) + 1} pages écrites dans {OUT.relative_to(ROOT)}")

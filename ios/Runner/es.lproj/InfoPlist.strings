@@ -1,0 +1,3 @@
+/* Textes des demandes d'autorisation iOS (Info.plist), par langue. */
+"NSPhotoLibraryUsageDescription" = "Para elegir una captura de pantalla de una conversación. Solo se usa para sugerir respuestas y nunca se guarda.";
+"NSUserTrackingUsageDescription" = "Tu consentimiento nos permite mostrar anuncios más relevantes a los usuarios de la versión gratuita. Puedes negarte: la aplicación funciona igual.";

@@ -1,0 +1,53 @@
+# Política de privacidad
+
+Última actualización: 18 de noviembre de 2026
+
+## Quiénes somos
+
+Flirt Coach Pro es una aplicación editada por {{EDITEUR}}. Para cualquier pregunta sobre tus datos: {{CONTACT}}.
+
+## Los datos que tratamos
+
+- Un identificador de cuenta anónimo, creado automáticamente: sin nombre, sin correo electrónico, sin número de teléfono.
+- Tu declaración de edad (18 años o más) y su fecha.
+- Los textos que escribes (mensaje recibido, contexto, conversación) y las respuestas generadas. Sirven para el historial (Premium) y para calcular los límites de uso. Puedes eliminarlos en cualquier momento.
+- Las capturas de pantalla que importas: se envían al servicio de IA para ser leídas y nunca se guardan.
+- Tus créditos, compras y suscripciones. El pago lo procesa App Store o Google Play: nunca recibimos tus datos bancarios.
+- En la versión gratuita, datos publicitarios tratados por Google AdMob, según tus elecciones de consentimiento.
+- Los reportes que envías: el texto reportado y el motivo elegido.
+
+## Por qué los tratamos
+
+- Para prestar el servicio: generar las respuestas, gestionar tus créditos, tu suscripción y tu historial (ejecución del contrato).
+- Para garantizar la seguridad y prevenir abusos: límites de uso, revisión de reportes (interés legítimo).
+- Para mostrar anuncios personalizados, solo con tu consentimiento, que puedes cambiar en Configuración > Preferencias de anuncios.
+
+## Nuestros proveedores
+
+- Supabase: alojamiento de la base de datos y del servidor, en la Unión Europea.
+- Anthropic: generación de las respuestas mediante inteligencia artificial. Los textos y las capturas se le envían para su tratamiento, de acuerdo con sus condiciones comerciales de uso.
+- RevenueCat: gestión de compras y suscripciones.
+- Google (AdMob, Google Play) y Apple (App Store).
+
+Algunos proveedores se encuentran fuera de la Unión Europea, en particular en Estados Unidos. Estas transferencias están protegidas por garantías adecuadas (cláusulas contractuales tipo de la Comisión Europea o Marco de Privacidad de Datos UE-EE. UU.).
+
+## Cuánto tiempo los conservamos
+
+- Tu cuenta, tu historial y tus reportes: hasta que los elimines o elimines tu cuenta.
+- Tus capturas de pantalla: no se conservan.
+
+## Tus derechos
+
+Puedes acceder a tus datos, rectificarlos, eliminarlos, oponerte a su tratamiento o solicitar su portabilidad escribiendo a {{CONTACT}}.
+
+Puedes eliminar tu cuenta de inmediato desde Configuración > Eliminar mi cuenta: todos tus datos se borran definitivamente. Una suscripción activa se cancela por separado, en App Store o Google Play.
+
+También puedes presentar una reclamación ante la autoridad de protección de datos de tu país (en Francia, la CNIL).
+
+## Menores
+
+Flirt Coach Pro está reservada a personas de 18 años o más.
+
+## Cambios
+
+Podemos actualizar esta política. La fecha al principio de la página indica la última versión.

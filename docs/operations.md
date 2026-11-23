@@ -139,10 +139,11 @@ La politique de confidentialité et les conditions sont publiées sur GitHub Pag
 (https://kelenix.github.io/Flirt-Coach/), depuis la branche `gh-pages`. La source reste
 `assets/legal/*_<langue>.txt`, pour que l'app et le site affichent le même texte : une page
 par langue (`confidentialite.html` et `conditions.html` en français, `privacy.html` et
-`terms.html` en anglais, `datenschutz.html` et `nutzungsbedingungen.html` en allemand).
+`terms.html` en anglais, `datenschutz.html` et `nutzungsbedingungen.html` en allemand,
+`privacidad.html` et `terminos.html` en espagnol).
 
 1. Modifier le texte dans `assets/legal/`, **dans chaque langue** (et la date « Dernière mise à
-   jour » / « Last updated » / « Zuletzt aktualisiert »).
+   jour » / « Last updated » / « Zuletzt aktualisiert » / « Última actualización »).
 2. Générer les pages (lit l'éditeur et le contact dans `config/prod.json`) :
 
    ```powershell

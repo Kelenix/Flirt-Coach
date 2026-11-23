@@ -19,8 +19,8 @@ void main() {
     for (final locale in AppLocalizations.supportedLocales) locale.languageCode,
   ];
 
-  test('le français (source), l\'anglais et l\'allemand sont proposés', () {
-    expect(languageCodes, containsAll(['fr', 'en', 'de']));
+  test('français (source), anglais, allemand et espagnol sont proposés', () {
+    expect(languageCodes, containsAll(['fr', 'en', 'de', 'es']));
   });
 
   for (final languageCode in languageCodes) {

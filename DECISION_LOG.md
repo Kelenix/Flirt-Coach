@@ -5,6 +5,40 @@
 
 ---
 
+## ADR-036 — Espagnol neutre, quatrième langue
+
+- **Date** : 2026-11-23
+- **Statut** : Accepté
+- **Décideur** : l'utilisateur (« ajoute l'espagnol », 2ᵉ langue recommandée après l'allemand,
+  ADR-035) ; mise en œuvre : Claude (rôles : flutter-engineer, backend)
+- **Contexte** : l'espagnol ouvre d'un coup l'Espagne, l'Amérique latine et les hispanophones des
+  États-Unis : surtout du volume de téléchargements, avec des revenus par utilisateur plus
+  faibles qu'en Allemagne.
+- **Décision** :
+  - Un seul espagnol, **neutre** (code `es`, toutes régions) : tutoiement (« tú »), jamais
+    « vosotros » ni expression propre à un pays, vocabulaire compris des deux côtés (« video »,
+    « configuración », « reportar », « coquetear »). Formulations sans accord de genre quand
+    elles visent l'utilisateur ou la personne en face (« Te damos la bienvenida », « ¿Te
+    gustaría ir conmigo? »).
+  - Même structure que les langues précédentes : `app_es.arb`, aide et textes légaux `*_es.txt`,
+    déclarations Android et iOS, 40 messages de banque (migration `20261123020000`), pages
+    légales `privacidad.html` et `terminos.html`. Serveur inchangé.
+  - Fiche store : mêmes textes pour « es-419 » (Amérique latine) et « es-ES » (Espagne),
+    section 12 de la fiche du store.
+- **Alternatives écartées** : deux variantes (`es_ES` et `es_419`) : double traduction à
+  maintenir pour des écarts minimes une fois les régionalismes évités ; à reconsidérer si les
+  avis le demandent.
+- **Conséquences** :
+  - Le parcours des écrans du menu sans débordement couvre aussi l'espagnol.
+  - Les prix en euros convertis par la Play Console sont élevés pour l'Amérique latine : des
+    prix locaux sont une décision financière de l'utilisateur (tâche 20).
+  - Après déploiement de la migration, la 1.0.0 affichera la banque dans les quatre langues
+    jusqu'à la 1.1.0.
+- **Impact** : métier (Espagne, Amérique latine), financier (prix locaux à décider), technique
+  faible.
+
+---
+
 ## ADR-035 — Allemand, troisième langue
 
 - **Date** : 2026-11-23
