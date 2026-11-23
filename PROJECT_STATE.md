@@ -22,8 +22,9 @@
   3. Sur l'autre machine : sauvegarde de la clé d'envoi (mot de passe dans le gestionnaire,
      copie chiffrée du `.jks` ailleurs).
   4. Décision de l'utilisateur à prendre : protection contre les comptes en série (tâche 17).
-  5. Anglais (ADR-034), prêt dans le code : à mettre en ligne avec la version 1.1.0
-     (tâche 20 : serveur au moment de l'envoi, AAB sur l'autre machine, fiche anglaise).
+  5. Anglais (ADR-034) : serveur déployé, pages légales en ligne, fiche anglaise en revue ;
+     reste à compiler et envoyer la version 1.1.0 sur l'autre machine (tâche 20), au plus
+     vite car la 1.0.0 affiche maintenant la banque dans les deux langues.
 
   Une étape à la fois, suivie dans `docs/manual-tasks.md` ; Android d'abord, iOS après la mise
   en ligne (ADR-028) ; versions des stores compilées uniquement sur l'autre machine. Chemin
@@ -321,6 +322,13 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-23 — Serveur : l'utilisateur a lancé `deploy-cloud.ps1` vers 09:02 UTC, puis envoyé
+  la fiche anglaise seule en revue. Vérifié en lecture seule : migration `20261123000000`
+  appliquée sur le cloud, banque à 40 messages `fr` + 40 `en`, 8 fonctions redéployées après
+  le commit de l'anglais (08:51 UTC). Dans la Play Console, seule la fiche en-US est en revue,
+  aucune nouvelle version. Effet transitoire : la 1.0.0 affiche la banque dans les deux
+  langues jusqu'à la 1.1.0.
 
 - 2026-11-23 — Pages légales anglaises publiées sur GitHub Pages à la demande de
   l'utilisateur (`gh-pages`, commit `32e8f2d`) : privacy.html et terms.html en ligne (HTTP 200,

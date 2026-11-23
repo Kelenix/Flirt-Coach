@@ -81,7 +81,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 17 | Protection contre la création de comptes en série | publication | **Décision attendue** |
 | 18 | Mesure de fluidité sur ton téléphone | qualité | Plus tard |
 | 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Envoyé en revue le 2026-11-20 (version 1.0.0 (1), liste « Flirt Coach Pro » avec 1 adresse) ; après l'approbation : 12 testeurs inscrits et 14 jours |
-| 20 | Mise en ligne de l'anglais (version 1.1.0) | testeurs anglophones, pays anglophones | Prêt dans le code (2026-11-23) ; pages légales anglaises en ligne ; fiche anglaise enregistrée dans la Play Console, non envoyée ; restent serveur et version 1.1.0 |
+| 20 | Mise en ligne de l'anglais (version 1.1.0) | testeurs anglophones, pays anglophones | Serveur déployé, pages légales en ligne, fiche anglaise en revue (2026-11-23) ; reste la version 1.1.0, à envoyer au plus vite |
 
 ---
 
@@ -489,8 +489,11 @@ avec la clé de débogage.
     `CHANGELOG.md` renommée en `[1.1.0]`, compilation et signature de l'AAB, dépôt dans
     « Test chiusi - Alpha » avec les notes de version en français et en anglais
     ([fiche du store](store/fiche-store.md), section 10).
-  - [ ] Sur ce poste, juste avant l'envoi en revue : `scripts/deploy-cloud.ps1` (migration de la
-    banque et fonctions IA ; la CLI demande confirmation avant la migration).
+  - [x] Serveur déployé par toi le 2026-11-23 vers 09:02 UTC (`scripts/deploy-cloud.ps1`) :
+    migration `20261123000000` appliquée (banque cloud : 40 messages `fr` et 40 `en`), 8
+    fonctions redéployées après le commit de l'anglais. Conséquence attendue jusqu'à la
+    1.1.0 : la version 1.0.0 installée affiche la banque en français et en anglais mélangés
+    (16 messages par catégorie) ; le reste ne change pas pour elle.
   - [x] Pages légales anglaises en ligne (2026-11-23, commit `32e8f2d` sur `gh-pages`) :
     https://kelenix.github.io/Flirt-Coach/privacy.html et
     https://kelenix.github.io/Flirt-Coach/terms.html, avec éditeur et contact ; les pages
@@ -499,10 +502,10 @@ avec la clé de débogage.
     2026-11-23, avec ton accord (Schede dello Store → Scheda predefinita → Gestisci lingue) :
     nom, description courte (68/80) et longue (2119/4000) de la section 10 de la fiche du
     store ; visuels repris de la fiche française ; déclaration des visuels IA inchangée.
-    **Enregistrée, pas envoyée** : « 1 modifica » attend dans la Panoramica della
-    pubblicazione, à envoyer avec la 1.1.0 (les pages légales anglaises vers lesquelles renvoie
-    la description sont en ligne depuis le 2026-11-23). Captures anglaises : plus tard (même
-    section).
+    **Envoyée en revue par toi le 2026-11-23, seule** (sans nouvelle version) : sans
+    conséquence, les liens de la description sont en ligne et la fiche ne promet rien que la
+    1.0.0 ne fasse ; elle sera simplement en avance sur l'app. Captures anglaises : plus tard
+    (même section).
   - [ ] Juriste : relire aussi `privacy_en.txt` et `terms_en.txt` (tâche 10).
 - **Coût** : aucun (relecture éventuelle).
 - **Vérification** : sur un téléphone en anglais, l'app s'affiche en anglais (accueil, menu,
