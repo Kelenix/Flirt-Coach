@@ -6,7 +6,7 @@
 ## Snapshot
 
 - **Phase courante** : 6 — Publication Android : test fermé envoyé en revue le 2026-11-20 (produits et RevenueCat prêts)
-- **Dernière mise à jour** : 2026-11-23
+- **Dernière mise à jour** : 2026-11-24
 - **Santé** : 🟢 OK
 - **Mode** : PLAN_PUIS_VALIDATION (plan validé le 2026-11-18, options par défaut retenues)
 - **Prochaine action** :
@@ -28,9 +28,9 @@
      et es-ES enregistrées (non envoyées), serveur à jour, prix locaux en Amérique latine
      appliqués (ADR-037). Portugais (ADR-038) : pages légales en ligne, fiches pt-BR et
      pt-PT enregistrées (non envoyées), serveur à jour, prix locaux au Brésil appliqués
-     (ADR-039). Puis
-     compiler et envoyer la 1.1.0 (anglais, allemand, espagnol, portugais) sur l'autre machine
-     (tâche 20).
+     (ADR-039). AAB 1.1.0 (2) compilé et signé sur l'autre machine le 2026-11-24 :
+     l'utilisateur le dépose dans « Test chiusi - Alpha » avec les notes de version des 7
+     langues de fiche, puis envoie le tout en revue avec les fiches en attente (tâche 20).
 
   Une étape à la fois, suivie dans `docs/manual-tasks.md` ; Android d'abord, iOS après la mise
   en ligne (ADR-028) ; versions des stores compilées uniquement sur l'autre machine. Chemin
@@ -330,6 +330,11 @@ Reste ouvert :
 - voir `docs/manual-tasks.md`
 
 ## Journal de session (résumé court, le plus récent en haut)
+
+- 2026-11-24 — Version 1.1.0 (2) compilée sur l'autre machine, à la demande de l'utilisateur (tâche 20).
+  - `pubspec.yaml` en `1.1.0+2` ; `CHANGELOG.md` : `[Non publié]` renommé en `[1.1.0]`, et le code d'accès rangé sous `[1.0.0]`, où il est apparu (déjà dans l'AAB 1.0.0 (1) du 2026-11-20).
+  - Vérifié : `flutter analyze` sans problème, 167 tests verts, `app-release.aab` (52,5 Mo, version 1.1.0 (2), langues de, en, es, fr et pt déclarées, identifiant AdMob réel, non débogable) signé par la clé d'envoi (SHA-256 `98:ED:…:A1:67`). Compilation Gradle : 4 min 36 s.
+  - Reste à l'utilisateur : dépôt dans « Test chiusi - Alpha » avec les notes de version (fiche du store, section 10), puis envoi en revue avec les 5 modifications de fiches en attente.
 
 - 2026-11-23 — Prix locaux au Brésil, à la demande de l'utilisateur (ADR-039) : même règle que
   l'ADR-037, saisie en USD et convertie par Google. Hebdo 17,99 BRL, mensuel 35,99 BRL,

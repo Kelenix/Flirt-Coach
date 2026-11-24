@@ -3,7 +3,7 @@
 Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) ·
 versions : [SemVer](https://semver.org/lang/fr/).
 
-## [Non publié]
+## [1.1.0] — 2026-11-24, test fermé
 
 ### Ajouté
 
@@ -16,10 +16,6 @@ versions : [SemVer](https://semver.org/lang/fr/).
 - **Coach dans la langue de l'app** : raisons de refus, explications du Mode Respect et analyse
   de conversation sont écrites dans la langue de l'app ; les messages proposés restent dans la
   langue de la conversation.
-
-- **Code d'accès** (Réglages → « J'ai un code ») : active Premium 30 jours avec un code fourni
-  par l'éditeur, par exemple aux testeurs des stores qui n'ont pas le droit d'acheter. Le code est
-  vérifié par le serveur ; essais et activations sont limités.
 
 ## [1.0.0] — en préparation (non publiée)
 
@@ -46,6 +42,9 @@ Première version complète de Flirt Coach Pro.
 - **Confiance** : signalement d'une réponse, réglages, préférences publicitaires, suppression
   définitive du compte, aide et questions fréquentes dans l'app.
 - Identité visuelle du kit de marque néon (logo, icône, écrans, icônes au trait).
+- **Code d'accès** (Réglages → « J'ai un code ») : active Premium 30 jours avec un code fourni
+  par l'éditeur, par exemple aux testeurs des stores qui n'ont pas le droit d'acheter. Le code est
+  vérifié par le serveur ; essais et activations sont limités.
 
 ### Sécurité
 

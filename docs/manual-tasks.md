@@ -81,7 +81,7 @@ contrats, fournir des informations légales. Chaque tâche indique **pourquoi**,
 | 17 | Protection contre la création de comptes en série | publication | **Décision attendue** |
 | 18 | Mesure de fluidité sur ton téléphone | qualité | Plus tard |
 | 19 | Test fermé Google Play (12 testeurs, 14 jours) | publication (production) | Envoyé en revue le 2026-11-20 (version 1.0.0 (1), liste « Flirt Coach Pro » avec 1 adresse) ; après l'approbation : 12 testeurs inscrits et 14 jours |
-| 20 | Mise en ligne de l'anglais, de l'allemand, de l'espagnol et du portugais (version 1.1.0) | testeurs et pays anglophones, germanophones, hispanophones, lusophones | Anglais et allemand : serveur, pages légales et fiches faits (fiche allemande non envoyée). Espagnol : serveur à jour (banque fr/en/de/es), pages légales en ligne, fiches es-419 et es-ES enregistrées non envoyées, prix locaux en Amérique latine appliqués (2026-11-23). Portugais : serveur à jour (banque fr/en/de/es/pt), pages légales en ligne, fiches pt-BR et pt-PT enregistrées non envoyées, prix locaux au Brésil appliqués (2026-11-23). Reste la 1.1.0, au plus vite |
+| 20 | Mise en ligne de l'anglais, de l'allemand, de l'espagnol et du portugais (version 1.1.0) | testeurs et pays anglophones, germanophones, hispanophones, lusophones | Anglais et allemand : serveur, pages légales et fiches faits (fiche allemande non envoyée). Espagnol : serveur à jour (banque fr/en/de/es), pages légales en ligne, fiches es-419 et es-ES enregistrées non envoyées, prix locaux en Amérique latine appliqués (2026-11-23). Portugais : serveur à jour (banque fr/en/de/es/pt), pages légales en ligne, fiches pt-BR et pt-PT enregistrées non envoyées, prix locaux au Brésil appliqués (2026-11-23). AAB 1.1.0 (2) compilé et signé sur l'autre machine (2026-11-24) ; reste à le déposer avec les notes de version |
 
 ---
 
@@ -559,7 +559,8 @@ avec la clé de débogage.
     `CHANGELOG.md` renommée en `[1.1.0]`, compilation et signature de l'AAB, dépôt dans
     « Test chiusi - Alpha » avec les notes de version de chaque langue de fiche (fr-FR,
     en-US, de-DE, es-419, es-ES, pt-BR, pt-PT : [fiche du store](store/fiche-store.md),
-    section 10).
+    section 10). Fait le 2026-11-24 sur l'autre machine : version, CHANGELOG, AAB 1.1.0 (2)
+    compilé et signé (analyse propre, 167 tests verts) ; reste le dépôt avec les notes.
   - [x] Serveur déployé par toi le 2026-11-23 vers 09:02 UTC (`scripts/deploy-cloud.ps1`) :
     migration `20261123000000` appliquée (banque cloud : 40 messages `fr` et 40 `en`), 8
     fonctions redéployées après le commit de l'anglais. Conséquence attendue jusqu'à la
